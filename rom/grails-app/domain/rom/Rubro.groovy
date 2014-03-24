@@ -7,5 +7,6 @@ class Rubro {
 	static hasMany = [subrubros: Subrubro]
 	
     static constraints = {
+		descripcion blank: false, maxSize: 200
     }
 }
