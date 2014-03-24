@@ -1,0 +1,10 @@
+package rom
+
+class Item {
+	String descripcion
+	
+	Subrubro subrubro
+	
+    static constraints = {
+    }
+}

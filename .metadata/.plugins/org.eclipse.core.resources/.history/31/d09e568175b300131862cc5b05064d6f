@@ -1,0 +1,9 @@
+package rom
+
+class Subrubro {
+	
+	String descripcion
+	
+    static constraints = {
+    }
+}
