@@ -1,10 +1,12 @@
 package rom
 
 
-
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import grails.plugin.springsecurity.annotation.Secured
 
+
+@Secured(['DUENIO'])
 @Transactional(readOnly = true)
 class SubrubroController {
 

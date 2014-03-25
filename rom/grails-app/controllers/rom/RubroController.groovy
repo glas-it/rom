@@ -1,10 +1,12 @@
 package rom
 
 
-
+import grails.plugin.springsecurity.annotation.Secured
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
+
+@Secured(['DUENIO'])
 @Transactional(readOnly = true)
 class RubroController {
 
