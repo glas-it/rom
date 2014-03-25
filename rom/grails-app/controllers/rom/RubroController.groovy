@@ -6,12 +6,12 @@ import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
 
-@Secured(['DUENIO'])
 @Transactional(readOnly = true)
+@Secured("hasRole('DUENIO')")
 class RubroController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-
+	
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Rubro.list(params), model:[rubroInstanceCount: Rubro.count()]

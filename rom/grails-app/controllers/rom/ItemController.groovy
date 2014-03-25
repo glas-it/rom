@@ -6,8 +6,8 @@ import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
 
-@Secured(['DUENIO'])
 @Transactional(readOnly = true)
+@Secured("hasRole('DUENIO')")
 class ItemController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]

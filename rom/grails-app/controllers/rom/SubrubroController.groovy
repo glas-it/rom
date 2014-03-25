@@ -6,8 +6,8 @@ import grails.transaction.Transactional
 import grails.plugin.springsecurity.annotation.Secured
 
 
-@Secured(['DUENIO'])
 @Transactional(readOnly = true)
+@Secured("hasRole('DUENIO')")
 class SubrubroController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
