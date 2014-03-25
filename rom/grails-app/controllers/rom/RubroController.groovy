@@ -3,6 +3,8 @@ package rom
 
 
 import static org.springframework.http.HttpStatus.*
+import grails.converters.JSON
+import grails.converters.XML
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
@@ -18,6 +20,14 @@ class RubroController {
     def show(Rubro rubroInstance) {
         respond rubroInstance
     }
+	
+	def getRubros = { 
+		 render Rubro.list() as XML
+	   }
+	
+	def getRubrosjs = {
+		render Rubro.list() as JSON
+	  }
 
     def create() {
         respond new Rubro(params)
