@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<installs>
+<install is-default="false">
+<home>/home/fede/springsource/grails-2.2.4/</home>
+<name>Grails 2.2.4</name>
+</install>
+<install is-default="true">
+<home>/home/fede/.gvm/grails/2.3.7/</home>
+<name>Grails 2.3.7</name>
+</install>
+</installs>
