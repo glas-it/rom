@@ -119,3 +119,12 @@ log4j = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
 }
+
+
+
+
+grails.plugin.springsecurity.securityConfigType = "InterceptUrlMap"
+
+grails.plugin.springsecurity.interceptUrlMap = [
+   //'/**/rubro/**':                  ['permitAll'],
+]
