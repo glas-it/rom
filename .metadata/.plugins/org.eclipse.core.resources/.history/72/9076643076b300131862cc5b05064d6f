@@ -1,0 +1,10 @@
+package rom
+
+class Item {
+	String descripcion
+	
+	static hasOne = [rubro: Rubro]
+	
+    static constraints = {
+    }
+}
