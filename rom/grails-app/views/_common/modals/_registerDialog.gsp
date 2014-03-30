@@ -1,22 +1,16 @@
 <div class="modal fade" id="RegisterModal" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
-	    	<g:form controller="login" action="register" class="form-horizontal" method="post" name="register_form">
+	    	<g:form controller="RegistroController" action="registrar" class="form-horizontal" method="post" name="register_form">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">x</button>
 					<h3><g:message code="security.register.title"/></h3>
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
-						<label class="col-lg-2 control-label" for="firstname">${message(code: 'security.firstname.label', default: 'Firstname')}</label>
+						<label class="col-lg-2 control-label" for="username">${message(code: 'security.username.label', default: 'Username')}</label>
 						<div   class="col-lg-10">
-							<input class="form-control" name="firstname" id="firstname" type="text" placeholder="${message(code: 'security.firstname.label', default: 'Firstname')}">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-2 control-label" for="lastname">${message(code: 'security.lastname.label', default: 'Lastname')}</label>
-						<div   class="col-lg-10">
-							<input class="form-control" name="lastname" id="lastname" type="text" placeholder="${message(code: 'security.lastname.label', default: 'Lastname')}">
+							<input class="form-control" name="username" id="username" type="text" placeholder="${message(code: 'security.username.label', default: 'Username')}">
 						</div>
 					</div>
 					<div class="form-group">
@@ -32,9 +26,9 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-lg-2 control-label" for="confirmpasswd">${message(code: 'security.password.confirm.label', default: 'Confirm')}</label>
+						<label class="col-lg-2 control-label" for="password2">${message(code: 'security.password.confirm.label', default: 'Confirm')}</label>
 						<div   class="col-lg-10">
-							<input class="form-control" name="confirmpasswd" id="confirmpasswd" type="password" placeholder="${message(code: 'security.password.confirm.label', default: 'Confirm')}">
+							<input class="form-control" name="password2" id="password2" type="password" placeholder="${message(code: 'security.password.confirm.label', default: 'Confirm')}">
 						</div>
 					</div>
 					<div class="form-group">

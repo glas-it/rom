@@ -1,11 +1,17 @@
 package rom.seguridad
 
+import rom.Restaurant
+
 class Usuario {
 
 	transient springSecurityService
 
 	String username
 	String password
+	String email
+	
+	static hasOne = [restaurant: Restaurant]
+	
 	boolean enabled = true
 	boolean accountExpired
 	boolean accountLocked
@@ -16,6 +22,8 @@ class Usuario {
 	static constraints = {
 		username blank: false, unique: true
 		password blank: false
+		email blank: false, email: true
+		restaurant visible:false, nullable: true
 	}
 
 	static mapping = {

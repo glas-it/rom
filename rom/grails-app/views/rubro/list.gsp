@@ -6,12 +6,12 @@
 <head>
 	<meta name="layout" content="kickstart" />
 	<g:set var="entityName" value="${message(code: 'rubro.label', default: 'Rubro')}" />
-	<title><g:message code="default.index.label" args="[entityName]" /></title>
+	<title><g:message code="default.list.label" args="[entityName]" /></title>
 </head>
 
 <body>
 
-<section id="index-rubro" class="first">
+<section id="list-rubro" class="first">
 
 	<table class="table table-bordered margin-top-medium">
 		<thead>

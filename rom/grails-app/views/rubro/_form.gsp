@@ -2,21 +2,18 @@
 
 
 
-<div class="fieldcontain ${hasErrors(bean: rubroInstance, field: 'descripcion', 'error')} required">
-	<label for="descripcion">
-		<g:message code="rubro.descripcion.label" default="Descripcion" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:textField name="descripcion" maxlength="200" required="" value="${rubroInstance?.descripcion}"/>
+			<div class="${hasErrors(bean: rubroInstance, field: 'descripcion', 'error')} required">
+				<label for="descripcion" class="control-label"><g:message code="rubro.descripcion.label" default="Descripcion" /><span class="required-indicator">*</span></label>
+				<div>
+					<g:textField class="form-control" name="descripcion" maxlength="200" required="" value="${rubroInstance?.descripcion}"/>
+					<span class="help-inline">${hasErrors(bean: rubroInstance, field: 'descripcion', 'error')}</span>
+				</div>
+			</div>
 
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: rubroInstance, field: 'subrubros', 'error')} ">
-	<label for="subrubros">
-		<g:message code="rubro.subrubros.label" default="Subrubros" />
-		
-	</label>
-	
+			<div class="${hasErrors(bean: rubroInstance, field: 'subrubros', 'error')} ">
+				<label for="subrubros" class="control-label"><g:message code="rubro.subrubros.label" default="Subrubros" /></label>
+				<div>
+					
 <ul class="one-to-many">
 <g:each in="${rubroInstance?.subrubros?}" var="s">
     <li><g:link controller="subrubro" action="show" id="${s.id}">${s?.encodeAsHTML()}</g:link></li>
@@ -26,6 +23,7 @@
 </li>
 </ul>
 
-
-</div>
+					<span class="help-inline">${hasErrors(bean: rubroInstance, field: 'subrubros', 'error')}</span>
+				</div>
+			</div>
 
