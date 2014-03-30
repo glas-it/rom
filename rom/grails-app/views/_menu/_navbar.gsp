@@ -35,10 +35,10 @@
 					</g:link>
 				</li>
 			</sec:ifAnyGranted>
-			<sec:ifAnyGranted roles='DUENIO'>
+			<sec:ifAnyGranted roles='ADMIN'>
 				<li class="controlleractive">
-					<g:link controller="subrubro" action="index">
-						<g:message code="subrubro.label" default="Subrubro"/>
+					<g:link controller="usuario" action="index">
+						<g:message code="usuario.label" default="Usuarios"/>
 					</g:link>
 				</li>
 			</sec:ifAnyGranted>

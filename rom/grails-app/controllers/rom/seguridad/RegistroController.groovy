@@ -10,7 +10,7 @@ import grails.transaction.Transactional;
 @Secured('permitAll')
 class RegistroController {
 	
-	static allowedMethods = [save: "POST", update: "PUT"]
+	static allowedMethods = [registrar: ["POST","PUT", "GET"]]
 	
 	@Transactional
 	def registrar() {
@@ -22,6 +22,7 @@ class RegistroController {
 		user.accountLocked = false
 		user.enabled = true
 		if (user.save(flush: true)) {
+			UsuarioRol.create(user, Rol.getByAuthority('ADMIN'), true)
 			flash.message('you have successfully registered, proceed to log in')
 			log.info "por redireccionar a login"
 			redirect controller: "login", action: "auth"

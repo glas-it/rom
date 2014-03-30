@@ -1,7 +1,7 @@
-<div class="modal fade" id="RegisterModal" role="dialog">
+<div class="modal fade" id="RegisterModal">
 	<div class="modal-dialog">
 		<div class="modal-content">
-	    	<g:form controller="RegistroController" action="registrar" class="form-horizontal" method="post" name="register_form">
+	    	<g:form controller="registro" class="form-horizontal" method="post" name="register_form">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">x</button>
 					<h3><g:message code="security.register.title"/></h3>
@@ -39,7 +39,7 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn btn-primary"><g:message code="security.register.label"/></button>
+					<g:actionSubmit name="Register" controller="registro" action="registrar" value="Register"/>
 				</div>
 			</g:form>
 		</div>
