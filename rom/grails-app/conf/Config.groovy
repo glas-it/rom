@@ -126,5 +126,5 @@ log4j = {
 grails.plugin.springsecurity.securityConfigType = "InterceptUrlMap"
 
 grails.plugin.springsecurity.interceptUrlMap = [
-   //'/**/rubro/**':                  ['permitAll'],
+	'/**/*/**':                  ['permitAll'],
 ]

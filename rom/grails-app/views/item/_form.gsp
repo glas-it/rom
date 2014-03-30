@@ -11,12 +11,12 @@
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: itemInstance, field: 'subrubro', 'error')} required">
-	<label for="subrubro">
-		<g:message code="item.subrubro.label" default="Subrubro" />
-		<span class="required-indicator">*</span>
+<div class="fieldcontain ${hasErrors(bean: itemInstance, field: 'items', 'error')} ">
+	<label for="items">
+		<g:message code="item.items.label" default="Items" />
+		
 	</label>
-	<g:select id="subrubro" name="subrubro.id" from="${rom.Subrubro.list()}" optionKey="id" required="" value="${itemInstance?.subrubro?.id}" class="many-to-one"/>
+	<g:select name="items" from="${rom.Item.list()}" multiple="multiple" optionKey="id" size="5" value="${itemInstance?.items*.id}" class="many-to-many"/>
 
 </div>
 

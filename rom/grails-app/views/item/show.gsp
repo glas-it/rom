@@ -32,11 +32,13 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${itemInstance?.subrubro}">
+				<g:if test="${itemInstance?.items}">
 				<li class="fieldcontain">
-					<span id="subrubro-label" class="property-label"><g:message code="item.subrubro.label" default="Subrubro" /></span>
+					<span id="items-label" class="property-label"><g:message code="item.items.label" default="Items" /></span>
 					
-						<span class="property-value" aria-labelledby="subrubro-label"><g:link controller="subrubro" action="show" id="${itemInstance?.subrubro?.id}">${itemInstance?.subrubro?.encodeAsHTML()}</g:link></span>
+						<g:each in="${itemInstance.items}" var="i">
+						<span class="property-value" aria-labelledby="items-label"><g:link controller="item" action="show" id="${i.id}">${i?.encodeAsHTML()}</g:link></span>
+						</g:each>
 					
 				</li>
 				</g:if>
