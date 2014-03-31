@@ -1,11 +1,13 @@
 package rom
 
-
-
+import grails.converters.JSON;
+import grails.plugin.springsecurity.annotation.Secured
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
+
 @Transactional(readOnly = true)
+@Secured("hasRole('DUENIO')")
 class ItemController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -22,6 +24,11 @@ class ItemController {
     def create() {
         respond new Item(params)
     }
+	
+	@Secured('permitAll')
+	def getItems() {
+		return Item.list() as JSON
+	}
 
     @Transactional
     def save(Item itemInstance) {

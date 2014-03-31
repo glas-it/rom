@@ -120,11 +120,36 @@ log4j = {
            'net.sf.ehcache.hibernate'
 }
 
+grails {
+	mail {
+	  host = "smtp.gmail.com"
+	  port = 465
+	  username = "rom.mailing.service@gmail.com"
+	  password = "rommailing"
+	  props = ["mail.smtp.auth":"true",
+			   "mail.smtp.socketFactory.port":"465",
+			   "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+			   "mail.smtp.socketFactory.fallback":"false"]
+ 
+ } }
 
 
-
-grails.plugin.springsecurity.securityConfigType = "InterceptUrlMap"
-
-grails.plugin.springsecurity.interceptUrlMap = [
-	'/**/*/**':                  ['permitAll'],
+// Added by the Spring Security Core plugin:
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'rom.seguridad.Usuario'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'rom.seguridad.UsuarioRol'
+grails.plugin.springsecurity.authority.className = 'rom.seguridad.Rol'
+grails.plugin.springsecurity.logout.postOnly = false
+grails.plugin.springsecurity.controllerAnnotations.staticRules = [
+	'/':                              ['permitAll'],
+	'/index':                         ['permitAll'],
+	'/home/*':                        ['permitAll'],
+	'/siteinfo/about':                ['permitAll'],
+	'/siteinfo/contact':              ['permitAll'],
+	'/index.gsp':                     ['permitAll'],
+	'/registro/*':					  ['permitAll'],
+	'/**/js/**':                      ['permitAll'],
+	'/**/css/**':                     ['permitAll'],
+	'/**/images/**':                  ['permitAll'],
+	'/**/favicon.ico':                ['permitAll']
 ]
+
