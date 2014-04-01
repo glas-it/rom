@@ -44,8 +44,22 @@
 			</sec:ifAnyGranted>
 			<sec:ifAnyGranted roles='DUENIO'>
 				<li class="controlleractive">
-					<g:link controller="item" action="index">
-						<g:message code="item.label" default="Item"/>
+					<g:link controller="subrubro" action="index">
+						<g:message code="subrubro.label" default="Subrubro"/>
+					</g:link>
+				</li>
+			</sec:ifAnyGranted>
+			<sec:ifAnyGranted roles='DUENIO'>
+				<li class="controlleractive">
+					<g:link controller="consumicion" action="index">
+						<g:message code="consumicion.label" default="Consumicion"/>
+					</g:link>
+				</li>
+			</sec:ifAnyGranted>
+			<sec:ifAnyGranted roles='DUENIO'>
+				<li class="controlleractive">
+					<g:link controller="agregado" action="index">
+						<g:message code="agregado.label" default="Agregado"/>
 					</g:link>
 				</li>
 			</sec:ifAnyGranted>

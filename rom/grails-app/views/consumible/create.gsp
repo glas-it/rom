@@ -1,20 +1,20 @@
-<%@ page import="rom.Item" %>
+<%@ page import="rom.Consumible" %>
 <!DOCTYPE html>
 <html>
 
 <head>
 	<meta name="layout" content="kickstart" />
-	<g:set var="entityName" value="${message(code: 'item.label', default: 'Item')}" />
+	<g:set var="entityName" value="${message(code: 'consumible.label', default: 'Consumible')}" />
 	<title><g:message code="default.create.label" args="[entityName]" /></title>
 </head>
 
 <body>
 
-	<section id="create-item" class="first">
+	<section id="create-consumible" class="first">
 
-		<g:hasErrors bean="${itemInstance}">
+		<g:hasErrors bean="${consumibleInstance}">
 		<div class="alert alert-danger">
-			<g:renderErrors bean="${itemInstance}" as="list" />
+			<g:renderErrors bean="${consumibleInstance}" as="list" />
 		</div>
 		</g:hasErrors>
 

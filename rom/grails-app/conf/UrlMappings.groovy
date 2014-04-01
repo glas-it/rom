@@ -5,12 +5,12 @@ class UrlMappings {
 		/*
 		 * Invoke http://localhost:8080/rom/rubro/getRubros or /anyControllerMethod
 		 * It works guacho!
-		*/
+		 */
+		/*
+		"/wsItem"(controller:'item'){
+			action = [GET:"show", POST:"save", PUT:"update", DELETE:"remove"]
+		  }*/
 		
-		"/wsItem"(resources:'item'){
-			action = [GET:"show"]
-		  }
-
 		
 		/*
 		 * Pages without controller

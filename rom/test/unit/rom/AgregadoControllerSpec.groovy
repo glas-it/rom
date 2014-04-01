@@ -5,9 +5,9 @@ package rom
 import grails.test.mixin.*
 import spock.lang.*
 
-@TestFor(RubroController)
-@Mock(Rubro)
-class RubroControllerSpec extends Specification {
+@TestFor(AgregadoController)
+@Mock(Agregado)
+class AgregadoControllerSpec extends Specification {
 
     def populateValidParams(params) {
         assert params != null
@@ -21,8 +21,8 @@ class RubroControllerSpec extends Specification {
             controller.index()
 
         then:"The model is correct"
-            !model.rubroInstanceList
-            model.rubroInstanceCount == 0
+            !model.agregadoInstanceList
+            model.agregadoInstanceCount == 0
     }
 
     void "Test the create action returns the correct model"() {
@@ -30,31 +30,31 @@ class RubroControllerSpec extends Specification {
             controller.create()
 
         then:"The model is correctly created"
-            model.rubroInstance!= null
+            model.agregadoInstance!= null
     }
 
     void "Test the save action correctly persists an instance"() {
 
         when:"The save action is executed with an invalid instance"
-            def rubro = new Rubro()
-            rubro.validate()
-            controller.save(rubro)
+            def agregado = new Agregado()
+            agregado.validate()
+            controller.save(agregado)
 
         then:"The create view is rendered again with the correct model"
-            model.rubroInstance!= null
+            model.agregadoInstance!= null
             view == 'create'
 
         when:"The save action is executed with a valid instance"
             response.reset()
             populateValidParams(params)
-            rubro = new Rubro(params)
+            agregado = new Agregado(params)
 
-            controller.save(rubro)
+            controller.save(agregado)
 
         then:"A redirect is issued to the show action"
-            response.redirectedUrl == '/rubro/show/1'
+            response.redirectedUrl == '/agregado/show/1'
             controller.flash.message != null
-            Rubro.count() == 1
+            Agregado.count() == 1
     }
 
     void "Test that the show action returns the correct model"() {
@@ -66,11 +66,11 @@ class RubroControllerSpec extends Specification {
 
         when:"A domain instance is passed to the show action"
             populateValidParams(params)
-            def rubro = new Rubro(params)
-            controller.show(rubro)
+            def agregado = new Agregado(params)
+            controller.show(agregado)
 
         then:"A model is populated containing the domain instance"
-            model.rubroInstance == rubro
+            model.agregadoInstance == agregado
     }
 
     void "Test that the edit action returns the correct model"() {
@@ -82,11 +82,11 @@ class RubroControllerSpec extends Specification {
 
         when:"A domain instance is passed to the edit action"
             populateValidParams(params)
-            def rubro = new Rubro(params)
-            controller.edit(rubro)
+            def agregado = new Agregado(params)
+            controller.edit(agregado)
 
         then:"A model is populated containing the domain instance"
-            model.rubroInstance == rubro
+            model.agregadoInstance == agregado
     }
 
     void "Test the update action performs an update on a valid domain instance"() {
@@ -94,28 +94,28 @@ class RubroControllerSpec extends Specification {
             controller.update(null)
 
         then:"A 404 error is returned"
-            response.redirectedUrl == '/rubro/index'
+            response.redirectedUrl == '/agregado/index'
             flash.message != null
 
 
         when:"An invalid domain instance is passed to the update action"
             response.reset()
-            def rubro = new Rubro()
-            rubro.validate()
-            controller.update(rubro)
+            def agregado = new Agregado()
+            agregado.validate()
+            controller.update(agregado)
 
         then:"The edit view is rendered again with the invalid instance"
             view == 'edit'
-            model.rubroInstance == rubro
+            model.agregadoInstance == agregado
 
         when:"A valid domain instance is passed to the update action"
             response.reset()
             populateValidParams(params)
-            rubro = new Rubro(params).save(flush: true)
-            controller.update(rubro)
+            agregado = new Agregado(params).save(flush: true)
+            controller.update(agregado)
 
         then:"A redirect is issues to the show action"
-            response.redirectedUrl == "/rubro/show/$rubro.id"
+            response.redirectedUrl == "/agregado/show/$agregado.id"
             flash.message != null
     }
 
@@ -124,23 +124,23 @@ class RubroControllerSpec extends Specification {
             controller.delete(null)
 
         then:"A 404 is returned"
-            response.redirectedUrl == '/rubro/index'
+            response.redirectedUrl == '/agregado/index'
             flash.message != null
 
         when:"A domain instance is created"
             response.reset()
             populateValidParams(params)
-            def rubro = new Rubro(params).save(flush: true)
+            def agregado = new Agregado(params).save(flush: true)
 
         then:"It exists"
-            Rubro.count() == 1
+            Agregado.count() == 1
 
         when:"The domain instance is passed to the delete action"
-            controller.delete(rubro)
+            controller.delete(agregado)
 
         then:"The instance is deleted"
-            Rubro.count() == 0
-            response.redirectedUrl == '/rubro/index'
+            Agregado.count() == 0
+            response.redirectedUrl == '/agregado/index'
             flash.message != null
     }
 }
