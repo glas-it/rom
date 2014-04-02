@@ -2,8 +2,11 @@ package rom
 
 
 import static org.springframework.http.HttpStatus.*
+
 import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
+import grails.converters.JSON
+
 
 /**
  * RestaurantController
@@ -32,6 +35,12 @@ class RestaurantController {
     def create() {
         respond new Restaurant(params)
     }
+	
+	def getMenu() {
+		ConsumicionController c = new ConsumicionController()
+		def lista = Rubro.list() + Subrubro.list() + c.getJSONList() + Agregado.list()
+		render  lista as JSON
+	}
 
     @Transactional
     def save(Restaurant restaurantInstance) {

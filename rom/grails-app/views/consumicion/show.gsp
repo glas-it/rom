@@ -31,9 +31,65 @@
 			</tr>
 		
 			<tr class="prop">
+				<td valign="top" class="name"><g:message code="consumicion.descripUno.label" default="Descrip Uno" /></td>
+				
+				<td valign="top" class="value">${fieldValue(bean: consumicionInstance, field: "descripUno")}</td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="consumicion.descripDos.label" default="Descrip Dos" /></td>
+				
+				<td valign="top" class="value">${fieldValue(bean: consumicionInstance, field: "descripDos")}</td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="consumicion.descripTres.label" default="Descrip Tres" /></td>
+				
+				<td valign="top" class="value">${fieldValue(bean: consumicionInstance, field: "descripTres")}</td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="consumicion.descripCuatro.label" default="Descrip Cuatro" /></td>
+				
+				<td valign="top" class="value">${fieldValue(bean: consumicionInstance, field: "descripCuatro")}</td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="consumicion.precioUno.label" default="Precio Uno" /></td>
+				
+				<td valign="top" class="value">${fieldValue(bean: consumicionInstance, field: "precioUno")}</td>
+				
+			</tr>
+		
+			<tr class="prop">
 				<td valign="top" class="name"><g:message code="consumicion.precios.label" default="Precios" /></td>
 				
 				<td valign="top" class="value">${fieldValue(bean: consumicionInstance, field: "precios")}</td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="consumicion.precioCuatro.label" default="Precio Cuatro" /></td>
+				
+				<td valign="top" class="value">${fieldValue(bean: consumicionInstance, field: "precioCuatro")}</td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="consumicion.precioDos.label" default="Precio Dos" /></td>
+				
+				<td valign="top" class="value">${fieldValue(bean: consumicionInstance, field: "precioDos")}</td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="consumicion.precioTres.label" default="Precio Tres" /></td>
+				
+				<td valign="top" class="value">${fieldValue(bean: consumicionInstance, field: "precioTres")}</td>
 				
 			</tr>
 		

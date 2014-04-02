@@ -3,8 +3,8 @@ package rom
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
-
 import grails.plugin.springsecurity.annotation.Secured;
+
 /**
  * AgregadoController
  * A controller class handles incoming web requests and performs actions such as redirects, rendering views and so on.

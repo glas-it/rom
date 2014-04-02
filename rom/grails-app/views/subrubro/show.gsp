@@ -17,9 +17,9 @@
 		<tbody>
 		
 			<tr class="prop">
-				<td valign="top" class="name"><g:message code="subrubro.descripcion.label" default="Descripcion" /></td>
+				<td valign="top" class="name"><g:message code="subrubro.nombre.label" default="Nombre" /></td>
 				
-				<td valign="top" class="value">${fieldValue(bean: subrubroInstance, field: "descripcion")}</td>
+				<td valign="top" class="value">${fieldValue(bean: subrubroInstance, field: "nombre")}</td>
 				
 			</tr>
 		

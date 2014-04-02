@@ -2,8 +2,8 @@ package rom
 
 
 import static org.springframework.http.HttpStatus.*
-import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
+import grails.plugin.springsecurity.annotation.Secured;
 
 /**
  * ConsumicionController
@@ -32,6 +32,14 @@ class ConsumicionController {
     def create() {
         respond new Consumicion(params)
     }
+	
+	def getJSONList() {
+		List<Consumicion> lista = Consumicion.list()
+		for(consu in lista) {
+			consu.setPreciosList();
+		}
+		return lista;
+	}
 
     @Transactional
     def save(Consumicion consumicionInstance) {

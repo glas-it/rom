@@ -2,11 +2,11 @@
 
 
 
-			<div class="${hasErrors(bean: subrubroInstance, field: 'descripcion', 'error')} required">
-				<label for="descripcion" class="control-label"><g:message code="subrubro.descripcion.label" default="Descripcion" /><span class="required-indicator">*</span></label>
+			<div class="${hasErrors(bean: subrubroInstance, field: 'nombre', 'error')} required">
+				<label for="nombre" class="control-label"><g:message code="subrubro.nombre.label" default="Nombre" /><span class="required-indicator">*</span></label>
 				<div>
-					<g:textField class="form-control" name="descripcion" maxlength="200" required="" value="${subrubroInstance?.descripcion}"/>
-					<span class="help-inline">${hasErrors(bean: subrubroInstance, field: 'descripcion', 'error')}</span>
+					<g:textField class="form-control" name="nombre" maxlength="200" required="" value="${subrubroInstance?.nombre}"/>
+					<span class="help-inline">${hasErrors(bean: subrubroInstance, field: 'nombre', 'error')}</span>
 				</div>
 			</div>
 

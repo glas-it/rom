@@ -17,7 +17,7 @@
 		<thead>
 			<tr>
 			
-				<g:sortableColumn property="descripcion" title="${message(code: 'subrubro.descripcion.label', default: 'Descripcion')}" />
+				<g:sortableColumn property="nombre" title="${message(code: 'subrubro.nombre.label', default: 'Nombre')}" />
 			
 				<th><g:message code="subrubro.rubro.label" default="Rubro" /></th>
 			
@@ -27,7 +27,7 @@
 		<g:each in="${subrubroInstanceList}" status="i" var="subrubroInstance">
 			<tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
 			
-				<td><g:link action="show" id="${subrubroInstance.id}">${fieldValue(bean: subrubroInstance, field: "descripcion")}</g:link></td>
+				<td><g:link action="show" id="${subrubroInstance.id}">${fieldValue(bean: subrubroInstance, field: "nombre")}</g:link></td>
 			
 				<td>${fieldValue(bean: subrubroInstance, field: "rubro")}</td>
 			

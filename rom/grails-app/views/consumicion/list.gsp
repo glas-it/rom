@@ -21,9 +21,13 @@
 			
 				<g:sortableColumn property="descripcion" title="${message(code: 'consumicion.descripcion.label', default: 'Descripcion')}" />
 			
-				<g:sortableColumn property="precios" title="${message(code: 'consumicion.precios.label', default: 'Precios')}" />
+				<g:sortableColumn property="descripUno" title="${message(code: 'consumicion.descripUno.label', default: 'Descrip Uno')}" />
 			
-				<th><g:message code="consumicion.subrubro.label" default="Subrubro" /></th>
+				<g:sortableColumn property="descripDos" title="${message(code: 'consumicion.descripDos.label', default: 'Descrip Dos')}" />
+			
+				<g:sortableColumn property="descripTres" title="${message(code: 'consumicion.descripTres.label', default: 'Descrip Tres')}" />
+			
+				<g:sortableColumn property="descripCuatro" title="${message(code: 'consumicion.descripCuatro.label', default: 'Descrip Cuatro')}" />
 			
 			</tr>
 		</thead>
@@ -35,9 +39,13 @@
 			
 				<td>${fieldValue(bean: consumicionInstance, field: "descripcion")}</td>
 			
-				<td>${fieldValue(bean: consumicionInstance, field: "precios")}</td>
+				<td>${fieldValue(bean: consumicionInstance, field: "descripUno")}</td>
 			
-				<td>${fieldValue(bean: consumicionInstance, field: "subrubro")}</td>
+				<td>${fieldValue(bean: consumicionInstance, field: "descripDos")}</td>
+			
+				<td>${fieldValue(bean: consumicionInstance, field: "descripTres")}</td>
+			
+				<td>${fieldValue(bean: consumicionInstance, field: "descripCuatro")}</td>
 			
 			</tr>
 		</g:each>
