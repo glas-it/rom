@@ -66,20 +66,6 @@
 			</tr>
 		
 			<tr class="prop">
-				<td valign="top" class="name"><g:message code="consumicion.precios.label" default="Precios" /></td>
-				
-				<td valign="top" class="value">${fieldValue(bean: consumicionInstance, field: "precios")}</td>
-				
-			</tr>
-		
-			<tr class="prop">
-				<td valign="top" class="name"><g:message code="consumicion.precioCuatro.label" default="Precio Cuatro" /></td>
-				
-				<td valign="top" class="value">${fieldValue(bean: consumicionInstance, field: "precioCuatro")}</td>
-				
-			</tr>
-		
-			<tr class="prop">
 				<td valign="top" class="name"><g:message code="consumicion.precioDos.label" default="Precio Dos" /></td>
 				
 				<td valign="top" class="value">${fieldValue(bean: consumicionInstance, field: "precioDos")}</td>
@@ -90,6 +76,13 @@
 				<td valign="top" class="name"><g:message code="consumicion.precioTres.label" default="Precio Tres" /></td>
 				
 				<td valign="top" class="value">${fieldValue(bean: consumicionInstance, field: "precioTres")}</td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="consumicion.precioCuatro.label" default="Precio Cuatro" /></td>
+				
+				<td valign="top" class="value">${fieldValue(bean: consumicionInstance, field: "precioCuatro")}</td>
 				
 			</tr>
 		
