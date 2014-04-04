@@ -9,7 +9,7 @@ import groovy.json.*;
 class Consumicion extends Consumible {
 
 	String descripUno, descripDos, descripTres, descripCuatro
-	int precioUno, precioDos, precioTres, precioCuatro
+	float precioUno, precioDos, precioTres, precioCuatro
 	Map precios
 	
     static	mapping = {
@@ -32,11 +32,10 @@ class Consumicion extends Consumible {
 			if (val == obj.descripUno || val == obj.descripDos || val == obj.descripTres)
 				return false
 			}
-		precioUno min: 0
-		precios visible: false
-		precioDos min: 0, blank:true, nullable: true //as Float
-		precioTres min: 0, blank:true, nullable: true //as Float
-		precioCuatro min: 0, blank:true, nullable: true //as Float
+		precioUno min: 0 as float
+		precioDos min: 0 as float, nullable: true, blank:true
+		precioTres min: 0 as float, blank:true, nullable: true
+		precioCuatro min: 0 as float, blank:true, nullable: true
     }
 	
 	

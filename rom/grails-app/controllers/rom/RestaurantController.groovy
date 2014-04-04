@@ -38,8 +38,8 @@ class RestaurantController {
 	
 	def getMenu() {
 		ConsumicionController c = new ConsumicionController()
-		def lista = Rubro.list() + Subrubro.list() + c.getJSONList() + Agregado.list()
-		render  lista as JSON
+		c.getJSONList()
+		render Rubro.list() as JSON
 	}
 
     @Transactional

@@ -6,6 +6,8 @@ package rom
  */
 class Rubro {
 
+	static	hasMany		= [subrubros:Subrubro]
+	
 	int orden
 	
 	String nombre
@@ -16,6 +18,7 @@ class Rubro {
 	static	constraints = {
 		nombre blank: false, maxSize: 200
 		orden min: 1
+		subrubros nullable: true, blank: true
     }
 	
 	@Override

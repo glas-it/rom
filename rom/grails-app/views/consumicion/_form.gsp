@@ -53,7 +53,7 @@
 			<div class="${hasErrors(bean: consumicionInstance, field: 'precioUno', 'error')} required">
 				<label for="precioUno" class="control-label"><g:message code="consumicion.precioUno.label" default="Precio Uno" /><span class="required-indicator">*</span></label>
 				<div>
-					<g:field class="form-control" name="precioUno" type="number" min="0" value="${consumicionInstance.precioUno}" required=""/>
+					<g:field class="form-control" name="precioUno" value="${fieldValue(bean: consumicionInstance, field: 'precioUno')}" required=""/>
 					<span class="help-inline">${hasErrors(bean: consumicionInstance, field: 'precioUno', 'error')}</span>
 				</div>
 			</div>
@@ -61,7 +61,7 @@
 			<div class="${hasErrors(bean: consumicionInstance, field: 'precioDos', 'error')} required">
 				<label for="precioDos" class="control-label"><g:message code="consumicion.precioDos.label" default="Precio Dos" /><span class="required-indicator">*</span></label>
 				<div>
-					<g:field class="form-control" name="precioDos" type="number" min="0" value="${consumicionInstance.precioDos}" required=""/>
+					<g:field class="form-control" name="precioDos" value="${fieldValue(bean: consumicionInstance, field: 'precioDos')}" required=""/>
 					<span class="help-inline">${hasErrors(bean: consumicionInstance, field: 'precioDos', 'error')}</span>
 				</div>
 			</div>
@@ -69,7 +69,7 @@
 			<div class="${hasErrors(bean: consumicionInstance, field: 'precioTres', 'error')} required">
 				<label for="precioTres" class="control-label"><g:message code="consumicion.precioTres.label" default="Precio Tres" /><span class="required-indicator">*</span></label>
 				<div>
-					<g:field class="form-control" name="precioTres" type="number" min="0" value="${consumicionInstance.precioTres}" required=""/>
+					<g:field class="form-control" name="precioTres" value="${fieldValue(bean: consumicionInstance, field: 'precioTres')}" required=""/>
 					<span class="help-inline">${hasErrors(bean: consumicionInstance, field: 'precioTres', 'error')}</span>
 				</div>
 			</div>
@@ -77,7 +77,7 @@
 			<div class="${hasErrors(bean: consumicionInstance, field: 'precioCuatro', 'error')} required">
 				<label for="precioCuatro" class="control-label"><g:message code="consumicion.precioCuatro.label" default="Precio Cuatro" /><span class="required-indicator">*</span></label>
 				<div>
-					<g:field class="form-control" name="precioCuatro" type="number" min="0" value="${consumicionInstance.precioCuatro}" required=""/>
+					<g:field class="form-control" name="precioCuatro" value="${fieldValue(bean: consumicionInstance, field: 'precioCuatro')}" required=""/>
 					<span class="help-inline">${hasErrors(bean: consumicionInstance, field: 'precioCuatro', 'error')}</span>
 				</div>
 			</div>
