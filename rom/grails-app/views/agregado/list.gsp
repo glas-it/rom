@@ -19,9 +19,9 @@
 			
 				<g:sortableColumn property="nombre" title="${message(code: 'agregado.nombre.label', default: 'Nombre')}" />
 			
-				<g:sortableColumn property="descripcion" title="${message(code: 'agregado.descripcion.label', default: 'Descripcion')}" />
-			
 				<g:sortableColumn property="precio" title="${message(code: 'agregado.precio.label', default: 'Precio')}" />
+			
+				<g:sortableColumn property="descripcion" title="${message(code: 'agregado.descripcion.label', default: 'Descripcion')}" />
 			
 				<th><g:message code="agregado.subrubro.label" default="Subrubro" /></th>
 			
@@ -33,9 +33,9 @@
 			
 				<td><g:link action="show" id="${agregadoInstance.id}">${fieldValue(bean: agregadoInstance, field: "nombre")}</g:link></td>
 			
-				<td>${fieldValue(bean: agregadoInstance, field: "descripcion")}</td>
-			
 				<td>${fieldValue(bean: agregadoInstance, field: "precio")}</td>
+			
+				<td>${fieldValue(bean: agregadoInstance, field: "descripcion")}</td>
 			
 				<td>${fieldValue(bean: agregadoInstance, field: "subrubro")}</td>
 			

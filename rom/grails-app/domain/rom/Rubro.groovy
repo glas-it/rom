@@ -6,6 +6,10 @@ package rom
  */
 class Rubro {
 
+	//Restaurant restaurant
+	
+	//static	belongsTo	= Restaurant
+	
 	static	hasMany		= [subrubros:Subrubro]
 	
 	int orden
@@ -16,13 +20,19 @@ class Rubro {
     }
     
 	static	constraints = {
-		nombre blank: false, maxSize: 200
-		orden min: 1
+		nombre blank: false, maxSize: 100, validator: { val, obj ->
+			return Rubro.list().find{ it.nombre == val && it.id != obj.id } == null 
+		}
+		orden validator: { val, obj ->
+			return (val >= 1 && Rubro.list().find{ it.orden == val && it.id != obj.id } == null) 
+		}
 		subrubros nullable: true, blank: true
     }
+	
 	
 	@Override
 	public String toString() {
 		return "${nombre}";
 	}
+
 }

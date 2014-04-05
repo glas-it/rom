@@ -24,6 +24,13 @@
 			</tr>
 		
 			<tr class="prop">
+				<td valign="top" class="name"><g:message code="subrubro.orden.label" default="Orden" /></td>
+				
+				<td valign="top" class="value">${fieldValue(bean: subrubroInstance, field: "orden")}</td>
+				
+			</tr>
+		
+			<tr class="prop">
 				<td valign="top" class="name"><g:message code="subrubro.consumiciones.label" default="Consumiciones" /></td>
 				
 				<td valign="top" style="text-align: left;" class="value">

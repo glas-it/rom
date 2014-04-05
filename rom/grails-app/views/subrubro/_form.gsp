@@ -5,11 +5,22 @@
 			<div class="${hasErrors(bean: subrubroInstance, field: 'nombre', 'error')} required">
 				<label for="nombre" class="control-label"><g:message code="subrubro.nombre.label" default="Nombre" /><span class="required-indicator">*</span></label>
 				<div>
-					<g:textField class="form-control" name="nombre" maxlength="200" required="" value="${subrubroInstance?.nombre}"/>
+					<g:textField class="form-control" name="nombre" maxlength="100" required="" value="${subrubroInstance?.nombre}"/>
 					<span class="help-inline">${hasErrors(bean: subrubroInstance, field: 'nombre', 'error')}</span>
 				</div>
 			</div>
 
+			<div class="${hasErrors(bean: subrubroInstance, field: 'orden', 'error')} required">
+				<label for="orden" class="control-label"><g:message code="subrubro.orden.label" default="Orden" /><span class="required-indicator">*</span></label>
+				<div>
+					<g:field class="form-control" name="orden" type="number" value="${subrubroInstance.orden}" required=""/>
+					<span class="help-inline">${hasErrors(bean: subrubroInstance, field: 'orden', 'error')}</span>
+				</div>
+			</div>
+
+
+
+<%--
 			<div class="${hasErrors(bean: subrubroInstance, field: 'consumiciones', 'error')} ">
 				<label for="consumiciones" class="control-label"><g:message code="subrubro.consumiciones.label" default="Consumiciones" /></label>
 				<div>
@@ -43,6 +54,8 @@
 					<span class="help-inline">${hasErrors(bean: subrubroInstance, field: 'agregados', 'error')}</span>
 				</div>
 			</div>
+  --%>
+
 
 			<div class="${hasErrors(bean: subrubroInstance, field: 'rubro', 'error')} required">
 				<label for="rubro" class="control-label"><g:message code="subrubro.rubro.label" default="Rubro" /><span class="required-indicator">*</span></label>
@@ -51,4 +64,3 @@
 					<span class="help-inline">${hasErrors(bean: subrubroInstance, field: 'rubro', 'error')}</span>
 				</div>
 			</div>
-

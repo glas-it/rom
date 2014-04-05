@@ -29,7 +29,7 @@
 				<td valign="top" class="value">${fieldValue(bean: rubroInstance, field: "orden")}</td>
 				
 			</tr>
-		
+
 			<tr class="prop">
 				<td valign="top" class="name"><g:message code="rubro.subrubros.label" default="Subrubros" /></td>
 				
@@ -42,7 +42,7 @@
 				</td>
 				
 			</tr>
-		
+			 
 		</tbody>
 	</table>
 </section>

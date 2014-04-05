@@ -24,16 +24,16 @@
 			</tr>
 		
 			<tr class="prop">
-				<td valign="top" class="name"><g:message code="agregado.descripcion.label" default="Descripcion" /></td>
+				<td valign="top" class="name"><g:message code="agregado.precio.label" default="Precio" /></td>
 				
-				<td valign="top" class="value">${fieldValue(bean: agregadoInstance, field: "descripcion")}</td>
+				<td valign="top" class="value">${fieldValue(bean: agregadoInstance, field: "precio")}</td>
 				
 			</tr>
 		
 			<tr class="prop">
-				<td valign="top" class="name"><g:message code="agregado.precio.label" default="Precio" /></td>
+				<td valign="top" class="name"><g:message code="agregado.descripcion.label" default="Descripcion" /></td>
 				
-				<td valign="top" class="value">${fieldValue(bean: agregadoInstance, field: "precio")}</td>
+				<td valign="top" class="value">${fieldValue(bean: agregadoInstance, field: "descripcion")}</td>
 				
 			</tr>
 		

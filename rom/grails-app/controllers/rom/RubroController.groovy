@@ -14,7 +14,9 @@ import grails.transaction.Transactional
 class RubroController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-
+	
+	//def springSecurityService
+	
 	def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Rubro.list(params), model:[rubroInstanceCount: Rubro.count()]
@@ -30,7 +32,7 @@ class RubroController {
     }
 
     def create() {
-        respond new Rubro(params)
+		respond new Rubro(params)
     }
 
     @Transactional
@@ -39,6 +41,8 @@ class RubroController {
             notFound()
             return
         }
+		
+		//rubroInstance.restaurant = springSecurityService.getCurrentUser().restaurant
 
         if (rubroInstance.hasErrors()) {
             respond rubroInstance.errors, view:'create'

@@ -6,16 +6,22 @@ package rom
  */
 class Consumible {
 	
-	static	belongsTo	= [subrubro:Subrubro]	// tells GORM to cascade commands: e.g., delete this object if the "parent" is deleted.
+	Subrubro subrubro
+	
+	static	belongsTo	= Subrubro	// tells GORM to cascade commands: e.g., delete this object if the "parent" is deleted.
 	
 	String nombre, descripcion
+	float precio
 	
     static	mapping = {
     }
     
 	static	constraints = {
-		nombre blank: false, maxSize: 100
-		descripcion blank: false, maxSize: 200
+		nombre blank: false, maxSize: 100, validator: { val, obj ->
+			return Consumible.list().find{ it.subrubro.nombre == obj.subrubro.nombre && it.nombre == val && it.id != obj.id } == null
+		}
+		descripcion nullable:true, maxSize: 150
+		precio min: 0 as float
     }
 	
 	

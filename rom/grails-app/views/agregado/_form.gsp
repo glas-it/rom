@@ -10,19 +10,19 @@
 				</div>
 			</div>
 
-			<div class="${hasErrors(bean: agregadoInstance, field: 'descripcion', 'error')} required">
-				<label for="descripcion" class="control-label"><g:message code="agregado.descripcion.label" default="Descripcion" /><span class="required-indicator">*</span></label>
-				<div>
-					<g:textField class="form-control" name="descripcion" maxlength="200" required="" value="${agregadoInstance?.descripcion}"/>
-					<span class="help-inline">${hasErrors(bean: agregadoInstance, field: 'descripcion', 'error')}</span>
-				</div>
-			</div>
-
 			<div class="${hasErrors(bean: agregadoInstance, field: 'precio', 'error')} required">
 				<label for="precio" class="control-label"><g:message code="agregado.precio.label" default="Precio" /><span class="required-indicator">*</span></label>
 				<div>
-					<g:field class="form-control" name="precio" value="${fieldValue(bean: agregadoInstance, field: 'precio')}" required=""/>
+					<g:field class="form-control" name="precio" type="number" value="${fieldValue(bean: agregadoInstance, field: 'precio')}" required=""/>
 					<span class="help-inline">${hasErrors(bean: agregadoInstance, field: 'precio', 'error')}</span>
+				</div>
+			</div>
+
+			<div class="${hasErrors(bean: agregadoInstance, field: 'descripcion', 'error')} ">
+				<label for="descripcion" class="control-label"><g:message code="agregado.descripcion.label" default="Descripcion" /></label>
+				<div>
+					<g:textField class="form-control" name="descripcion" value="${agregadoInstance?.descripcion}"/>
+					<span class="help-inline">${hasErrors(bean: agregadoInstance, field: 'descripcion', 'error')}</span>
 				</div>
 			</div>
 
