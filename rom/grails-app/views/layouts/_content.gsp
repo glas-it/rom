@@ -1,8 +1,9 @@
 <div id="Content" class="container">
 	<!-- Main menu in one row (e.g., controller entry points -->
-	<g:if test="${!layout_nomainmenu}">
+
+	<%--<g:if test="${!layout_nomainmenu}">
 		<g:render template="/_menu/menubar"/>
-	</g:if>
+	</g:if> --%>
 	
 	<!-- Secondary menu in one row (e.g., actions for current controller) -->
 	<g:if test="${!layout_nosecondarymenu}">

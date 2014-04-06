@@ -13,12 +13,6 @@
 			</a>
 		</li>
 		<li class="">
-			<a href="http://wordpress.com/signup/">
-				<i class="glyphicon glyphicon-align-justify"></i>
-				<i><g:message code="default.blog.label"/></i>
-			</a>
-		</li>
-		<li class="">
 			<a href="${createLink(uri: '/terms')}">
 				<i class="glyphicon glyphicon-exclamation-sign"></i>
 				<g:message code="default.terms.label"/>

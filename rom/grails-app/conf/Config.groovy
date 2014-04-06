@@ -70,6 +70,7 @@ grails.scaffolding.templates.domainSuffix = 'Instance'
 
 // Set to false to use the new Grails 1.2 JSONBuilder in the render method
 grails.json.legacy.builder = false
+grails.converters.json.default.deep=true
 // enabled native2ascii conversion of i18n properties files
 grails.enable.native2ascii = true
 // packages to include in Spring bean scanning
@@ -119,3 +120,37 @@ log4j = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
 }
+
+grails {
+	mail {
+	  host = "smtp.gmail.com"
+	  port = 465
+	  username = "rom.mailing.service@gmail.com"
+	  password = "rommailing"
+	  props = ["mail.smtp.auth":"true",
+			   "mail.smtp.socketFactory.port":"465",
+			   "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+			   "mail.smtp.socketFactory.fallback":"false"]
+ 
+ } }
+
+
+// Added by the Spring Security Core plugin:
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'rom.seguridad.Usuario'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'rom.seguridad.UsuarioRol'
+grails.plugin.springsecurity.authority.className = 'rom.seguridad.Rol'
+grails.plugin.springsecurity.logout.postOnly = false
+grails.plugin.springsecurity.controllerAnnotations.staticRules = [
+	'/':                              ['permitAll'],
+	'/index':                         ['permitAll'],
+	'/home/*':                        ['permitAll'],
+	'/siteinfo/about':                ['permitAll'],
+	'/siteinfo/contact':              ['permitAll'],
+	'/index.gsp':                     ['permitAll'],
+	'/registro/*':					  ['permitAll'],
+	'/**/js/**':                      ['permitAll'],
+	'/**/css/**':                     ['permitAll'],
+	'/**/images/**':                  ['permitAll'],
+	'/**/favicon.ico':                ['permitAll']
+]
+
