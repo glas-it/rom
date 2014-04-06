@@ -23,10 +23,17 @@
 			--%>
 			<sec:ifAnyGranted roles='DUENIO'>
 			<li class="controlleractive">
-				<g:link controller="restaurant" action="index">
-					<g:message code="restaurant.label" default="Mi Restaurant"/>
+				<g:link controller="mozo" action="index">
+					<g:message code="mozo.label" default="Mozos"/>
 				</g:link>
 			</li>
+			</sec:ifAnyGranted>
+			<sec:ifAnyGranted roles='DUENIO'>
+				<li class="controlleractive">
+					<g:link controller="restaurant" action="index">
+						<g:message code="mozo.label" default="Mi restaurant"/>
+					</g:link>
+				</li>
 			</sec:ifAnyGranted>
 			<sec:ifAnyGranted roles='DUENIO'>
 				<li class="controlleractive">
@@ -37,8 +44,8 @@
 			</sec:ifAnyGranted>
 			<sec:ifAnyGranted roles='ADMIN'>
 				<li class="controlleractive">
-					<g:link controller="usuario" action="index">
-						<g:message code="usuario.label" default="Usuarios"/>
+					<g:link controller="duenio" action="index">
+						<g:message code="duenio.label" default="Dueños"/>
 					</g:link>
 				</li>
 			</sec:ifAnyGranted>

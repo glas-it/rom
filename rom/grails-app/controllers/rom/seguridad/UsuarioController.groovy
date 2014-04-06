@@ -2,6 +2,7 @@ package rom.seguridad
 
 
 import static org.springframework.http.HttpStatus.*
+import rom.Restaurant;
 import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
 
@@ -15,6 +16,8 @@ class UsuarioController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+	def usuarioService
+	
 	def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Usuario.list(params), model:[usuarioInstanceCount: Usuario.count()]
@@ -44,10 +47,9 @@ class UsuarioController {
             respond usuarioInstance.errors, view:'create'
             return
         }
-
-        usuarioInstance.save flush:true
-		UsuarioRol.create usuarioInstance, Rol.findByAuthority('DUENIO'), true
-        request.withFormat {
+		usuarioService.crearUsuarioAdminitrador(usuarioInstance)
+		
+		request.withFormat {
             form {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'usuarioInstance.label', default: 'Usuario'), usuarioInstance.id])
                 redirect usuarioInstance

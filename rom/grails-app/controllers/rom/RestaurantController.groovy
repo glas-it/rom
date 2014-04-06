@@ -2,6 +2,7 @@ package rom
 
 
 import static org.springframework.http.HttpStatus.*
+import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
 
 /**
@@ -9,13 +10,17 @@ import grails.transaction.Transactional
  * A controller class handles incoming web requests and performs actions such as redirects, rendering views and so on.
  */
 @Transactional(readOnly = true)
+@Secured("hasRole('DUENIO')")
 class RestaurantController {
 
+	def springSecurityService
+	
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
 	def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Restaurant.list(params), model:[restaurantInstanceCount: Restaurant.count()]
+        /*params.max = Math.min(max ?: 10, 100)
+        respond Restaurant.list(params), model:[restaurantInstanceCount: Restaurant.count()]*/
+		redirect action:'edit', id:( springSecurityService.currentUser as Duenio).restaurant.id
     }
 
 	def list(Integer max) {
