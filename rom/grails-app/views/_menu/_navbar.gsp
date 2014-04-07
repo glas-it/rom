@@ -21,12 +21,20 @@
     	<ul class="nav navbar-nav navbar-right">
  			<%--<g:render template="/_menu/search"/> 
 			--%>
+			
 			<sec:ifAnyGranted roles='DUENIO'>
 			<li class="controlleractive">
 				<g:link controller="restaurant" action="index">
 					<g:message code="restaurant.label" default="Mi Restaurant"/>
 				</g:link>
 			</li>
+				<sec:ifAnyGranted roles='DUENIO'>
+					<li class="controlleractive">
+						<g:link controller="mozo" action="index">
+							<g:message code="mozo.label" default="Mozos"/>
+						</g:link>
+					</li>
+				</sec:ifAnyGranted>
 			</sec:ifAnyGranted>
 			<sec:ifAnyGranted roles='DUENIO'>
 				<li class="controlleractive">
@@ -68,8 +76,8 @@
 			</sec:ifAnyGranted>														
 			<g:render template="/_menu/info"/>														
 			<g:render template="/_menu/user"/><!-- NOTE: the renderDialog for the "Register" modal dialog MUST be placed outside the NavBar (at least for Bootstrap 2.1.1): see bottom of main.gsp -->
-			<g:render template="/_menu/language"/>														
-	    </ul>			
+			<%--<g:render template="/_menu/language"/>														
+	    --%></ul>			
 
 		</div>
 	</div>

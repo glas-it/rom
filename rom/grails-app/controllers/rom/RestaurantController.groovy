@@ -41,6 +41,13 @@ class RestaurantController {
 		respond duenio.restaurant
     }
 
+	@Secured(['permitAll'])
+	def getMenu() {
+		ConsumicionController c = new ConsumicionController()
+		c.getJSONList()
+		render Rubro.list() as JSON	
+	}
+	
     @Transactional
     def update(Restaurant restaurantInstance) {
         if (restaurantInstance == null) {

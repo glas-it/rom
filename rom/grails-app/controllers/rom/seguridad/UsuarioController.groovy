@@ -50,10 +50,7 @@ class UsuarioController {
             return
         }
         
-        usuarioInstance.save flush:true
-		UsuarioRol.create usuarioInstance, Rol.findByAuthority('DUENIO'), true
-        request.withFormat {
-		usuarioService.crearUsuarioAdminitrador(usuarioInstance)
+        usuarioService.crearUsuarioAdminitrador(usuarioInstance)
 		
 		request.withFormat {
             form {

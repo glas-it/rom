@@ -30,6 +30,18 @@
 				
 			</tr>
 
+				<tr class="prop">
+					<td valign="top" class="name"><g:message code="rubro.subrubros.label" default="Subrubros" /></td>
+					
+					<td valign="top" style="text-align: left;" class="value">
+						<ul>
+							<g:each in="${rubroInstance.subrubros}" var="s">
+								<li><g:link controller="subrubro" action="show" id="${s.id}">${s?.encodeAsHTML()}</g:link></li>
+							</g:each>
+						</ul>
+					</td>
+					
+				</tr>
 		
 		</tbody>
 	</table>

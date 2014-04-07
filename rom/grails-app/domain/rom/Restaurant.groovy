@@ -19,13 +19,8 @@ class Restaurant {
 
 	String nombre
 	
-	static	constraints = {
-    	nombre blank: false, size: 1..70
-		usuario visible: false
-
 	Duenio duenio
 	
-	String nombre
 	
 	static	constraints = {
     	nombre blank: false, nullable: true, size: 1..70
