@@ -16,13 +16,12 @@ class MozoService {
 		mozo.accountExpired = false
 		mozo.accountLocked = false
 		mozo.passwordExpired = false
-		mozo.restaurant = duenio.restaurant //Restaurant.find()
+		mozo.restaurant = duenio.restaurant
 		mozo.password = mozo.restaurant.id.toString()
-		if (mozo.hasErrors()) {
+		if (!mozo.save()) {
 			throw new MozoConErroresException()
 		}
-		mozo.save()
-		UsuarioRol.create mozo as Usuario, Rol.findByAuthority('COCINA')
+		UsuarioRol.create mozo as Usuario, Rol.findByAuthority('MOZO')
     }
 	
 	def findAllByRestaurant(Restaurant restaurant) {

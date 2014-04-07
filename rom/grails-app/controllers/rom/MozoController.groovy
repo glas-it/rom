@@ -27,7 +27,8 @@ class MozoController {
 
 	def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        List mozoSet = mozoService.findAllByRestaurant((springSecurityService.currentUser as Duenio).restaurant)
+		Duenio duenio = Duenio.findByUsername(springSecurityService.currentUser.username)
+        List mozoSet = mozoService.findAllByRestaurant(duenio.restaurant)
         [mozoInstanceList: mozoSet, mozoInstanceCount: mozoSet != null ? mozoSet.size() : 0]
 		//respond Mozo.list(), model:[mozoInstanceCount: Mozo.count()]
     }
@@ -38,7 +39,7 @@ class MozoController {
 
     def create() {
 		def mozo = new Mozo(params)
-		[mozoInstance: mozo, restaurantId: (springSecurityService.currentUser as Duenio).restaurant.id]
+		[mozoInstance: mozo]
     }
 
     @Transactional
@@ -47,8 +48,9 @@ class MozoController {
             notFound()
             return
         }
+		Duenio duenio = Duenio.findByUsername(springSecurityService.currentUser.username) 
 		try {
-			mozoService.crearMozo(mozo, (springSecurityService.currentUser as Duenio))
+			mozoService.crearMozo(mozoInstance, duenio)
 		} catch (MozoConErroresException) {
 			respond mozoInstance.errors, view:'create'
 			return
