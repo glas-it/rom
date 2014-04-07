@@ -10,7 +10,6 @@
 			</button>
 	
 			<a class="navbar-brand" href="${createLink(uri: '/')}">
-
 				<img class="logo" src="${resource(plugin: 'kickstart', dir:'images', file:'rom-logo.png')}" alt="${meta(name:'app.name')}" width="16px" height="16px"/> 
 				${meta(name:'app.name')}
 				<small> v${meta(name:'app.version')}</small>
@@ -66,7 +65,7 @@
 			</sec:ifAnyGranted>
 			<sec:ifAnyGranted roles='ADMIN'>
 				<g:render template="/_menu/admin"/>
-			</sec:ifAnyGranted>	
+			</sec:ifAnyGranted>														
 			<g:render template="/_menu/info"/>														
 			<g:render template="/_menu/user"/><!-- NOTE: the renderDialog for the "Register" modal dialog MUST be placed outside the NavBar (at least for Bootstrap 2.1.1): see bottom of main.gsp -->
 			<g:render template="/_menu/language"/>														

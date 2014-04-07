@@ -29,11 +29,18 @@ class UrlMappings {
 		 * Pages with controller
 		 * WARN: No domain/controller should be named "api" or "mobile" or "web"!
 		 */
+
+		
         "/"	{
 			controller	= 'home'
 			action		= { 'index' }
             view		= { 'index' }
         }
+		
+		"/autenticacion/$username/$idRestaurant"(controller: "autenticacion", parseRequest: true) {
+			action = [GET: "index"]
+		}
+		
 		"/$controller/$action?/$id?"{
 			constraints {
 				controller(matches:/^((?!(api|mobile|web)).*)$/)

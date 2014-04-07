@@ -8,65 +8,37 @@ import grails.transaction.Transactional
 import grails.converters.JSON
 
 
+import grails.plugin.springsecurity.SpringSecurityService;
+import grails.transaction.Transactional
+
+
 /**
  * RestaurantController
  * A controller class handles incoming web requests and performs actions such as redirects, rendering views and so on.
  */
 @Transactional(readOnly = true)
-@Secured('permitAll')
+@Secured("hasRole('DUENIO')")
 class RestaurantController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+	def springSecurityService
+	
+    static allowedMethods = [update: "PUT"]
 
 	def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Restaurant.list(params), model:[restaurantInstanceCount: Restaurant.count()]
+        /*params.max = Math.min(max ?: 10, 100)
+        respond Restaurant.list(params), model:[restaurantInstanceCount: Restaurant.count()]*/
+		Duenio duenio = Duenio.findByUsername(springSecurityService.currentUser.username)
+		redirect action:'show'
     }
 
-	def list(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Restaurant.list(params), model:[restaurantInstanceCount: Restaurant.count()]
+    def show() {
+		Duenio duenio = Duenio.findByUsername(springSecurityService.currentUser.username)
+		respond duenio.restaurant
     }
-
-    def show(Restaurant restaurantInstance) {
-        respond restaurantInstance
-    }
-
-    def create() {
-        respond new Restaurant(params)
-    }
-	
-	def getMenu() {
-		ConsumicionController c = new ConsumicionController()
-		c.getJSONList()
-		render Rubro.list() as JSON
-	}
-
-    @Transactional
-    def save(Restaurant restaurantInstance) {
-        if (restaurantInstance == null) {
-            notFound()
-            return
-        }
-
-        if (restaurantInstance.hasErrors()) {
-            respond restaurantInstance.errors, view:'create'
-            return
-        }
-
-        restaurantInstance.save flush:true
-
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'restaurantInstance.label', default: 'Restaurant'), restaurantInstance.id])
-                redirect restaurantInstance
-            }
-            '*' { respond restaurantInstance, [status: CREATED] }
-        }
-    }
-
-    def edit(Restaurant restaurantInstance) {
-        respond restaurantInstance
+    
+    def edit() {
+		Duenio duenio = Duenio.findByUsername(springSecurityService.currentUser.username)
+		respond duenio.restaurant
     }
 
     @Transactional

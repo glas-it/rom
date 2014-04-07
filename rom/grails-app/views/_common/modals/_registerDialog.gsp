@@ -39,7 +39,7 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<g:actionSubmit name="Register" controller="registro" action="registrar" value="Register"/>
+					<button type="submit" class="btn btn-primary"><g:message code="security.register.label"/></button>
 				</div>
 			</g:form>
 		</div>

@@ -23,13 +23,6 @@
 				
 			</tr>
 		
-			<tr class="prop">
-				<td valign="top" class="name"><g:message code="restaurant.usuario.label" default="Usuario" /></td>
-				
-				<td valign="top" class="value"><g:link controller="usuario" action="show" id="${restaurantInstance?.usuario?.id}">${restaurantInstance?.usuario?.encodeAsHTML()}</g:link></td>
-				
-			</tr>
-		
 		</tbody>
 	</table>
 </section>

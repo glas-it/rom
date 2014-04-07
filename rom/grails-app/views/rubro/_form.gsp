@@ -1,7 +1,6 @@
 <%@ page import="rom.Rubro" %>
 
 
-
 			<div class="${hasErrors(bean: rubroInstance, field: 'nombre', 'error')} required">
 				<label for="nombre" class="control-label"><g:message code="rubro.nombre.label" default="Nombre" /><span class="required-indicator">*</span></label>
 				<div>

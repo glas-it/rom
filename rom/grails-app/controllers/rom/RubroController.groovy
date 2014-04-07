@@ -1,6 +1,7 @@
 package rom
 
 
+
 import static org.springframework.http.HttpStatus.*
 import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
@@ -10,7 +11,7 @@ import grails.transaction.Transactional
  * A controller class handles incoming web requests and performs actions such as redirects, rendering views and so on.
  */
 @Transactional(readOnly = true)
-@Secured('permitAll')
+@Secured("hasRole('DUENIO')")
 class RubroController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -42,8 +43,6 @@ class RubroController {
             return
         }
 		
-		//rubroInstance.restaurant = springSecurityService.getCurrentUser().restaurant
-
         if (rubroInstance.hasErrors()) {
             respond rubroInstance.errors, view:'create'
             return
@@ -52,7 +51,7 @@ class RubroController {
         rubroInstance.save flush:true
 
         request.withFormat {
-            form {
+            form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'rubroInstance.label', default: 'Rubro'), rubroInstance.id])
                 redirect rubroInstance
             }
@@ -79,7 +78,7 @@ class RubroController {
         rubroInstance.save flush:true
 
         request.withFormat {
-            form {
+            form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'Rubro.label', default: 'Rubro'), rubroInstance.id])
                 redirect rubroInstance
             }
@@ -98,7 +97,7 @@ class RubroController {
         rubroInstance.delete flush:true
 
         request.withFormat {
-            form {
+            form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'Rubro.label', default: 'Rubro'), rubroInstance.id])
                 redirect action:"index", method:"GET"
             }
@@ -108,7 +107,7 @@ class RubroController {
 
     protected void notFound() {
         request.withFormat {
-            form {
+            form multipartForm {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'rubroInstance.label', default: 'Rubro'), params.id])
                 redirect action: "index", method: "GET"
             }

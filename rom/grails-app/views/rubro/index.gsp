@@ -19,18 +19,15 @@
 			
 				<g:sortableColumn property="nombre" title="${message(code: 'rubro.nombre.label', default: 'Nombre')}" />
 			
-				<g:sortableColumn property="orden" title="${message(code: 'rubro.orden.label', default: 'Orden')}" />
-			
+				<g:sortableColumn property="orden" title="${message(code: 'rubro.orden.label', default: 'Orden')}" />			
 			</tr>
 		</thead>
 		<tbody>
 		<g:each in="${rubroInstanceList}" status="i" var="rubroInstance">
 			<tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-			
 				<td><g:link action="show" id="${rubroInstance.id}">${fieldValue(bean: rubroInstance, field: "nombre")}</g:link></td>
 			
-				<td>${fieldValue(bean: rubroInstance, field: "orden")}</td>
-			
+				<td>${fieldValue(bean: rubroInstance, field: "orden")}</td>			
 			</tr>
 		</g:each>
 		</tbody>

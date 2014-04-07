@@ -8,9 +8,6 @@ class Usuario {
 
 	String username
 	String password
-	String email
-	
-	static hasOne = [restaurant: Restaurant]
 	
 	boolean enabled = true
 	boolean accountExpired
@@ -20,14 +17,14 @@ class Usuario {
 	static transients = ['springSecurityService']
 
 	static constraints = {
-		username blank: false, unique: true
+		username blank: false
 		password blank: false
-		email blank: false, email: true
-		restaurant visible:false, nullable: true
 	}
 
 	static mapping = {
 		password column: '`password`'
+
+		tablePerHierarchy false
 	}
 
 	Set<Rol> getAuthorities() {

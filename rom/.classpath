@@ -236,6 +236,10 @@
 			<attribute name="org.grails.ide.eclipse.core.SOURCE_FOLDER" value="true"/>
 		</attributes>
 	</classpathentry>
+<<<<<<< HEAD
 	<classpathentry exported="true" kind="con" path="org.grails.ide.eclipse.core.CLASSPATH_CONTAINER"/>
+=======
+	<classpathentry kind="con" path="org.grails.ide.eclipse.core.CLASSPATH_CONTAINER"/>
+>>>>>>> 237-adm-usuarios
 	<classpathentry kind="output" path="target-eclipse/classes"/>
 </classpath>

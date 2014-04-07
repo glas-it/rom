@@ -26,6 +26,7 @@
 				</div>
 			</div>
 
+<%-- 
 			<div class="${hasErrors(bean: usuarioInstance, field: 'restaurant', 'error')} ">
 				<label for="restaurant" class="control-label"><g:message code="usuario.restaurant.label" default="Restaurant" /></label>
 				<div>
@@ -33,7 +34,7 @@
 					<span class="help-inline">${hasErrors(bean: usuarioInstance, field: 'restaurant', 'error')}</span>
 				</div>
 			</div>
-
+--%>
 			<div class="${hasErrors(bean: usuarioInstance, field: 'accountExpired', 'error')} ">
 				<label for="accountExpired" class="control-label"><g:message code="usuario.accountExpired.label" default="Account Expired" /></label>
 				<div>

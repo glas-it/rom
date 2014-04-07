@@ -16,7 +16,7 @@
 	<table class="table table-bordered margin-top-medium">
 		<thead>
 			<tr>
-			
+
 				<g:sortableColumn property="nombre" title="${message(code: 'rubro.nombre.label', default: 'Nombre')}" />
 			
 				<g:sortableColumn property="orden" title="${message(code: 'rubro.orden.label', default: 'Orden')}" />

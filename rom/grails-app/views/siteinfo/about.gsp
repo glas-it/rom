@@ -6,7 +6,6 @@
 </head>
 
 <body>
-
 	<section id="intro">
 		<h1 class="center"><g:message code="default.welcome.title" args="[meta(name:'app.name')]"/></h1>
 	</section>
