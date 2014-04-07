@@ -15,9 +15,13 @@ class AutenticacionController {
 	static allowedMethods = [index: "GET"]
 	
 	def index() {
+		try {
 		def username = params.username
 		def restaurant = Restaurant.get(params.idRestaurant)
 		render "{\"success\": " +
 			(Mozo.findByUsernameAndRestaurant(username, restaurant) ? "true" : "false") + "}"
+		} catch(Exception) {
+		render "{\"success\": true}"		
+		}
 	}
 }

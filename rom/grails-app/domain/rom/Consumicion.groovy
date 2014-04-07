@@ -40,7 +40,7 @@ class Consumicion extends Consumible {
 	
 	public void setPreciosList() {
 		String cad = String.format('{"%1s": %2s, "%3s": %4s, "%5s": %6s, "%7s": %8s}',
-			 descripcion, precio, descripDos, precioDos, descripTres, precioTres, descripCuatro, precioCuatro)
+			 descripcion, precio.toString(), descripDos, precioDos.toString(), descripTres, precioTres.toString(), descripCuatro, precioCuatro.toString())
 		JsonSlurper js = new JsonSlurper()
 		precios = js.parseText(cad) as Map
 		//precios = [descripUno: precioUno, descripDos: precioDos, descripTres:precioTres, descripCuatro:precioCuatro]

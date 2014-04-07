@@ -14,7 +14,7 @@
 			<div class="thumbnails">
 				<div id="what" class="col-md-4 hero-unit">
 					<div class="thumbnail" style="min-height: 300px">		
-						<img alt="" src="${resource(plugin: 'kickstart', dir:'images', file:'thumb-acc-libro.jpeg')}">	
+						<%--<img alt="" src="${resource(plugin: 'kickstart', dir:'images', file:'thumb-acc-libro.jpeg')}">--%>	
 						<div class="caption">
 							<h3 class="icon icon-question-sign center">What</h3>
 							<h4>

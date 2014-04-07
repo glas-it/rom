@@ -43,9 +43,13 @@ class RestaurantController {
 
 	@Secured(['permitAll'])
 	def getMenu() {
+		try {
 		ConsumicionController c = new ConsumicionController()
 		c.getJSONList()
-		render Rubro.list() as JSON	
+		render Rubro.list() as JSON
+		} catch(Exception) {
+		render "[]"
+		}	
 	}
 	
     @Transactional
