@@ -12,6 +12,7 @@ class Consumible {
 	
 	String nombre, descripcion
 	float precio
+	boolean activo
 	
     static	mapping = {
     }

@@ -33,4 +33,12 @@
 					<span class="help-inline">${hasErrors(bean: agregadoInstance, field: 'subrubro', 'error')}</span>
 				</div>
 			</div>
+			
+			<div class="${hasErrors(bean: agregadoInstance, field: 'activo', 'error')} ">
+				<label for="activo" class="control-label"><g:message code="agregado.activo.label" default="Activo" /></label>
+				<div>
+					<bs:checkBox name="activo" value="${agregadoInstance?.activo}" checked="${agregadoInstance?.activo}" />
+					<span class="help-inline">${hasErrors(bean: agregadoInstance, field: 'activo', 'error')}</span>
+				</div>
+			</div>
 

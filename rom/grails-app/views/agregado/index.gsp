@@ -29,7 +29,7 @@
 		</thead>
 		<tbody>
 		<g:each in="${agregadoInstanceList}" status="i" var="agregadoInstance">
-			<tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+			<tr class="${agregadoInstance.activo == true ? 'even' : 'odd'}">
 			
 				<td><g:link action="show" id="${agregadoInstance.id}">${fieldValue(bean: agregadoInstance, field: "nombre")}</g:link></td>
 			

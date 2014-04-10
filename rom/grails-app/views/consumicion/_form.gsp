@@ -94,3 +94,11 @@
 				</div>
 			</div>
 
+			<div class="${hasErrors(bean: consumicionInstance, field: 'activo', 'error')} ">
+				<label for="activo" class="control-label"><g:message code="consumicion.activo.label" default="Activo" /></label>
+				<div>
+					<bs:checkBox name="activo" value="${consumicionInstance?.activo}" checked="${consumicionInstance?.activo}" />
+					<span class="help-inline">${hasErrors(bean: consumicionInstance, field: 'activo', 'error')}</span>
+				</div>
+			</div>
+

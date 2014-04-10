@@ -99,6 +99,13 @@
 				<td valign="top" class="value"><g:link controller="subrubro" action="show" id="${consumicionInstance?.subrubro?.id}">${consumicionInstance?.subrubro?.encodeAsHTML()}</g:link></td>
 				
 			</tr>
+			
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="consumicion.activo.label" default="Activo" /></td>
+				
+				<td valign="top" class="value">${consumicionInstance?.activo ? "Si" : "No"}</td>
+				
+			</tr>
 		
 		</tbody>
 	</table>
