@@ -34,7 +34,13 @@ class BootStrap {
 		def subrubroDos = new Subrubro(orden: 2, nombre: "Calientes", rubro: rubroUno)
 		lista.add(subrubroDos)
 		def subrubroTres = new Subrubro(orden: 1, nombre: "Con dulce", rubro: rubroDos)
-		lista.add(subrubroTres)
+		
+		int i = 3;
+		for (a in 'a'..'z') {
+			lista.add(new Subrubro(orden: i, nombre: a, rubro: rubroDos))
+			i++
+		}
+		
 		def consuUno = new Consumicion(nombre: "Ensalada", descripcion: "Descripcion", precio: 14.5,
 			subrubro: subrubroUno, activo: true)
 		lista.add(consuUno)

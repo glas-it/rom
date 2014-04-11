@@ -23,6 +23,8 @@
 			
 				<g:sortableColumn property="precio" title="${message(code: 'consumicion.precio.label', default: 'Precio')}" />
 			
+				<th><g:message code="subrubro.label" default="Sububro" /></th>
+				
 				<th><g:message code="subrubro.rubro.label" default="Rubro" /></th>
 				
 			</tr>
@@ -35,9 +37,11 @@
 
 				<td>${fieldValue(bean: consumicionInstance, field: "descripcion")}</td>
 			
-				<td>${fieldValue(bean: consumicionInstance, field: "precio")}</td>
+				<td>${consumicionInstance.getPrecioFormateado()}</td>
 				
 				<td>${fieldValue(bean: consumicionInstance, field: "subrubro")}</td>
+				
+				<td>${consumicionInstance.subrubro.rubro}</td>
 			
 			</tr>
 		</g:each>

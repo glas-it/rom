@@ -30,4 +30,10 @@ class Consumible {
 	public String toString() {
 		return "${nombre}";
 	}
+	
+	public String getPrecioFormateado() {
+		def formatter = java.text.NumberFormat.currencyInstance
+		return formatter.format(precio);
+		//return String.format('\$%1', precio)
+	}
 }

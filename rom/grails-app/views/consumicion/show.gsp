@@ -33,7 +33,7 @@
 			<tr class="prop">
 				<td valign="top" class="name"><g:message code="consumicion.precio.label" default="Precio" /></td>
 				
-				<td valign="top" class="value">${fieldValue(bean: consumicionInstance, field: "precio")}</td>
+				<td valign="top" class="value">${consumicionInstance.getPrecioFormateado()}</td>
 				
 			</tr>
 			

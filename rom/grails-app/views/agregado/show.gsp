@@ -26,7 +26,7 @@
 			<tr class="prop">
 				<td valign="top" class="name"><g:message code="agregado.precio.label" default="Precio" /></td>
 				
-				<td valign="top" class="value">${fieldValue(bean: agregadoInstance, field: "precio")}</td>
+				<td valign="top" class="value">${agregadoInstance.getPrecioFormateado()}</td>
 				
 			</tr>
 		
