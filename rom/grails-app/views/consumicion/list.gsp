@@ -23,21 +23,25 @@
 			
 				<g:sortableColumn property="precio" title="${message(code: 'consumicion.precio.label', default: 'Precio')}" />
 			
+				<th><g:message code="subrubro.label" default="Sububro" /></th>
+				
 				<th><g:message code="subrubro.rubro.label" default="Rubro" /></th>
 				
 			</tr>
 		</thead>
 		<tbody>
 		<g:each in="${consumicionInstanceList}" status="i" var="consumicionInstance">
-			<tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+			<tr class="${consumicionInstance.activo == true ? 'even' : 'odd'}">
 			
 				<td><g:link action="show" id="${consumicionInstance.id}">${fieldValue(bean: consumicionInstance, field: "nombre")}</g:link></td>
 
 				<td>${fieldValue(bean: consumicionInstance, field: "descripcion")}</td>
 			
-				<td>${fieldValue(bean: consumicionInstance, field: "precio")}</td>
+				<td>${consumicionInstance.getPrecioFormateado()}</td>
 				
 				<td>${fieldValue(bean: consumicionInstance, field: "subrubro")}</td>
+				
+				<td>${consumicionInstance.subrubro.rubro}</td>
 			
 			</tr>
 		</g:each>

@@ -16,12 +16,18 @@ class ConsumicionSpec extends Specification {
 
     def cleanup() {
     }
+	
+	void "Test getPrecioFormateado"() {
+		when: "Creo una consumicion con precio 15,4"
+			Consumicion c = new Consumicion(nombre: "Algo", descripcion: "Foo", precio: 15.4)
+		
+		then: "Veo el precio formateado"
+			c.getPrecioFormateado() == /.*$15,4.*/
+	}
 
     void "Test metodo de conversion de cadena"() {
 		when: "Creo una consumicion"
 			Consumicion c = new Consumicion();
-			c.descripUno = "Uno"
-			c.precioUno = 10.0
 			c.descripDos = "Dos"
 			c.precioDos = 20.0
 			c.descripTres = "Tres"

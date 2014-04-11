@@ -22,6 +22,10 @@
 				<g:sortableColumn property="orden" title="${message(code: 'subrubro.orden.label', default: 'Orden')}" />
 			
 				<th><g:message code="subrubro.rubro.label" default="Rubro" /></th>
+								
+				<th># Consumiciones</th>
+				
+				<th># Agregados</th>
 			
 			</tr>
 		</thead>
@@ -34,6 +38,10 @@
 				<td>${fieldValue(bean: subrubroInstance, field: "orden")}</td>
 			
 				<td>${fieldValue(bean: subrubroInstance, field: "rubro")}</td>
+							
+				<td>${subrubroInstance.consumiciones.size()}</td>
+				
+				<td>${subrubroInstance.agregados.size()}</td>
 			
 			</tr>
 		</g:each>

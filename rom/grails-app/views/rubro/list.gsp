@@ -21,6 +21,8 @@
 			
 				<g:sortableColumn property="orden" title="${message(code: 'rubro.orden.label', default: 'Orden')}" />
 			
+				<th># Subrubros</th>
+			
 			</tr>
 		</thead>
 		<tbody>
@@ -30,6 +32,8 @@
 				<td><g:link action="show" id="${rubroInstance.id}">${fieldValue(bean: rubroInstance, field: "nombre")}</g:link></td>
 			
 				<td>${fieldValue(bean: rubroInstance, field: "orden")}</td>
+				
+				<td>${rubroInstance.subrubros.size()}</td>
 			
 			</tr>
 		</g:each>

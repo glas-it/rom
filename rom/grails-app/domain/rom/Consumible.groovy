@@ -12,6 +12,7 @@ class Consumible {
 	
 	String nombre, descripcion
 	float precio
+	boolean activo
 	
     static	mapping = {
     }
@@ -28,5 +29,11 @@ class Consumible {
 	@Override	// Override toString for a nicer / more descriptive UI 
 	public String toString() {
 		return "${nombre}";
+	}
+	
+	public String getPrecioFormateado() {
+		def formatter = java.text.NumberFormat.currencyInstance
+		return formatter.format(precio);
+		//return String.format('\$%1', precio)
 	}
 }

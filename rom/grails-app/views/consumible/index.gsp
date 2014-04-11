@@ -21,6 +21,10 @@
 			
 				<g:sortableColumn property="descripcion" title="${message(code: 'consumible.descripcion.label', default: 'Descripcion')}" />
 			
+				<g:sortableColumn property="precio" title="${message(code: 'consumible.precio.label', default: 'Precio')}" />
+			
+				<g:sortableColumn property="activo" title="${message(code: 'consumible.activo.label', default: 'Activo')}" />
+			
 				<th><g:message code="consumible.subrubro.label" default="Subrubro" /></th>
 			
 			</tr>
@@ -32,6 +36,10 @@
 				<td><g:link action="show" id="${consumibleInstance.id}">${fieldValue(bean: consumibleInstance, field: "nombre")}</g:link></td>
 			
 				<td>${fieldValue(bean: consumibleInstance, field: "descripcion")}</td>
+			
+				<td>${fieldValue(bean: consumibleInstance, field: "precio")}</td>
+			
+				<td><g:formatBoolean boolean="${consumibleInstance.activo}" /></td>
 			
 				<td>${fieldValue(bean: consumibleInstance, field: "subrubro")}</td>
 			

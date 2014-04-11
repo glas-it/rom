@@ -33,7 +33,7 @@
 			<tr class="prop">
 				<td valign="top" class="name"><g:message code="consumicion.precio.label" default="Precio" /></td>
 				
-				<td valign="top" class="value">${fieldValue(bean: consumicionInstance, field: "precio")}</td>
+				<td valign="top" class="value">${consumicionInstance.getPrecioFormateado()}</td>
 				
 			</tr>
 			
@@ -97,6 +97,13 @@
 				<td valign="top" class="name"><g:message code="consumicion.subrubro.label" default="Subrubro" /></td>
 				
 				<td valign="top" class="value"><g:link controller="subrubro" action="show" id="${consumicionInstance?.subrubro?.id}">${consumicionInstance?.subrubro?.encodeAsHTML()}</g:link></td>
+				
+			</tr>
+			
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="consumicion.activo.label" default="Activo" /></td>
+				
+				<td valign="top" class="value">${consumicionInstance?.activo ? "Si" : "No"}</td>
 				
 			</tr>
 		

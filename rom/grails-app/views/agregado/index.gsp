@@ -23,21 +23,25 @@
 			
 				<g:sortableColumn property="descripcion" title="${message(code: 'agregado.descripcion.label', default: 'Descripcion')}" />
 			
-				<th><g:message code="agregado.subrubro.label" default="Subrubro" /></th>
+				<th><g:message code="subrubro.label" default="Sububro" /></th>
+				
+				<th><g:message code="subrubro.rubro.label" default="Rubro" /></th>
 			
 			</tr>
 		</thead>
 		<tbody>
 		<g:each in="${agregadoInstanceList}" status="i" var="agregadoInstance">
-			<tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+			<tr class="${agregadoInstance.activo == true ? 'even' : 'odd'}">
 			
 				<td><g:link action="show" id="${agregadoInstance.id}">${fieldValue(bean: agregadoInstance, field: "nombre")}</g:link></td>
 			
-				<td>${fieldValue(bean: agregadoInstance, field: "precio")}</td>
+				<td>${agregadoInstance.getPrecioFormateado()}</td>
 			
 				<td>${fieldValue(bean: agregadoInstance, field: "descripcion")}</td>
 			
 				<td>${fieldValue(bean: agregadoInstance, field: "subrubro")}</td>
+				
+				<td>${agregadoInstance.subrubro.rubro}</td>
 			
 			</tr>
 		</g:each>
