@@ -20,6 +20,10 @@ class BootStrap {
 		mozo.accountLocked = false
 		mozo.passwordExpired = false
 		mozo.enabled = true
+		mozo.nombre = "mozotest"
+		mozo.apellido = "mozotest"
+		mozo.numeroLegajo = 123456
+		mozo.activo = true;
 		mozo.save()
 		UsuarioRol.create(usuarioAdmin, rolAdmin)
 		UsuarioRol.create(mozo, rolMozo)

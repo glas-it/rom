@@ -12,12 +12,6 @@
 
 	<section id="create-mozo" class="first">
 
-		<g:hasErrors bean="${mozoInstance}" field="username">
-		<div class="alert alert-danger">
-			<g:renderErrors bean="${mozoInstance}" field="username" as="list" />
-		</div>
-		</g:hasErrors>
-
 		<g:form action="save" class="form-horizontal" role="form" >
 			<g:render template="form"/>
 

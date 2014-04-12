@@ -13,12 +13,32 @@
 
 <section id="show-mozo" class="first">
 
-	<table class="table">
+	<table class="table table-striped table-bordered table-responsive">
 		<tbody>
 			<tr class="prop">
-				<td valign="top" class="name"><g:message code="mozo.username.label" default="Username" /></td>
+				<td valign="top" class="name"><g:message code="mozo.numeroLegajo.label" default="N° Legajo" /></td>
 				
-				<td valign="top" class="value">${fieldValue(bean: mozoInstance, field: "username")}</td>
+				<td valign="top" class="value">${fieldValue(bean: mozoInstance, field: "numeroLegajo")}</td>
+				
+			</tr>
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="mozo.nombre.label" default="Nombre" /></td>
+				
+				<td valign="top" class="value">${fieldValue(bean: mozoInstance, field: "nombre")}</td>
+				
+			</tr>
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="mozo.apellido.label" default="Apellido" /></td>
+				
+				<td valign="top" class="value">${fieldValue(bean: mozoInstance, field: "apellido")}</td>
+				
+			</tr>
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="mozo.activo.label" default="Activo" /></td>
+				
+				<td valign="top" class="value">
+					<g:checkBox name="activo" value="${fieldValue(bean: mozoInstance, field: "activo")}" disabled="true"/>
+				</td>
 				
 			</tr>
 		</tbody>

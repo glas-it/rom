@@ -18,8 +18,9 @@ class AutenticacionController {
 		try {
 		def username = params.username
 		def restaurant = Restaurant.get(params.idRestaurant)
+		def mozo = Mozo.findByUsernameAndRestaurant(username, restaurant)
 		render "{\"success\": " +
-			(Mozo.findByUsernameAndRestaurant(username, restaurant) ? "true" : "false") + "}"
+			( mozo != null && mozo.activo? "true" : "false") + "}"
 		} catch(Exception) {
 		render "{\"success\": true}"		
 		}

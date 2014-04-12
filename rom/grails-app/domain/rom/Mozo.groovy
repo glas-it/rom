@@ -25,10 +25,20 @@ class Mozo extends Usuario {
 	
 	Restaurant restaurant
 	
+	String nombre
+	String apellido
+	Long numeroLegajo
+	boolean activo
+	
     static	mapping = {
     }
     
 	static	constraints = {
+		nombre blank: false, maxSize: 50
+		apellido blank: false, maxSize: 50
+		numeroLegajo validate: { val, obj -> 
+			return Mozo.findByNumeroLegajoAndRestaurant(val, (obj as Mozo).restaurant)
+		}
 		restaurant visible: false
 		username validate: {val, obj ->
 			return Mozo.findByUsernameAndRestaurant(val, (obj as Mozo).restaurant)

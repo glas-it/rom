@@ -31,6 +31,10 @@ class MozoSpec extends Specification {
 			mozo.accountLocked = false
 			mozo.enabled = true
 			mozo.passwordExpired = false
+			mozo.apellido = "mozotest"
+			mozo.nombre = "mozotest"
+			mozo.activo = true
+			mozo.numeroLegajo = 1234
 		when: "the validations are triggered"
 			mozo.validate()
 		then: "there should be no errors"

@@ -13,7 +13,7 @@
 
 <section id="show-rubro" class="first">
 
-	<table class="table">
+	<table class="table table-striped table-bordered table-responsive">
 		<tbody>
 		
 			<tr class="prop">
