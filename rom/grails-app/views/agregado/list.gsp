@@ -11,6 +11,15 @@
 
 <body>
 
+	<script type="text/javascript">
+		$(document).ready(function() {
+			if ($('.prev.disabled') !== undefined)
+				$('.prev.disabled').hide()
+			if ($('.next.disabled') !== undefined)
+				$('.next.disabled').hide()
+		})
+	</script>
+
 <section id="list-agregado" class="first">
 	<table class="table table-bordered margin-top-medium">
 		<thead>

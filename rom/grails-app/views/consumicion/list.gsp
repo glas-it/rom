@@ -13,6 +13,14 @@
 
 <section id="list-consumicion" class="first">
 
+	<script type="text/javascript">
+		$(document).ready(function() {
+			if ($('.prev.disabled') !== undefined)
+				$('.prev.disabled').hide()
+			if ($('.next.disabled') !== undefined)
+				$('.next.disabled').hide()
+		})
+	</script>
 	<table class="table table-bordered margin-top-medium">
 		<thead>
 			<tr>
