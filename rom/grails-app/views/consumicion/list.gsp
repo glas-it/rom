@@ -31,7 +31,7 @@
 		</thead>
 		<tbody>
 		<g:each in="${consumicionInstanceList}" status="i" var="consumicionInstance">
-			<tr class="${consumicionInstance.activo == true ? 'even' : 'odd'}">
+			<tr class= "${consumicionInstance.activo == true ? 'even' : 'odd'}">
 			
 				<td><g:link action="show" id="${consumicionInstance.id}">${fieldValue(bean: consumicionInstance, field: "nombre")}</g:link></td>
 

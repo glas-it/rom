@@ -13,7 +13,7 @@
 
 <section id="list-subrubro" class="first">
 
-	<table class="table table-bordered margin-top-medium">
+	<table class="table table-striped table-bordered margin-top-medium">
 		<thead>
 			<tr>
 			
@@ -31,7 +31,7 @@
 		</thead>
 		<tbody>
 		<g:each in="${subrubroInstanceList}" status="i" var="subrubroInstance">
-			<tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+			<tr>
 			
 				<td><g:link action="show" id="${subrubroInstance.id}">${fieldValue(bean: subrubroInstance, field: "nombre")}</g:link></td>
 			

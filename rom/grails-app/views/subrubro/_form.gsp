@@ -1,23 +1,21 @@
 <%@ page import="rom.Subrubro" %>
 
-
-
-			<div class="${hasErrors(bean: subrubroInstance, field: 'nombre', 'error')} required">
-				<label for="nombre" class="control-label"><g:message code="subrubro.nombre.label" default="Nombre" /><span class="required-indicator">*</span></label>
-				<div>
-					<g:textField class="form-control nombre" name="nombre" maxlength="100" required="" value="${subrubroInstance?.nombre}"/>
-					<span class="help-inline">${hasErrors(bean: subrubroInstance, field: 'nombre', 'error')}</span>
-				</div>
-			</div>
-
-			<div class="${hasErrors(bean: subrubroInstance, field: 'orden', 'error')} required">
-				<label for="orden" class="control-label"><g:message code="subrubro.orden.label" default="Orden" /><span class="required-indicator">*</span></label>
-				<div>
-					<g:field class="form-control precio" name="orden" type="number" value="${subrubroInstance.orden}" required=""/>
-					<span class="help-inline">${hasErrors(bean: subrubroInstance, field: 'orden', 'error')}</span>
-				</div>
-			</div>
-
+<div class = "row">
+	<div class="col-md-2">
+		<label for="nombre" class="control-label"><g:message code="subrubro.nombre.label" default="Nombre" /><span class="required-indicator">*</span></label>	
+	</div>
+	<div class="col-md-4 ${hasErrors(bean: subrubroInstance, field: 'nombre', 'error')} required">
+		<g:textField class="form-control nombre" name="nombre" maxlength="100" required="" value="${subrubroInstance?.nombre}"/>
+		<span class="help-inline">${hasErrors(bean: subrubroInstance, field: 'nombre', 'error')}</span>
+	</div>
+	<div class="col-md-2">
+		<label for="orden" class="control-label"><g:message code="subrubro.orden.label" default="Orden" /><span class="required-indicator">*</span></label>
+	</div>
+	<div class="col-md-4 ${hasErrors(bean: subrubroInstance, field: 'orden', 'error')} required">
+		<g:field class="form-control precio" name="orden" type="number" value="${subrubroInstance.orden}" required=""/>
+		<span class="help-inline">${hasErrors(bean: subrubroInstance, field: 'orden', 'error')}</span>
+	</div>
+</div>
 
 
 <%--
@@ -55,12 +53,15 @@
 				</div>
 			</div>
   --%>
-
-
-			<div class="${hasErrors(bean: subrubroInstance, field: 'rubro', 'error')} required">
-				<label for="rubro" class="control-label"><g:message code="subrubro.rubro.label" default="Rubro" /><span class="required-indicator">*</span></label>
-				<div>
-					<g:select class="form-control" id="rubro" name="rubro.id" from="${rom.Rubro.list()}" optionKey="id" required="" value="${subrubroInstance?.rubro?.id}" class="many-to-one"/>
-					<span class="help-inline">${hasErrors(bean: subrubroInstance, field: 'rubro', 'error')}</span>
-				</div>
-			</div>
+</br>
+<div class = "row">
+	<div class = "col-md-2">
+		<label for="rubro" class="control-label"><g:message code="subrubro.rubro.label" default="Rubro" /><span class="required-indicator">*</span></label>	
+	</div>
+	<div class="col-md-4 ${hasErrors(bean: subrubroInstance, field: 'rubro', 'error')} required">
+		<g:select class="form-control" id="rubro" name="rubro.id" from="${rom.Rubro.list()}" optionKey="id" required="" value="${subrubroInstance?.rubro?.id}" class="many-to-one"/>
+		<span class="help-inline">${hasErrors(bean: subrubroInstance, field: 'rubro', 'error')}</span>
+	</div>
+	<div class = "col-md-2"></div>
+	<div class = "col-md-4"></div>
+</div>

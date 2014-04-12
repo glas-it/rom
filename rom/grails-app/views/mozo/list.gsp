@@ -13,7 +13,7 @@
 
 <section id="list-mozo" class="first">
 
-	<table class="table table-bordered margin-top-medium">
+	<table class="table table-striped table-bordered margin-top-medium">
 		<thead>
 			<tr>
 				<g:sortableColumn property="numeroLegajo" title="${message(code: 'mozo.numeroLegajo.label', default: 'N° legajo')}" />
@@ -24,7 +24,7 @@
 		</thead>
 		<tbody>
 		<g:each in="${mozoInstanceList}" status="i" var="mozoInstance">
-			<tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+			<tr>
 				<td><g:link action="show" id="${mozoInstance.id}"> ${fieldValue(bean: mozoInstance, field: "numeroLegajo")} </g:link></td>
 				<td> ${fieldValue(bean: mozoInstance, field: "nombre")}</td>
 				<td>${fieldValue(bean: mozoInstance, field: "apellido")}</td>
