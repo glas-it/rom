@@ -35,7 +35,9 @@
 				<label for="rubro" class="control-label">Rubro</label>
 			</div>
 			<div class="col-md-4">
-				<g:select class="form-control" id="rubro" name="rubro.id" from="${rom.Rubro.list()}" optionKey="id" class="many-to-one"/>
+				<g:select class="form-control" id="rubro" name="rubro.id"
+				 from="${rom.Rubro.list()}" optionKey="id" class="many-to-one"
+				 noSelection="['':'Seleccione un rubro']"/>
 			</div>
 		</div>
 		<div class="row form-group" >
@@ -43,7 +45,9 @@
 				<label for="subrubro" class="control-label">Subrubro</label>
 			</div>
 			<div class="col-md-4">
-				<g:select class="form-control" id="subrubro" name="subrubro.id" from="${rom.Subrubro.list()}" optionKey="id" class="many-to-one"/>
+				<g:select class="form-control" id="subrubro" name="subrubro.id"
+				 from="${rom.Subrubro.list()}" optionKey="id" class="many-to-one"
+				 noSelection="['':'Seleccione un subrubro']"/>
 			</div>
 			<div class="col-md-2"></div>
 			<div class="col-md-4"></div>

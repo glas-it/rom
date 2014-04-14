@@ -6,6 +6,8 @@ import static org.springframework.http.HttpStatus.*
 import org.apache.jasper.compiler.Node.ParamsAction;
 
 import grails.transaction.Transactional
+import grails.converters.JSON;
+import grails.converters.XML;
 import grails.plugin.springsecurity.annotation.Secured;
 
 /**
@@ -49,27 +51,19 @@ class ConsumicionController {
 	def filter(ConsumicionFilter filter) {
 		if (!params.max)
 			params.max = 10
-		def parameters = []
-		def query = "from Consumicion where 1=1 "
-		if (params.nombre && !params.nombre.isAllWhitespace()) {
-			query += "and nombre = :nombre "
-			parameters.add(nombre: params.nombre)
+		
+		List consumiciones = Consumicion.list()
+		if (filter.nombre && !filter.nombre.isAllWhitespace()) {
+			consumiciones = consumiciones.findAll { it.nombre.contains(filter.nombre) }
 		}
-//		if (filter.subrubro != null) {
-//			parameters.add(idsubrubro: params.subrubro.id)
-//			query += "and subrubro.id = :idsubrubro"
-//		}
-//		if (filter.rubro != null) {
-//			parameters.add(idrubro: params.rubro.id)
-//			query += "and subrubro.rubro.id = :idrubro"
-//		}
-		List consumiciones = Consumicion.findAll(query, parameters)
+		if (filter.subrubro) {
+			consumiciones = consumiciones.findAll { it.subrubro.id == filter.subrubro.id }
+		}
+		if (filter.rubro) {
+			consumiciones = consumiciones.findAll { it.subrubro.rubro.id == filter.rubro.id }
+		}
 		//List consumiciones = consumisionService.filter(params)
-		render(view:'list',
-				ConsumicionInstanceList: consumiciones,
-				model:[ConsumicionInstanceCount: consumiciones? consumiciones.size() : 0,
-				params:params]
-			)
+		respond view:'list', consumiciones
 	}
 	
     @Transactional
@@ -154,6 +148,6 @@ class ConsumicionController {
 
 class ConsumicionFilter {
 	String nombre
-	int subrubro
-	int rubro
+	Subrubro subrubro
+	Rubro rubro
 }
