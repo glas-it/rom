@@ -17,6 +17,7 @@ class Subrubro {
 	int orden
 	
     static	mapping = {
+		sort "orden"
     }
     
 	static	constraints = {
@@ -29,6 +30,12 @@ class Subrubro {
 		consumiciones nullable: true, blank: true
 		agregados nullable: true, blank: true
     }
+	
+	def cambiarOrden(Subrubro subrubro) {
+		int aux = subrubro.orden
+		subrubro.orden = this.orden
+		this.orden = aux
+	}
 	
 	@Override
 	public String toString() {

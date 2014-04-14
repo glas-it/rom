@@ -26,9 +26,9 @@
 		<thead>
 			<tr>
 			
-				<g:sortableColumn property="nombre" title="${message(code: 'subrubro.nombre.label', default: 'Nombre')}" />
+				<th> "${message(code: 'subrubro.nombre.label', default: 'Nombre')}" </th>
 			
-				<g:sortableColumn property="orden" title="${message(code: 'subrubro.orden.label', default: 'Orden')}" />
+				<th> <g:message code="subrubro.orden.label"  default="Orden"/> </th>
 			
 				<th><g:message code="subrubro.rubro.label" default="Rubro" /></th>
 				
@@ -36,6 +36,7 @@
 				
 				<th># Agregados</th>
 			
+				<th> Acciones </th>
 			</tr>
 		</thead>
 		<tbody>
@@ -51,6 +52,14 @@
 				<td>${subrubroInstance.consumiciones.size()}</td>
 				
 				<td>${subrubroInstance.agregados.size()}</td>
+				<td>
+					<g:if test="${i != 0}">
+						<g:link class="glyphicon glyphicon-arrow-up" action="subirOrden" id="${subrubroInstance.id}"></g:link>
+					</g:if>
+					<g:if test="${i < subrubroInstanceList.size() - 1}">
+						<g:link class="glyphicon glyphicon-arrow-down" action="bajarOrden" id="${subrubroInstance.id}"></g:link>
+					</g:if>
+				</td>
 			
 			</tr>
 		</g:each>

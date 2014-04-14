@@ -26,9 +26,9 @@
 		<thead>
 			<tr>
 
-				<g:sortableColumn property="nombre" title="${message(code: 'rubro.nombre.label', default: 'Nombre')}" />
+				<th>"${message(code: 'rubro.nombre.label', default: 'Nombre')}"</th>
 			
-				<g:sortableColumn property="orden" title="${message(code: 'rubro.orden.label', default: 'Orden')}" />
+				<th>"${message(code: 'rubro.orden.label', default: 'Orden')}" </th>
 			
 				<th># Subrubros</th>
 			
@@ -43,7 +43,14 @@
 				<td>${fieldValue(bean: rubroInstance, field: "orden")}</td>
 				
 				<td>${rubroInstance.subrubros.size()}</td>
-			
+				<td>
+					<g:if test="${i != 0}">
+						<g:link action="subirOrden" id="${rubroInstance.id}">subir</g:link>
+					</g:if>
+					<g:if test="${i < rubroInstanceList.size() - 1}">
+						<g:link action="bajarOrden" id="${rubroInstance.id}">bajar</g:link>
+					</g:if>
+				</td>
 			</tr>
 		</g:each>
 		</tbody>

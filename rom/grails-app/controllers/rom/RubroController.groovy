@@ -19,8 +19,9 @@ class RubroController {
 	//def springSecurityService
 	
 	def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Rubro.list(params), model:[rubroInstanceCount: Rubro.count()]
+        //params.max = Math.min(max ?: 10, 100)
+        //respond Rubro.list(params), model:[rubroInstanceCount: Rubro.count()]
+		redirect action: "list"
     }
 
 	def list(Integer max) {
@@ -28,6 +29,35 @@ class RubroController {
         respond Rubro.list(params), model:[rubroInstanceCount: Rubro.count()]
     }
 
+	@Transactional
+	def subirOrden() {
+		Rubro rubroInstance = Rubro.get(params.id)
+		if (rubroInstance) {
+			Rubro rubro = Rubro.findByOrden(rubroInstance.orden - 1)
+			if (rubro) {
+				rubroInstance.cambiarOrden(rubro)
+				rubro.save()
+				rubroInstance.save()
+			}
+		}
+		redirect action: "list"
+	}
+		
+	@Transactional
+	def bajarOrden() {
+		Rubro rubroInstance = Rubro.get(params.id)
+		if (rubroInstance) {
+			Rubro rubro = Rubro.findByOrden(rubroInstance.orden + 1)
+			if (rubro) {
+				
+				rubroInstance.cambiarOrden(rubro)
+				rubro.save()
+				rubroInstance.save()
+			}
+		}
+		redirect action: "list"
+	}
+	
     def show(Rubro rubroInstance) {
         respond rubroInstance
     }

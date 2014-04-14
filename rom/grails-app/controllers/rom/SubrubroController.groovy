@@ -17,8 +17,9 @@ class SubrubroController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
 	def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Subrubro.list(params), model:[subrubroInstanceCount: Subrubro.count()]
+        //params.max = Math.min(max ?: 10, 100)
+        //respond Subrubro.list(params), model:[subrubroInstanceCount: Subrubro.count()]
+		redirect action: "list"
     }
 
 	def list(Integer max) {
@@ -30,6 +31,34 @@ class SubrubroController {
         respond subrubroInstance
     }
 
+	@Transactional
+	def subirOrden() {
+		Subrubro subrubroInstance = Subrubro.get(params.id)
+		if (subrubroInstance) {
+			Subrubro subrubro = Subrubro.findByOrden(subrubroInstance.orden - 1)
+			if (subrubro) {
+				subrubroInstance.cambiarOrden(subrubro)
+				subrubro.save()
+				subrubroInstance.save()
+			}
+		}
+		redirect action: "list"
+	}
+		
+	@Transactional
+	def bajarOrden() {
+		Subrubro subrubroInstance = Subrubro.get(params.id)
+		if (subrubroInstance) {
+			Subrubro subrubro = Subrubro.findByOrden(subrubroInstance.orden + 1)
+			if (subrubro) {
+				subrubroInstance.cambiarOrden(subrubro)
+				subrubro.save()
+				subrubroInstance.save()
+			}
+		}
+		redirect action: "list"
+	}
+	
     def create() {
         respond new Subrubro(params)
     }
