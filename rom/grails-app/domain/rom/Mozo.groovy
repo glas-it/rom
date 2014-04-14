@@ -36,14 +36,10 @@ class Mozo extends Usuario {
 	static	constraints = {
 		nombre blank: false, maxSize: 50
 		apellido blank: false, maxSize: 50
-		numeroLegajo validate: { val, obj -> 
-			return Mozo.findByNumeroLegajoAndRestaurant(val, (obj as Mozo).restaurant)
-		}
+		numeroLegajo unique: 'restaurant'
 		restaurant visible: false
-		username validate: {val, obj ->
-			return Mozo.findByUsernameAndRestaurant(val, (obj as Mozo).restaurant)
+		username unique: 'restaurant'
 		}
-    }
 
 	
 	/*

@@ -36,9 +36,7 @@
 			<tr class="prop">
 				<td valign="top" class="name"><g:message code="mozo.activo.label" default="Activo" /></td>
 				
-				<td valign="top" class="value">
-					<g:checkBox name="activo" value="${fieldValue(bean: mozoInstance, field: "activo")}" disabled="true"/>
-				</td>
+				<td><g:checkBox name="activo${mozoInstance.id}" value="${mozoInstance.activo}" disabled="true"/></td>
 				
 			</tr>
 		</tbody>

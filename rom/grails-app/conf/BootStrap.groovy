@@ -29,44 +29,43 @@ class BootStrap {
 		UsuarioRol.create(mozo, rolMozo)
 		
 		def lista = [];
-		def rubroUno = new Rubro(orden: 1, nombre: "Entradas")
+		def rubroUno = new Rubro(orden: 1, nombre: "Entradas").save()
 		lista.add(rubroUno)
-		def rubroDos = new Rubro(orden: 2, nombre: "Postres")
+		def rubroDos = new Rubro(orden: 2, nombre: "Postres").save()
 		lista.add(rubroDos)
-		def subrubroUno = new Subrubro(orden: 1, nombre: "Frias", rubro: rubroUno)
+		def subrubroUno = new Subrubro(orden: 1, nombre: "Frias", rubro: rubroUno).save()
 		lista.add(subrubroUno)
-		def subrubroDos = new Subrubro(orden: 2, nombre: "Calientes", rubro: rubroUno)
+		def subrubroDos = new Subrubro(orden: 2, nombre: "Calientes", rubro: rubroUno).save()
 		lista.add(subrubroDos)
-		def subrubroTres = new Subrubro(orden: 1, nombre: "Con dulce", rubro: rubroDos)
+		def subrubroTres = new Subrubro(orden: 1, nombre: "Con dulce", rubro: rubroDos).save()
 		
 		int i = 3;
 		for (a in 'a'..'z') {
-			lista.add(new Subrubro(orden: i, nombre: a, rubro: rubroDos))
+			lista.add(new Subrubro(orden: i, nombre: a, rubro: rubroDos).save())
 			i++
 		}
 		
 		def consuUno = new Consumicion(nombre: "Ensalada", descripcion: "Descripcion", precio: 14.5,
-			subrubro: subrubroUno, activo: true)
+			subrubro: subrubroUno, activo: true).save()
 		lista.add(consuUno)
 		def consuUnoD = new Consumicion(nombre: "Ensalada tomate", descripcion: "Descripcion", precio: 14.5,
-			subrubro: subrubroUno, activo: true)
+			subrubro: subrubroUno, activo: true).save()
 		lista.add(consuUnoD)
 		def consudos = new Consumicion(nombre: "Ensalada lechuga", descripcion: "Descripcion", precio: 14.5,
-			subrubro: subrubroUno, activo: false)
+			subrubro: subrubroUno, activo: false).save()
 		lista.add(consudos)
 		def consufaa = new Consumicion(nombre: "Ensalada huevo", descripcion: "Descripcion", precio: 14.5,
-			subrubro: subrubroUno, activo: true)
+			subrubro: subrubroUno, activo: true).save()
 		lista.add(consufaa)
 		def consuDos = new Consumicion(nombre: "Empanadas Carne", descripcion: "Descripcion", precio: 14.5,
-			subrubro: subrubroDos, activo: true)
+			subrubro: subrubroDos, activo: true).save()
 		lista.add(consuDos)
 		def consuTres = new Consumicion(nombre: "Empanadas Verdura", descripcion: "Descripcion", precio: 14.5,
-			subrubro: subrubroUno, activo: true)
+			subrubro: subrubroUno, activo: true).save()
 		lista.add(consuTres)
 		def consuTresa = new Consumicion(nombre: "Flan", descripcion: "Descripcion", precio: 14.5,
-			subrubro: subrubroDos, activo: true)
+			subrubro: subrubroDos, activo: true).save()
 		lista.add(consuTresa)
-		lista*.save();
     }
     def destroy = {
     }

@@ -29,7 +29,7 @@
 	<div class="col-md-4 ${hasErrors(bean: mozoInstance, field: 'numeroLegajo', 'error')} required">
 		<div>
 			<g:textField class="form-control" name="numeroLegajo" required="" value="${mozoInstance?.numeroLegajo}"/>
-			<span class="help-inline alert-danger">${hasErrors(bean: mozoInstance, field: 'numeroLegajo', 'El campo debe ser un número')}</span>
+			<span class="help-inline alert-danger">${hasErrors(bean: mozoInstance, field: 'numeroLegajo', 'El campo debe ser un número único')}</span>
 		</div>
 	</div>
 	<div class="col-md-2">
@@ -37,7 +37,7 @@
 	</div>
 	<div class="col-md-4">
 		<div>
-			<bs:checkBox class="form-control" name="activo" value="${mozoInstance?.activo}" />
+			<g:checkBox class="form-control" name="activo" value="${mozoInstance?.activo}" />
 			<span class="help-inline alert-danger">${hasErrors(bean: mozoInstance, field: 'activo', '')}</span>
 		</div>
 	</div>
@@ -50,7 +50,7 @@
 	<div class="col-md-4 ${hasErrors(bean: mozoInstance, field: 'username', 'error')} required">
 		<div>
 			<g:textField class="form-control" name="username" required="" value="${mozoInstance?.username}"/>
-			<span class="help-inline alert-danger">${hasErrors(bean: mozoInstance, field: 'username', 'El campo no puede ser vacio')}</span>
+			<span class="help-inline alert-danger">${hasErrors(bean: mozoInstance, field: 'username', 'El campo debe contener un nombre de usuario único')}</span>
 		</div>
 	</div>
 	<div class="col-md-2"></div>

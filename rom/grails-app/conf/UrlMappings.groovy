@@ -41,6 +41,9 @@ class UrlMappings {
 			action = [GET: "index"]
 		}
 		
+		"/consumision/filter"(controller: "consumicion", action: "filter") {
+		}
+		
 		"/$controller/$action?/$id?"{
 			constraints {
 				controller(matches:/^((?!(api|mobile|web)).*)$/)

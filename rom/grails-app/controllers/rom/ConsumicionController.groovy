@@ -2,6 +2,9 @@ package rom
 
 
 import static org.springframework.http.HttpStatus.*
+
+import org.apache.jasper.compiler.Node.ParamsAction;
+
 import grails.transaction.Transactional
 import grails.plugin.springsecurity.annotation.Secured;
 
@@ -10,18 +13,20 @@ import grails.plugin.springsecurity.annotation.Secured;
  * A controller class handles incoming web requests and performs actions such as redirects, rendering views and so on.
  */
 @Transactional(readOnly = true)
-@Secured('permitAll')
+@Secured("hasRole('DUENIO')")
 class ConsumicionController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", filter:"GET"]
+	
 	def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Consumicion.list(params), model:[consumicionInstanceCount: Consumicion.count()]
+        //params.max = Math.min(max ?: 10, 100)
+        //respond Consumicion.list(params), model:[consumicionInstanceCount: Consumicion.count()]
+		redirect action: "list"
     }
 
 	def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
+		
         respond Consumicion.list(params), model:[consumicionInstanceCount: Consumicion.count()]
     }
 
@@ -41,6 +46,32 @@ class ConsumicionController {
 		return lista;
 	}
 
+	def filter(ConsumicionFilter filter) {
+		if (!params.max)
+			params.max = 10
+		def parameters = []
+		def query = "from Consumicion where 1=1 "
+		if (params.nombre && !params.nombre.isAllWhitespace()) {
+			query += "and nombre = :nombre "
+			parameters.add(nombre: params.nombre)
+		}
+//		if (filter.subrubro != null) {
+//			parameters.add(idsubrubro: params.subrubro.id)
+//			query += "and subrubro.id = :idsubrubro"
+//		}
+//		if (filter.rubro != null) {
+//			parameters.add(idrubro: params.rubro.id)
+//			query += "and subrubro.rubro.id = :idrubro"
+//		}
+		List consumiciones = Consumicion.findAll(query, parameters)
+		//List consumiciones = consumisionService.filter(params)
+		render(view:'list',
+				ConsumicionInstanceList: consumiciones,
+				model:[ConsumicionInstanceCount: consumiciones? consumiciones.size() : 0,
+				params:params]
+			)
+	}
+	
     @Transactional
     def save(Consumicion consumicionInstance) {
         if (consumicionInstance == null) {
@@ -119,4 +150,10 @@ class ConsumicionController {
             '*'{ render status: NOT_FOUND }
         }
     }
+}
+
+class ConsumicionFilter {
+	String nombre
+	int subrubro
+	int rubro
 }

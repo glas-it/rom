@@ -54,10 +54,10 @@
 				<td>${subrubroInstance.agregados.size()}</td>
 				<td>
 					<g:if test="${i != 0}">
-						<g:link class="glyphicon glyphicon-arrow-up" action="subirOrden" id="${subrubroInstance.id}"></g:link>
+						<g:link action="subirOrden" id="${subrubroInstance.id}">subir</g:link>
 					</g:if>
 					<g:if test="${i < subrubroInstanceList.size() - 1}">
-						<g:link class="glyphicon glyphicon-arrow-down" action="bajarOrden" id="${subrubroInstance.id}"></g:link>
+						<g:link action="bajarOrden" id="${subrubroInstance.id}">bajar</g:link>
 					</g:if>
 				</td>
 			

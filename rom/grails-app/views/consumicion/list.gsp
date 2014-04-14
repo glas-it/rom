@@ -21,10 +21,41 @@
 				$('.next.disabled').hide()
 		})
 	</script>
+	
+	<g:form action="filter" method="GET" class="form-horizontal" role="form" >
+		
+		<div class="row form-group" >
+			<div class="col-md-2">
+				<label for="rubro" class="control-label">Nombre</label>
+			</div>
+			<div class="col-md-4">
+				<g:textField class="form-control" name="nombre" maxlength="100" />
+			</div>
+			<div class="col-md-2">
+				<label for="rubro" class="control-label">Rubro</label>
+			</div>
+			<div class="col-md-4">
+				<g:select class="form-control" id="rubro" name="rubro.id" from="${rom.Rubro.list()}" optionKey="id" class="many-to-one"/>
+			</div>
+		</div>
+		<div class="row form-group" >
+			<div class="col-md-2" >
+				<label for="subrubro" class="control-label">Subrubro</label>
+			</div>
+			<div class="col-md-4">
+				<g:select class="form-control" id="subrubro" name="subrubro.id" from="${rom.Subrubro.list()}" optionKey="id" class="many-to-one"/>
+			</div>
+			<div class="col-md-2"></div>
+			<div class="col-md-4"></div>
+		</div>
+		<div class="form-actions margin-top-medium">
+			<g:submitButton name="buscar" class="btn btn-primary" value="${message(code: 'default.button.buscar.label', default: 'Buscar')}"/>
+		</div>			
+	</g:form>
+	
 	<table class="table table-bordered margin-top-medium">
 		<thead>
 			<tr>
-			
 				<g:sortableColumn property="nombre" title="${message(code: 'consumicion.nombre.label', default: 'Nombre')}" />
 			
 				<g:sortableColumn property="descripcion" title="${message(code: 'consumicion.descripcion.label', default: 'Descripción')}" />
@@ -56,8 +87,8 @@
 		</tbody>
 	</table>
 	<div>
-		<bs:paginate total="${consumicionInstanceCount}" />
-	</div>
+		<%--<bs:paginate total="${consumicionInstanceCount}" />
+	--%></div>
 </section>
 
 </body>
