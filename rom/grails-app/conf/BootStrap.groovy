@@ -54,6 +54,12 @@ class BootStrap {
 			subrubro: subrubroUno, activo: true).save()
 		def consuTresa = new Consumicion(nombre: "Flan", descripcion: "Descripcion", precio: 14.5,
 			subrubro: subrubroDos, activo: true).save()
+		new Consumicion(nombre: "afafa", descripcion: "Descripcion", precio: 14.5,
+			subrubro: subrubroDos, activo: true).save()
+		for (k in 1..40) {
+			new Consumicion(nombre: "Flan" + k.toString(), descripcion: "Descripcion", precio: 14.5,
+				subrubro: subrubroDos, activo: true).save()
+		}
     }
     def destroy = {
     }

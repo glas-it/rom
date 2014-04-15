@@ -91,8 +91,8 @@
 		</tbody>
 	</table>
 	<div>
-		<%--<bs:paginate total="${consumicionInstanceCount}" />
-	--%></div>
+		<bs:paginate total="${consumicionInstanceCount}"/>
+	</div>
 </section>
 
 </body>

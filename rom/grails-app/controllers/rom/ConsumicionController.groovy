@@ -20,6 +20,8 @@ class ConsumicionController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", filter:"GET"]
 	
+	def consumicionService
+	
 	def index(Integer max) {
         //params.max = Math.min(max ?: 10, 100)
         //respond Consumicion.list(params), model:[consumicionInstanceCount: Consumicion.count()]
@@ -48,22 +50,11 @@ class ConsumicionController {
 		return lista;
 	}
 
-	def filter(ConsumicionFilter filter) {
-		if (!params.max)
-			params.max = 10
-		
-		List consumiciones = Consumicion.list()
-		if (filter.nombre && !filter.nombre.isAllWhitespace()) {
-			consumiciones = consumiciones.findAll { it.nombre.contains(filter.nombre) }
-		}
-		if (filter.subrubro) {
-			consumiciones = consumiciones.findAll { it.subrubro.id == filter.subrubro.id }
-		}
-		if (filter.rubro) {
-			consumiciones = consumiciones.findAll { it.subrubro.rubro.id == filter.rubro.id }
-		}
-		//List consumiciones = consumisionService.filter(params)
-		respond view:'list', consumiciones
+	def filter(ConsumicionFilter filter, Integer max) {
+		Integer offset = params.offset? params.int("offset"): 0
+		params.max = Math.min(max ?: 10, 100)
+		def consumiciones = consumicionService.filter(filter, params.max, offset)
+		respond consumiciones, model:[consumicionInstanceCount: consumicionService.filterCount(filter)], view:'list'
 	}
 	
     @Transactional
