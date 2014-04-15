@@ -23,6 +23,13 @@
 		</sec:ifAnyGranted>
 		<sec:ifAnyGranted roles='DUENIO'>
 			<li class="controlleractive">
+				<g:link controller="mesa" action="index">
+					<g:message code="mesa.label" default="Mesas"/>
+				</g:link>
+			</li>
+		</sec:ifAnyGranted>
+		<sec:ifAnyGranted roles='DUENIO'>
+			<li class="controlleractive">
 				<g:link controller="item" action="index">
 					<g:message code="item.label" default="Item"/>
 				</g:link>

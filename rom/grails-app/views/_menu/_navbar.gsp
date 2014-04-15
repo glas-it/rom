@@ -30,7 +30,15 @@
 			</li>
 			
 			</sec:ifAnyGranted>
-			--%><sec:ifAnyGranted roles='DUENIO'>
+			--%>
+			<sec:ifAnyGranted roles='DUENIO'>
+				<li class="controlleractive">
+					<g:link controller="mesa" action="index">
+						<g:message code="mesa.label" default="Mesas"/>
+					</g:link>
+				</li>
+			</sec:ifAnyGranted>
+			<sec:ifAnyGranted roles='DUENIO'>
 					<li class="controlleractive">
 						<g:link controller="mozo" action="index">
 							<g:message code="mozo.label" default="Mozos"/>
@@ -58,6 +66,7 @@
 					</g:link>
 				</li>
 			</sec:ifAnyGranted>
+			
 			<sec:ifAnyGranted roles='DUENIO'>
 				<li class="controlleractive">
 					<g:link controller="consumicion" action="index">

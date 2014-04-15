@@ -18,6 +18,8 @@ class Mesa {
     }
     
 	static	constraints = {
+		numero blank: false, unique: 'restaurant'
+		capacidad blank: false
     }
 	
 	Restaurant restaurant
