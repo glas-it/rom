@@ -60,6 +60,8 @@ class BootStrap {
 			new Consumicion(nombre: "Flan" + k.toString(), descripcion: "Descripcion", precio: 14.5,
 				subrubro: subrubroDos, activo: true).save()
 		}
+		subrubroUno.save()
+		subrubroDos.save()
     }
     def destroy = {
     }
