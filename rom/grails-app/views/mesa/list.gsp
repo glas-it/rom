@@ -16,28 +16,23 @@
 	<table class="table table-bordered margin-top-medium">
 		<thead>
 			<tr>
-			
-				<g:sortableColumn property="activo" title="${message(code: 'mesa.activo.label', default: 'Activo')}" />
-			
-				<g:sortableColumn property="capacidad" title="${message(code: 'mesa.capacidad.label', default: 'Capacidad')}" />
-			
 				<g:sortableColumn property="numero" title="${message(code: 'mesa.numero.label', default: 'Numero')}" />
 			
-				<th><g:message code="mesa.restaurant.label" default="Restaurant" /></th>
+				<g:sortableColumn property="capacidad" title="${message(code: 'mesa.capacidad.label', default: 'Capacidad')}" />
+				
+				<th>${message(code: 'mesa.activo.label', default: 'Activo')} </th>
 			
 			</tr>
 		</thead>
 		<tbody>
 		<g:each in="${mesaInstanceList}" status="i" var="mesaInstance">
-			<tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+			<tr class="${mesaInstance.activo ? 'success' : 'danger'}">
 			
-				<td><g:link action="show" id="${mesaInstance.id}">${fieldValue(bean: mesaInstance, field: "activo")}</g:link></td>
+				<td><g:link action="show" id="${mesaInstance.numero}">${fieldValue(bean: mesaInstance, field: "numero")}</g:link></td>
 			
 				<td>${fieldValue(bean: mesaInstance, field: "capacidad")}</td>
 			
-				<td>${fieldValue(bean: mesaInstance, field: "numero")}</td>
-			
-				<td>${fieldValue(bean: mesaInstance, field: "restaurant")}</td>
+				<td><g:checkBox name="activo${mesaInstance.id}" value="${mesaInstance.activo}" disabled="true"/></td>
 			
 			</tr>
 		</g:each>
