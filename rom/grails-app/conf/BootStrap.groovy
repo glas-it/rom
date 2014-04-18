@@ -1,4 +1,5 @@
 import rom.seguridad.*
+import grails.converters.JSON
 import rom.*
 
 class BootStrap {
@@ -27,6 +28,18 @@ class BootStrap {
 		mozo.save()*/
 		UsuarioRol.create(usuarioAdmin, rolAdmin)
 		//UsuarioRol.create(mozo, rolMozo)
+		
+		JSON.registerObjectMarshaller(Mesa) {
+			def res = [:]
+			res['id'] = it.id
+			res['abierta'] = it.abierta
+			res['activo'] = it.activo
+			res['capacidad'] = it.capacidad
+			res['numero'] = it.numero
+			return res
+		}
+		
+		
 		
 		def rubroUno = new Rubro(orden: 1, nombre: "Entradas").save()
 		def rubroDos = new Rubro(orden: 2, nombre: "Postres").save()

@@ -54,7 +54,7 @@ class RestaurantController {
 	
 	
 	@Secured(['permitAll'])
-	def getMesas() {
+	def mesas() {
 		try {
 			render Mesa.list() as JSON
 		} catch(Exception) {

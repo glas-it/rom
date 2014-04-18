@@ -23,7 +23,7 @@ class MesaController {
 	
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
-	def abrirMesa(long idMesa, long idMozo) {
+	def apertura(long idMesa, long idMozo, int comensales) {
 		Mesa mesa = Mesa.findById(idMesa)
 		if (mesa == null || ! mesa.activo || mesa.abierta) {
 			render "ERROR: No se puede procesa mesa"
@@ -40,6 +40,7 @@ class MesaController {
 		MesaOcupada mesaOcupada = new MesaOcupada()
 		mesaOcupada.setMesa(mesa)
 		mesaOcupada.setMozo(mozo)
+		mesaOcupada.setComensales(comensales)
 		mesaOcupada.ocupar()
 		mesaOcupada.save()
 		
@@ -49,7 +50,7 @@ class MesaController {
 	
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
-	def cerrarMesa(long idMesa) {
+	def cierre(long idMesa) {
 		Mesa mesa = Mesa.findById(idMesa)
 		if (mesa == null) {
 			render "ERROR: mesa inexistente"

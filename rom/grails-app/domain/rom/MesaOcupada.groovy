@@ -19,6 +19,7 @@ class MesaOcupada {
 	Mesa mesa
 	Mozo mozo
 	boolean activo
+	int comensales
 	
 	public void ocupar() {
 		if (mesa == null)
