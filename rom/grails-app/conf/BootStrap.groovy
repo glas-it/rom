@@ -13,7 +13,7 @@ class BootStrap {
 		def usuarioAdmin = new Usuario(username: 'admin', password: '12345678').save()
 		def duenio = new Duenio(username: 'duenio', password:'duenio', email:'test@test.com')
 		duenioService.crearDuenio(duenio)
-/*		def mozo = new Mozo(username: "test", numeroLegajo: 123456)
+		/*def mozo = new Mozo(username: "test", numeroLegajo: 123456)
 		mozo.restaurant = duenio.restaurant
 		mozo.password = duenio.restaurant.id
 		mozo.accountExpired = false

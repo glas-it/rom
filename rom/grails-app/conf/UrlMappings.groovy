@@ -1,18 +1,6 @@
 class UrlMappings {
 
 	static mappings = {
-
-		
-		/*
-		 * Invoke http://localhost:8080/rom/rubro/getRubros or /anyControllerMethod
-		 * It works guacho!
-		 */
-		/*
-		"/wsItem"(controller:'item'){
-			action = [GET:"show", POST:"save", PUT:"update", DELETE:"remove"]
-		  }*/
-		
-	
 		/*
 		 * Pages without controller
 		 */
@@ -49,6 +37,7 @@ class UrlMappings {
 				controller(matches:/^((?!(api|mobile|web)).*)$/)
 		  	}
 		}
+		
 
 		/*
 		 * System Pages without controller

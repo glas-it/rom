@@ -14,22 +14,68 @@ import grails.transaction.Transactional
 @Secured("hasRole('DUENIO')")
 class MesaController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", abrirMesa: "POST",
+		cerrarMesa: "POST"]
 
 	def mesaService
 	
 	def springSecurityService
 	
+	@Secured(['permitAll'])
+	@Transactional(readOnly = false)
+	def abrirMesa(long idMesa, long idMozo) {
+		Mesa mesa = Mesa.findById(idMesa)
+		if (mesa == null || ! mesa.activo || mesa.abierta) {
+			render "ERROR: No se puede procesa mesa"
+			return
+		}
+		
+		
+		Mozo mozo = Mozo.findById(idMozo);
+		if (mozo == null) {
+			render "ERROR: mozo inexistente"
+			return
+		}
+		
+		MesaOcupada mesaOcupada = new MesaOcupada()
+		mesaOcupada.setMesa(mesa)
+		mesaOcupada.setMozo(mozo)
+		mesaOcupada.ocupar()
+		mesaOcupada.save()
+		
+		render "Mesa:" + mesa.toString() + " mozo:" + mozo.toString()
+	}
+	
+	
+	@Secured(['permitAll'])
+	@Transactional(readOnly = false)
+	def cerrarMesa(long idMesa) {
+		Mesa mesa = Mesa.findById(idMesa)
+		if (mesa == null) {
+			render "ERROR: mesa inexistente"
+			return
+		}
+		MesaOcupada mesaOcupada = mesaService.getMesaOcupada(mesa)
+		if (mesaOcupada == null) {
+			render "ERROR: mesa no ocupada"
+			return
+		}
+		mesaOcupada.desocupar()
+		mesaOcupada.save()
+		render idMesa.toString();
+	}
+	
 	def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Mesa.list(params), model:[mesaInstanceCount: Mesa.count()]
+        //params.max = Math.min(max ?: 10, 100)
+        //respond Mesa.list(params), model:[mesaInstanceCount: Mesa.count()]
+		redirect action: "list"
     }
 
 	def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Mesa.list(params), model:[mesaInstanceCount: Mesa.count()]
     }
-
+	
     def show(Mesa mesaInstance) {
         respond mesaInstance
     }

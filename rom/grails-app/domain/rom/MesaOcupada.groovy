@@ -1,14 +1,10 @@
 package rom
 
 /**
- * Mesa
+ * MesaOcupada
  * A domain class describes the data object and it's mapping to the database
  */
-class Mesa {
-	/* Automatic timestamping of GORM */
-//	Date	dateCreated
-//	Date	lastUpdated
-	
+class MesaOcupada {
 //	static	belongsTo	= []	// tells GORM to cascade commands: e.g., delete this object if the "parent" is deleted.
 //	static	hasOne		= []	// tells GORM to associate another domain object as an owner in a 1-1 mapping
 //	static	hasMany		= []	// tells GORM to associate other domain objects for a 1-n or n-m mapping
@@ -18,26 +14,32 @@ class Mesa {
     }
     
 	static	constraints = {
-		numero blank: false, unique: 'restaurant'
-		capacidad blank: false
     }
 	
-	Restaurant restaurant
+	Mesa mesa
+	Mozo mozo
+	boolean activo
 	
-	int numero
-	int capacidad
-	boolean activo, abierta
-	
-	@Override	// Override toString for a nicer / more descriptive UI 
-	public String toString() {
-		return numero.toString();
+	public void ocupar() {
+		if (mesa == null)
+			return;
+		mesa.abrir();
+		activo = true
 	}
 	
-	public void abrir() {
-		abierta = true
+	public void desocupar() {
+		if (mesa == null)
+			return;
+		mesa.cerrar();
+		activo = false
 	}
 	
-	public void cerrar() {
-		abierta = false
-	}
+	
+	/*
+	 * Methods of the Domain Class
+	 */
+//	@Override	// Override toString for a nicer / more descriptive UI 
+//	public String toString() {
+//		return "${name}";
+//	}
 }

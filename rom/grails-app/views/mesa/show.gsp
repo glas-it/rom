@@ -25,7 +25,7 @@
 				</tr>
 				<tr class="prop">
 					<td valign="top" class="name"><g:message code="mesa.activo.label" default="Activo" /></td>
-					<td valign="top" class="value"><g:checkBox name="activo${mesaInstance.id}" value="${mesaInstance.activo}" disabled="true"/></td>
+					<td valign="top" class="value">${mesaInstance.activo ? "Si" : "No"}</td>
 				</tr>
 			</tbody>
 		</table>

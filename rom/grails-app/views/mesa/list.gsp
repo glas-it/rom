@@ -31,8 +31,8 @@
 				<td><g:link action="show" id="${mesaInstance.numero}">${fieldValue(bean: mesaInstance, field: "numero")}</g:link></td>
 			
 				<td>${fieldValue(bean: mesaInstance, field: "capacidad")}</td>
-			
-				<td><g:checkBox name="activo${mesaInstance.id}" value="${mesaInstance.activo}" disabled="true"/></td>
+							
+				<td>${mesaInstance.activo ? "Si" : "No"}</td>
 			
 			</tr>
 		</g:each>
