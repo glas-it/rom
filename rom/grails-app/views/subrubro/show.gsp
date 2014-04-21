@@ -62,6 +62,13 @@
 				<td valign="top" class="value"><g:link controller="rubro" action="show" id="${subrubroInstance?.rubro?.id}">${subrubroInstance?.rubro?.encodeAsHTML()}</g:link></td>
 				
 			</tr>
+			
+			<tr class="prop">
+				<td valign="top" class="name">Acciones de orden</td>
+				
+				<td valign="top" class="value"><g:link action="subirOrden" id="${subrubroInstance.id}">Subir</g:link> - <g:link action="bajarOrden" id="${subrubroInstance.id}">Bajar</g:link></td>
+				
+			</tr>
 		
 		</tbody>
 	</table>

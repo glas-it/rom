@@ -26,17 +26,17 @@
 		<thead>
 			<tr>
 			
-				<th> "${message(code: 'subrubro.nombre.label', default: 'Nombre')}" </th>
+				<th>${message(code: 'subrubro.nombre.label', default:'Nombre')}</th>
 			
 				<th> <g:message code="subrubro.orden.label"  default="Orden"/> </th>
 			
 				<th><g:message code="subrubro.rubro.label" default="Rubro" /></th>
 				
-				<th># Consumiciones</th>
+				<th style="width:150px"># Consumiciones</th>
 				
-				<th># Agregados</th>
+				<th style="width:150px"># Agregados</th>
 			
-				<th> Acciones </th>
+				<!--  <th> Acciones </th>  -->
 			</tr>
 		</thead>
 		<tbody>
@@ -52,6 +52,8 @@
 				<td>${subrubroInstance.consumiciones.size()}</td>
 				
 				<td>${subrubroInstance.agregados.size()}</td>
+				
+				<!-- 
 				<td>
 					<g:if test="${i != 0}">
 						<g:link action="subirOrden" id="${subrubroInstance.id}">subir</g:link>
@@ -60,7 +62,8 @@
 						<g:link action="bajarOrden" id="${subrubroInstance.id}">bajar</g:link>
 					</g:if>
 				</td>
-			
+				 -->
+				 
 			</tr>
 		</g:each>
 		</tbody>
