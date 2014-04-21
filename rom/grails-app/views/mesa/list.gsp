@@ -28,7 +28,7 @@
 		<g:each in="${mesaInstanceList}" status="i" var="mesaInstance">
 			<tr class="${mesaInstance.activo ? 'success' : 'danger'}">
 			
-				<td><g:link action="show" id="${mesaInstance.numero}">${fieldValue(bean: mesaInstance, field: "numero")}</g:link></td>
+				<td><g:link action="show" id="${mesaInstance.id}">${fieldValue(bean: mesaInstance, field: "numero")}</g:link></td>
 			
 				<td>${fieldValue(bean: mesaInstance, field: "capacidad")}</td>
 							
