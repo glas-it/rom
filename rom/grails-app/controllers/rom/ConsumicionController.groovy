@@ -42,6 +42,7 @@ class ConsumicionController {
         respond new Consumicion(params)
     }
 	
+	@Secured(['permitAll'])
 	def getJSONList() {
 		List<Consumicion> lista = Consumicion.list()
 		for(consu in lista) {
