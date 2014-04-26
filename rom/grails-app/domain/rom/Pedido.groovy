@@ -8,7 +8,6 @@ class Pedido {
 
 //	static	belongsTo	= []	// tells GORM to cascade commands: e.g., delete this object if the "parent" is deleted.
 //	static	hasOne		= []	// tells GORM to associate another domain object as an owner in a 1-1 mapping
-//	static	hasMany		= []	// tells GORM to associate other domain objects for a 1-n or n-m mapping
 //	static	mappedBy	= []	// specifies which property should be used in a mapping 
 	
 	static	mapping = {
@@ -16,6 +15,8 @@ class Pedido {
     
 	static	constraints = {
     }
+	
+	static	hasMany		= [ordenes : Orden]	// tells GORM to associate other domain objects for a 1-n or n-m mapping
 	
 	Mesa mesa
 	Mozo mozo
@@ -41,6 +42,13 @@ class Pedido {
 		mesa.cerrar();
 		activo = false
 	}	
+	
+	public boolean addOrden(Orden orden) {
+		if ( ! activo) return false
+		orden.pedido = this;
+		return ordenes.add(orden)
+	}
+	
 	/*
 	 * Methods of the Domain Class
 	 */

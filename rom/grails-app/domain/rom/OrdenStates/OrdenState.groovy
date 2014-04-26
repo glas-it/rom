@@ -24,4 +24,7 @@ class OrdenState {
 	
 	public void marcarEntregado(Orden orden) {
 	}
+	
+	public void marcarCancelado(Orden orden) {
+	}
 }

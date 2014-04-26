@@ -16,6 +16,8 @@ class PedidoController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", apertura: "POST",
 		cierre: "POST"]
 
+	def pedidoService
+	
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
 	def apertura(long idMesa, long idMozo, int comensales) {
@@ -42,36 +44,11 @@ class PedidoController {
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
 	def cierre(long idMesa) {
-		Mesa mesa = Mesa.findById(idMesa)
-		if (mesa == null) {
-			render "ERROR: mesa inexistente"
-			return
-		}
-		Pedido pedido = getPedidoByMesa(mesa)
-		if (pedido == null) {
-			render "ERROR: mesa no ocupada"
-			return
-		}
+		Pedido pedido = pedidoService.getPedidoByMesaId(idMesa)
+
 		pedido.cerrar()
 		pedido.save()
 		render "SUCCESS: pedido de mesa " + idMesa.toString() + " cerrado"
-	}
-	
-	
-	@Transactional(readOnly = false)
-	def getPedidoByMesa(Mesa unaMesa) {
-		def criteria = Pedido.createCriteria()
-		def result = criteria.list{
-			eq("activo", true)
-			and {
-				mesa {
-					eq("id", unaMesa.id)
-				}
-			}
-		}
-		if (result.size() > 0)
-			return result[0]
-		return null
 	}
 	
 	

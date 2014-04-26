@@ -74,16 +74,39 @@ class OrdenStateUserType implements UserType {
 		return false;
 	}
 	@Override
-	public Object nullSafeGet(ResultSet arg0, String[] arg1, Object arg2)
+	public Object nullSafeGet(ResultSet rs, String[] names, Object arg2)
 			throws HibernateException, SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		String name = rs.getString(names.first())
+		switch (name) {
+			case OrdenStatePendiente.PENDIENTE:
+				return new OrdenStatePendiente()
+ 
+			case OrdenStateEnPreparacion.EN_PREPARACION:
+				return new OrdenStateEnPreparacion()
+			
+			case OrdenStateTerminado.TERMINADO:
+				return new OrdenStateTerminado()
+				
+			case OrdenStateEntregado.ENTREGADO:
+				return new OrdenStateEntregado()
+				
+			case OrdenStateCancelado.CANCELADO:
+				return new OrdenStateCancelado()
+				
+			default:
+				throw new RuntimeException("El estado de la orden esta corrupto")
+		}
 	}
-	@Override
-	public void nullSafeSet(PreparedStatement arg0, Object arg1, int arg2)
-			throws HibernateException, SQLException {
-		// TODO Auto-generated method stub
 		
+	@Override
+	public void nullSafeSet(PreparedStatement st, Object value, int index)
+			throws HibernateException, SQLException {
+		if (! value) {
+            st.setNull(index, sqlTypes()[0]);
+        } else {
+			OrdenState estado = value
+            st.setString(index, estado.nombre);
+        }
 	}
 			
 	@Override

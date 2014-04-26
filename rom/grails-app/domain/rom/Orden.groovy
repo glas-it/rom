@@ -1,20 +1,33 @@
 package rom
 
 import rom.OrdenStates.OrdenState;
+import rom.OrdenStates.OrdenStatePendiente;
 import rom.OrdenStates.OrdenStateUserType;
+
 
 /**
  * Orden
  * A domain class describes the data object and it's mapping to the database
  */
 class Orden {
-//	static	belongsTo	= []	// tells GORM to cascade commands: e.g., delete this object if the "parent" is deleted.
 //	static	hasOne		= []	// tells GORM to associate another domain object as an owner in a 1-1 mapping
 //	static	hasMany		= []	// tells GORM to associate other domain objects for a 1-n or n-m mapping
 //	static	mappedBy	= []	// specifies which property should be used in a mapping 
 	
+	Pedido pedido
+	Consumible consumible
+	int indice // para saber que opcion del consumible utilizar
 	OrdenState estado;
 	
+	static	belongsTo	= Pedido	// tells GORM to cascade commands: e.g., delete this object if the "parent" is deleted.
+	
+	public Orden(Consumible unConsumible, int unIndice) {
+		consumible = unConsumible
+		indice = unIndice
+		marcarPendiente()
+	}
+	
+		
     static	mapping = {
 		estado type: OrdenStateUserType
     }
@@ -22,8 +35,24 @@ class Orden {
 	static	constraints = {
     }
 	
+	private void marcarPendiente() {
+		estado = new OrdenStatePendiente();
+	}
+	
 	public void marcarEnPreparacion() {
 		this.estado.marcarEnPreparacion(this);
+	}
+	
+	public void marcarTerminado() {
+		this.estado.marcarTerminado(this);
+	}
+	
+	public void marcarEntregado() {
+		this.estado.marcarEntregado(this);
+	}
+	
+	public void marcarCancelado() {
+		this.estado.marcarCancelado(this);
 	}
 	
 	/*

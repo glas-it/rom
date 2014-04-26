@@ -25,4 +25,9 @@ class OrdenStatePendiente extends OrdenState {
 		orden.estado = new OrdenStateEnPreparacion();
 	}
 	
+	@Override
+	public void marcarCancelado(Orden orden) {
+		orden.estado = new OrdenStateCancelado();
+	}
+	
 }
