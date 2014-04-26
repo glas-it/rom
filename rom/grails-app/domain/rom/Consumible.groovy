@@ -9,9 +9,9 @@ class Consumible {
 	Subrubro subrubro
 	
 	static	belongsTo	= Subrubro	// tells GORM to cascade commands: e.g., delete this object if the "parent" is deleted.
-	
+	static	hasMany		= [precios:Precio]	// tells GORM to associate other domain objects for a 1-n or n-m mapping
 	String nombre, descripcion
-	float precio
+	
 	boolean activo
 	
     static	mapping = {
@@ -22,7 +22,6 @@ class Consumible {
 			return Consumible.list().find{ it.subrubro.nombre == obj.subrubro.nombre && it.nombre == val && it.id != obj.id } == null
 		}
 		descripcion nullable:true, maxSize: 150
-		precio min: 0 as float
     }
 	
 	
@@ -31,9 +30,9 @@ class Consumible {
 		return "${nombre}";
 	}
 	
-	public String getPrecioFormateado() {
-		def formatter = java.text.NumberFormat.currencyInstance
-		return formatter.format(precio);
-		//return String.format('\$%1', precio)
-	}
+//	public String getPrecioFormateado() {
+//		def formatter = java.text.NumberFormat.currencyInstance
+//		return formatter.format(precio);
+//		//return String.format('\$%1', precio)
+//	}
 }

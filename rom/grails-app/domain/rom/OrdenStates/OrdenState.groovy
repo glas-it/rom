@@ -1,6 +1,7 @@
 package rom.OrdenStates
 
 import rom.Orden;
+import rom.Exceptions.TransicionInvalidaOrdenException
 
 /**
  * ConsumicionState
@@ -16,15 +17,19 @@ class OrdenState {
 	static	constraints = {
     }
 	
-	public void marcarEnPreparacion(Orden orden) {	
+	public void marcarEnPreparacion(Orden orden) {
+		throw new TransicionInvalidaOrdenException()	
 	}
 	
 	public void marcarTerminado(Orden orden) {
+		throw new TransicionInvalidaOrdenException()
 	}
 	
 	public void marcarEntregado(Orden orden) {
+		throw new TransicionInvalidaOrdenException()
 	}
 	
 	public void marcarCancelado(Orden orden) {
+		throw new TransicionInvalidaOrdenException()
 	}
 }
