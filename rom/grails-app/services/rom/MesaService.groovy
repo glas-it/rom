@@ -26,20 +26,4 @@ class MesaService {
 			mesa.save()
 		}
     }
-	
-	
-	def getMesaOcupada(Mesa unaMesa) {
-		def criteria = MesaOcupada.createCriteria()
-		def result = criteria.list{
-			eq("activo", true)
-			and {
-				mesa {
-					eq("id", unaMesa.id)
-				}
-			}
-		}
-		if (result.size() > 0)
-			return result[0]
-		return null
-	}
 }
