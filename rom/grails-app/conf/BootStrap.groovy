@@ -31,6 +31,7 @@ class BootStrap {
 		
 		JSON.registerObjectMarshaller(Mesa) {
 			def res = [:]
+			res["class"] = "Mesa"
 			res['id'] = it.id
 			res['abierta'] = it.abierta
 			res['activo'] = it.activo
@@ -42,6 +43,7 @@ class BootStrap {
 		
 		JSON.registerObjectMarshaller(Rubro) {
 			def res = [:]
+			res["class"] = "Rubro"
 			res['id'] = it.id
 			res['nombre'] = it.nombre
 			res['orden'] = it.orden
@@ -51,6 +53,7 @@ class BootStrap {
 		
 		JSON.registerObjectMarshaller(Subrubro) {
 			def res = [:]
+			res["class"] = "Subrubro"
 			res['id'] = it.id
 			res['nombre'] = it.nombre
 			res['orden'] = it.orden
@@ -61,6 +64,7 @@ class BootStrap {
 		
 		JSON.registerObjectMarshaller(Agregado) {
 			def res = [:]
+			res["class"] = "Agregado"
 			res['id'] = it.id
 			res['nombre'] = it.nombre
 			res['precio'] = it.precio
@@ -71,6 +75,7 @@ class BootStrap {
 		
 		JSON.registerObjectMarshaller(Consumicion) {
 			def res = [:]
+			res["class"] = "Consumicion"
 			res['id'] = it.id
 			res['nombre'] = it.nombre
 			//res['precio'] = it.precio
