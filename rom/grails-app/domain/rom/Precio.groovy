@@ -6,6 +6,13 @@ package rom
  */
 class Precio {
 
+	
+	float valor
+	String descripcion
+	Consumible consumible
+	
+	static	belongsTo	= Consumible
+	
     static	mapping = {
     }
     
@@ -13,9 +20,6 @@ class Precio {
 		valor min: 0 as float
 		descripcion nullable:true, maxSize: 150
     }
-	
-	float valor
-	String descripcion
 	
 	/*
 	 * Methods of the Domain Class
@@ -27,6 +31,6 @@ class Precio {
 	
 	public String getPrecioFormateado() {
 		def formatter = java.text.NumberFormat.currencyInstance
-		return formatter.format(precio);
+		return formatter.format(valor);
     }
 }

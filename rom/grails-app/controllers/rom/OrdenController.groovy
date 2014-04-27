@@ -2,8 +2,11 @@ package rom
 
 
 import static org.springframework.http.HttpStatus.*
+import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
+import rom.OrdenStates.OrdenStateCancelado;
+import rom.OrdenStates.OrdenStateEntregado;
 
 /**
  * OrdenController
@@ -19,17 +22,29 @@ class OrdenController {
 	
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
-	def alta(long idMesa, long idConsumible, int indice) {
+	def alta(long idMesa, long idConsumible, long idPrecio) {
 		Pedido pedido = pedidoService.getPedidoByMesaId(idMesa)
 		
 		Consumible consumible = Consumicion.findById(idConsumible)
-		if (! consumible) throw new Exception("Consumible inexistente")
+		Precio precio = Precio.findById(idPrecio)
+		if (! consumible || ! precio) throw new Exception("Consumible inexistente")
 		
-		Orden orden = new Orden(consumible, indice)
+		Orden orden = new Orden(consumible, precio)
 		
 		pedido.addOrden(orden)
 		pedido.save()
-		render "SUCCESS: "
+		render "SUCCESS"
+	}
+	
+	def cocina() {
+		def criteria = Orden.createCriteria()
+		def results = criteria.list {
+			and {
+				ne("estado", new OrdenStateCancelado())
+				ne("estado", new OrdenStateEntregado())
+			}	
+		} 
+		render results as JSON
 	}
 	
 	def index(Integer max) {

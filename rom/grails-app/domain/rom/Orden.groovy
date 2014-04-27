@@ -16,14 +16,14 @@ class Orden {
 	
 	Pedido pedido
 	Consumible consumible
-	int indice // para saber que opcion del consumible utilizar
+	Precio precio
 	OrdenState estado;
 	
 	static	belongsTo	= Pedido	// tells GORM to cascade commands: e.g., delete this object if the "parent" is deleted.
 	
-	public Orden(Consumible unConsumible, int unIndice) {
+	public Orden(Consumible unConsumible, Precio unPrecio) {
 		consumible = unConsumible
-		indice = unIndice
+		precio = unPrecio
 		marcarPendiente()
 	}
 	

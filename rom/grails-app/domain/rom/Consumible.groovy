@@ -8,8 +8,8 @@ class Consumible {
 	
 	Subrubro subrubro
 	
-	static	belongsTo	= Subrubro	// tells GORM to cascade commands: e.g., delete this object if the "parent" is deleted.
-	static	hasMany		= [precios:Precio]	// tells GORM to associate other domain objects for a 1-n or n-m mapping
+	static	belongsTo	= Subrubro	// tells GORM to cascade commands: e.g., delete this object if the "parent" is deleted.	
+	static	hasMany		= [ precios: Precio ]	// tells GORM to associate other domain objects for a 1-n or n-m mapping
 	String nombre, descripcion
 	
 	boolean activo

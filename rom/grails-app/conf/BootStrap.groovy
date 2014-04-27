@@ -67,7 +67,7 @@ class BootStrap {
 			res["class"] = "Agregado"
 			res['id'] = it.id
 			res['nombre'] = it.nombre
-			res['precio'] = it.precio
+			res['precios'] = it.precio
 			res['descripcion'] = it.descripcion
 			res['activo'] = it.activo
 			return res
@@ -78,18 +78,9 @@ class BootStrap {
 			res["class"] = "Consumicion"
 			res['id'] = it.id
 			res['nombre'] = it.nombre
-			//res['precio'] = it.precio
-			//res['descripcion'] = it.descripcion
+			res['descripcion'] = it.descripcion
 			res['activo'] = it.activo
-			def precios = [:]
-			precios[it.descripcion.toString()] = it.precio
-			if (it.descripDos != null && ! it.descripDos.isAllWhitespace())
-				precios[it.descripDos.toString()] = it.precioDos
-			if (it.descripTres != null && ! it.descripTres.isAllWhitespace())
-				precios[it.descripTres.toString()] = it.precioTres
-			if (it.descripCuatro != null && ! it.descripCuatro.isAllWhitespace())
-				precios[it.descripCuatro.toString()] = it.precioCuatro
-			res['precios'] = precios
+			res['precios'] = it.precios
 			return res
 		}
 		
@@ -106,40 +97,16 @@ class BootStrap {
 			new Subrubro(orden: i, nombre: a, rubro: rubroDos).save()
 			i++
 		}
-		new Agregado(nombre: "Ensalada", descripcion: "UNa Descripcion", precio: 14.5,
-			subrubro: subrubroUno, activo: true).save()
 		
-		new Consumicion(nombre: "Ensaladadsasda", descripcion: "Una Descripcion", precio: 14.5,
-			descripDos: "sarasa", precioDos: 55.4, subrubro: subrubroUno, activo: true).save()
-		
-		new Consumicion(nombre: "Ensaladaadsd", descripcion: "Una Descripcion", precio: 14.5,
-				descripDos: "sarasa", precioDos: 55.4, descripTres: "sadasdrasa", precioTres: 5.4,
-				subrubro: subrubroUno, activo: true).save()
-		
-		new Consumicion(nombre: "Ensaaaaaaladaadsd", descripcion: "Una Descripcion", precio: 14.5,
-			descripDos: "saradasa", precioDos: 55.4, descripTres: "sadasdcdcrasa", precioTres: 5.4,
-			descripCuatro: "saradaaaaadsdsdssa", precioCuatro: 55.44, subrubro: subrubroUno, activo: true).save()
-			
-		def consuUno = new Consumicion(nombre: "Ensalada", descripcion: "Una Descripcion", precio: 14.5,
-			subrubro: subrubroUno, activo: true).save()
-		def consuUnoD = new Consumicion(nombre: "Ensalada tomate", descripcion: "asd Descripcion", precio: 14.5,
-			subrubro: subrubroUno, activo: true).save()
-		def consudos = new Consumicion(nombre: "Ensalada lechuga", descripcion: "fsdfdsDescripcion", precio: 14.5,
-			subrubro: subrubroUno, activo: false).save()
-		def consufaa = new Consumicion(nombre: "Ensalada huevo", descripcion: "Deqqqqqscripcion", precio: 14.5,
-			subrubro: subrubroUno, activo: true).save()
-		def consuDos = new Consumicion(nombre: "Empanadas Carne", descripcion: "Descreeeeipcion", precio: 14.5,
-			subrubro: subrubroDos, activo: true).save()
-		def consuTres = new Consumicion(nombre: "Empanadas Verdura", descripcion: "Descrirrrrrpcion", precio: 14.5,
-			subrubro: subrubroUno, activo: true).save()
-		def consuTresa = new Consumicion(nombre: "Flan", descripcion: "Descripcqqqion", precio: 14.5,
-			subrubro: subrubroDos, activo: true).save()
-		new Consumicion(nombre: "afafa", descripcion: "Descripcggggion", precio: 14.5,
-			subrubro: subrubroDos, activo: true).save()
 		for (k in 1..40) {
-			new Consumicion(nombre: "Flan" + k.toString(), descripcion: "Descripcion" + k.toString(), precio: 14.5,
-				subrubro: subrubroDos, activo: true).save()
+			Consumicion c = new Consumicion(nombre: "Flan" + k.toString(), descripcion: "Descripcion" + k.toString(),
+				subrubro: subrubroDos, activo: true)
+			c.addToPrecios(new Precio(valor: 15.43, descripcion: "una cosa"))
+			if (k % 2 == 0)
+				c.addToPrecios(new Precio(valor: 88.62, descripcion: "sarasa magica"))
+			c.save()
 		}
+		
 		subrubroUno.save()
 		subrubroDos.save()
     }
