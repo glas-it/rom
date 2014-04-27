@@ -40,7 +40,6 @@ class BootStrap {
 			return res
 		}
 		
-		
 		JSON.registerObjectMarshaller(Rubro) {
 			def res = [:]
 			res["class"] = "Rubro"
@@ -84,7 +83,26 @@ class BootStrap {
 			return res
 		}
 		
+		JSON.registerObjectMarshaller(Mozo) {
+			def res = [:]
+			res["class"] = "Mozo"
+			res["id"] = it.id
+			res["activo"] = it.activo
+			res["apellido"] = it.apellido
+			res["nombre"] = it.nombre
+			res["numeroLegajo"] = it.numeroLegajo
+			res["username"] = it.username
+			return res
+		}
 		
+		JSON.registerObjectMarshaller(Precio) {
+			def res = [:]
+			res["class"] = "Precio"
+			res["id"] = it.id
+			res["descripcion"] = it.descripcion
+			res["valor"] = it.valor
+			return res
+		}
 		
 		def rubroUno = new Rubro(orden: 1, nombre: "Entradas").save()
 		def rubroDos = new Rubro(orden: 2, nombre: "Postres").save()

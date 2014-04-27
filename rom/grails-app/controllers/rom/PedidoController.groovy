@@ -3,6 +3,7 @@ package rom
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured;
 
 
@@ -38,6 +39,21 @@ class PedidoController {
 		pedido.save()
 		
 		render "SUCCESS: idPedido: " + pedido.id.toString() + " Mesa:" + mesa.toString() + " Mozo:" + mozo.toString()
+	}
+	
+	@Secured(['permitAll'])
+	@Transactional(readOnly = false)
+	def mozo(long idMozo) {
+		def criteria = Pedido.createCriteria()
+		def result = criteria.list {
+			and {
+				eq("activo", true)
+				mozo {
+					eq("id", idMozo)
+				}
+			}
+		}
+		render result as JSON
 	}
 	
 	
