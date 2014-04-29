@@ -23,6 +23,7 @@ class OrdenStatePendiente extends OrdenState {
 	@Override
 	public void marcarEnPreparacion(Orden orden) {
 		orden.estado = new OrdenStateEnPreparacion();
+		println "\n\nMarco orden: " + orden.id + " en preparacion"
 	}
 	
 	@Override

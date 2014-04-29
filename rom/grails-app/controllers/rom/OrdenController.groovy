@@ -5,8 +5,7 @@ import static org.springframework.http.HttpStatus.*
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
-import rom.OrdenStates.OrdenStateCancelado;
-import rom.OrdenStates.OrdenStateEntregado;
+import rom.OrdenStates.*;
 
 /**
  * OrdenController
@@ -16,9 +15,12 @@ import rom.OrdenStates.OrdenStateEntregado;
 @Secured("hasRole('DUENIO')")
 class OrdenController {
 
+	private String SUCCESS = "SUCCESS"
+	
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", alta: "POST"]
 	
 	def pedidoService
+	def ordenService
 	
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
@@ -33,9 +35,15 @@ class OrdenController {
 		
 		pedido.addOrden(orden)
 		pedido.save()
-		render "SUCCESS"
+		
+		/* TODO
+		 * Notificar cocina
+		 */
+		
+		render SUCCESS
 	}
 	
+	// Para que la cocina pueda pedir el listado de las ordenes
 	def cocina() {
 		def criteria = Orden.createCriteria()
 		def results = criteria.list {
@@ -46,6 +54,31 @@ class OrdenController {
 		} 
 		render results as JSON
 	}
+	
+	@Transactional(readOnly = false)
+	def preparacion(long idOrden) {
+		Orden orden = Orden.findById(idOrden)
+		if (! orden)
+			throw new Exception("Orden inexistente")
+			
+		ordenService.marcarOrden(orden, OrdenStateEnPreparacion.EN_PREPARACION)
+	
+		/* TODO
+		 * Notificar mozo
+		 */
+		
+		orden.save(flush:true)
+		render SUCCESS
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)

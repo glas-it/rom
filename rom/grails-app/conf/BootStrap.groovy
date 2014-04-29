@@ -1,3 +1,4 @@
+import rom.Exceptions.MesaConErroresException
 import rom.seguridad.*
 import grails.converters.JSON
 import rom.*
@@ -5,6 +6,8 @@ import rom.*
 class BootStrap {
 
 	def duenioService
+	
+	def mozoService
 	
     def init = { servletContext ->
 		def rolDuenio = new Rol(authority: 'DUENIO').save()
@@ -28,6 +31,19 @@ class BootStrap {
 		mozo.save()*/
 		UsuarioRol.create(usuarioAdmin, rolAdmin)
 		//UsuarioRol.create(mozo, rolMozo)
+		
+		Mesa mesa = null
+		for (i in 1..5) {
+			mesa = new Mesa()
+			mesa.numero = i
+			mesa.restaurant = duenio.restaurant
+			mesa.activo = true
+			mesa.capacidad = 4
+			if (!mesa.validate()) {
+				throw new MesaConErroresException("No se puede crear la mesa")
+			}
+			mesa.save()
+		}
 		
 		JSON.registerObjectMarshaller(Mesa) {
 			def res = [:]
@@ -101,6 +117,16 @@ class BootStrap {
 			res["id"] = it.id
 			res["descripcion"] = it.descripcion
 			res["valor"] = it.valor
+			return res
+		}
+		
+		JSON.registerObjectMarshaller(Orden) {
+			def res = [:]
+			res["class"] = "Orden"
+			res["id"] = it.id
+			res["consumible"] = it.consumible
+			res["precio"] = it.precio
+			res["estado"] = it.estado
 			return res
 		}
 		

@@ -22,7 +22,7 @@ class RestaurantController {
 
 	def springSecurityService
 	
-    static allowedMethods = [update: "PUT", imprime: "POST"]
+    static allowedMethods = [update: "PUT"]
 
 	def index(Integer max) {
         /*params.max = Math.min(max ?: 10, 100)
@@ -42,10 +42,8 @@ class RestaurantController {
     }
 
 	@Secured(['permitAll'])
-	def getMenu() {
+	def menu() {
 		try {
-			//ConsumicionController c = new ConsumicionController()
-			//c.getJSONList()
 			render Rubro.list() as JSON
 		} catch(Exception) {
 			render "[]"
