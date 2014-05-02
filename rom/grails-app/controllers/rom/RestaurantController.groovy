@@ -50,7 +50,6 @@ class RestaurantController {
 		}	
 	}
 	
-	
 	@Secured(['permitAll'])
 	def mesas() {
 		try {
