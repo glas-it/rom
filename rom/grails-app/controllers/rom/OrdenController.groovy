@@ -7,6 +7,10 @@ import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
 import rom.OrdenStates.*;
 
+
+import groovy.time.*;
+
+
 /**
  * OrdenController
  * A controller class handles incoming web requests and performs actions such as redirects, rendering views and so on.
@@ -24,26 +28,57 @@ class OrdenController {
 	
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
-	def alta(long idMesa, long idConsumible, long idPrecio) {
+	def alta() {
+		def args = request.JSON
+		long idMesa = args["mesa"] as Long
+		long idConsumible = args["consumible"] as Long
+		long idPrecio = args["precio"] as Long
+		long codigo = args["codigo"] as Long
+		
 		Pedido pedido = pedidoService.getPedidoByMesaId(idMesa)
 		
 		Consumible consumible = Consumicion.findById(idConsumible)
 		Precio precio = Precio.findById(idPrecio)
 		if (! consumible || ! precio) throw new Exception("Consumible inexistente")
 		
-		Orden orden = new Orden(consumible, precio)
+		Orden orden = new Orden(codigo, consumible, precio)
+		
+		println "CON" + consumible.nombre
+		println "PRECIO" + precio.valor
+		println "PEDIDO" + pedido.id
+		println "CODI" + orden.codigo
 		
 		pedido.addOrden(orden)
-		pedido.save()
+		pedido.save(flush:true)
 		
 		/* TODO
 		 * Notificar cocina
 		 */
+		println "ORDENES:" + pedido.ordenes
 		
+		render SUCCESS + " " + orden.id
+	}
+	
+	
+	
+	@Transactional(readOnly = false)
+	@Secured(['permitAll'])
+	def foo() {
+		StateTimer st = new StateTimer()
+		st.start("EstadoUno")
+		println st.total
+		//st.changeState("EstadoDOS")
+		//println st.total
+		TimeDuration dUno = TimeCategory.minus(new Date() + 1, new Date())
+		println "DiffUno:" + dUno
+		println "en milisegundo:" + dUno.toMilliseconds()
 		render SUCCESS
 	}
 	
+	
+		
 	// Para que la cocina pueda pedir el listado de las ordenes
+	@Secured(['permitAll'])
 	def cocina() {
 		def criteria = Orden.createCriteria()
 		def results = criteria.list {
@@ -55,12 +90,17 @@ class OrdenController {
 		render results as JSON
 	}
 	
-	@Transactional(readOnly = false)
-	def preparacion(long idOrden) {
+	def getOrden(long idOrden) {
 		Orden orden = Orden.findById(idOrden)
 		if (! orden)
 			throw new Exception("Orden inexistente")
-			
+		return orden
+	}
+	
+	@Transactional(readOnly = false)
+	@Secured(['permitAll'])
+	def preparacion(long idOrden) {
+		Orden orden = getOrden(idOrden)
 		ordenService.marcarOrden(orden, OrdenStateEnPreparacion.EN_PREPARACION)
 	
 		/* TODO
@@ -72,12 +112,49 @@ class OrdenController {
 	}
 	
 	
+	@Transactional(readOnly = false)
+	@Secured(['permitAll'])
+	def terminado(long idOrden) {
+		Orden orden = getOrden(idOrden)
+		ordenService.marcarOrden(orden, OrdenStateTerminado.TERMINADO)
+	
+		/* TODO
+		 * Notificar mozo
+		 */
+		
+		orden.save(flush:true)
+		render SUCCESS
+	}
 	
 	
+	@Transactional(readOnly = false)
+	@Secured(['permitAll'])
+	def entregado(long idOrden) {
+		Orden orden = getOrden(idOrden)
+		ordenService.marcarOrden(orden, OrdenStateEntregado.ENTREGADO)
+	
+		/* TODO
+		 * Notificar cocina
+		 */
+		
+		orden.save(flush:true)
+		render SUCCESS
+	}
 	
 	
+	@Transactional(readOnly = false)
+	@Secured(['permitAll'])
+	def cancelado(long idOrden) {
+		Orden orden = getOrden(idOrden)
+		ordenService.marcarOrden(orden, OrdenStateCancelado.CANCELADO)
 	
-	
+		/* TODO
+		 * Notificar cocina
+		 */
+		
+		orden.save(flush:true)
+		render SUCCESS
+	}
 	
 	
 	def index(Integer max) {

@@ -63,6 +63,8 @@ class OrdenStateUserType implements UserType {
 			return new OrdenStateEntregado()
 		else if (name == OrdenStateCancelado.CANCELADO)
 			return new OrdenStateCancelado()
+		else if (name == OrdenStateRechazado.RECHAZADO)
+			return new OrdenStateRechazado()
 		else
 			return null
 	}
@@ -72,6 +74,7 @@ class OrdenStateUserType implements UserType {
 	}
 	@Override
 	public boolean equals(Object x, Object y) throws HibernateException {
+		return false
 		if (x == y)
         return true;
         if (null == x || null == y)
@@ -106,6 +109,9 @@ class OrdenStateUserType implements UserType {
 				
 			case OrdenStateCancelado.CANCELADO:
 				return new OrdenStateCancelado()
+			
+			case OrdenStateRechazado.RECHAZADO:
+				return new OrdenStateRechazado()
 				
 			default:
 				throw new RuntimeException("El estado de la orden esta corrupto")

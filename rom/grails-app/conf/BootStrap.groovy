@@ -32,6 +32,10 @@ class BootStrap {
 		UsuarioRol.create(usuarioAdmin, rolAdmin)
 		//UsuarioRol.create(mozo, rolMozo)
 		
+		def mozo = new Mozo(nombre:"Juan", apellido:"Perez", numeroLegajo:4567, activo:true, 
+			username:"fafafa")
+		mozoService.crearMozo(mozo, duenio)
+		
 		Mesa mesa = null
 		for (i in 1..5) {
 			mesa = new Mesa()

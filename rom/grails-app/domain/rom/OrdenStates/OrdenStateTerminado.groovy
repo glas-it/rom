@@ -22,8 +22,14 @@ class OrdenStateTerminado extends OrdenState {
 	
 	@Override
 	public void marcarEntregado(Orden orden) {
-		orden.estado = new OrdenStateTerminado()
+		orden.estado = new OrdenStateEntregado()
 	}
+	
+	@Override
+	public void marcarRechazado(Orden orden) {
+		orden.estado = new OrdenStateRechazado()
+	}
+	
 	
 	/*
 	 * Methods of the Domain Class
