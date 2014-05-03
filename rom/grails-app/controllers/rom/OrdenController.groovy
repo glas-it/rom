@@ -3,9 +3,10 @@ package rom
 
 import static org.springframework.http.HttpStatus.*
 import grails.converters.JSON
-import grails.plugin.springsecurity.annotation.Secured;
+import grails.plugin.springsecurity.annotation.Secured
+import org.codehaus.groovy.grails.web.json.*
 import grails.transaction.Transactional
-import rom.OrdenStates.*;
+import rom.OrdenStates.*
 
 
 import groovy.time.*;
@@ -19,44 +20,35 @@ import groovy.time.*;
 @Secured("hasRole('DUENIO')")
 class OrdenController {
 
-	private String SUCCESS = "SUCCESS"
+	private String SUCCESS = "{success: true}"
 	
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", alta: "POST"]
+	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", alta: "POST"]
 	
 	def pedidoService
 	def ordenService
 	
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
-	def alta() {
-		def args = request.JSON
-		long idMesa = args["mesa"] as Long
-		long idConsumible = args["consumible"] as Long
-		long idPrecio = args["precio"] as Long
-		long codigo = args["codigo"] as Long
+	def alta(long idRestaurant, long nroMesa, String platos) {
+		Mesa mesa = Mesa.findByNumeroAndRestaurant(nroMesa, Restaurant.findById(idRestaurant))
+		Pedido pedido = pedidoService.getPedidoByMesaId(mesa.id)
+		JSONArray ordenes = new JSONArray(platos)
+		for(plato in ordenes) {
+			Consumible consumible = Consumicion.findById(plato.idConsumicion)
+			Consumible agregados = Agregado.findById(plato.idAgregado)
+			Precio precio = Precio.findByConsumibleAndDescripcion(consumible, plato.precio.descripcion)
+			if (consumible == null || precio == null) throw new Exception("Consumible inexistente")
+			Orden orden = new Orden(plato.id, consumible, agregados, precio)
+			pedido.addOrden(orden)
+		}
 		
-		Pedido pedido = pedidoService.getPedidoByMesaId(idMesa)
-		
-		Consumible consumible = Consumicion.findById(idConsumible)
-		Precio precio = Precio.findById(idPrecio)
-		if (! consumible || ! precio) throw new Exception("Consumible inexistente")
-		
-		Orden orden = new Orden(codigo, consumible, precio)
-		
-		println "CON" + consumible.nombre
-		println "PRECIO" + precio.valor
-		println "PEDIDO" + pedido.id
-		println "CODI" + orden.codigo
-		
-		pedido.addOrden(orden)
 		pedido.save(flush:true)
 		
 		/* TODO
 		 * Notificar cocina
 		 */
-		println "ORDENES:" + pedido.ordenes
 		
-		render SUCCESS + " " + orden.id
+		render SUCCESS
 	}
 	
 	
@@ -68,8 +60,6 @@ class OrdenController {
 		render orden.timer.total 
 	}
 	
-	
-		
 	// Para que la cocina pueda pedir el listado de las ordenes
 	@Secured(['permitAll'])
 	def cocina() {
@@ -83,17 +73,18 @@ class OrdenController {
 		render results as JSON
 	}
 	
-	def getOrden(long idOrden) {
-		Orden orden = Orden.findById(idOrden)
+	@Secured(['permitAll'])
+	def getOrden(String uuidOrden) {
+		Orden orden = Orden.findByUuid(uuidOrden)
 		if (! orden)
 			throw new Exception("Orden inexistente")
 		return orden
 	}
 	
-	@Transactional(readOnly = false)
 	@Secured(['permitAll'])
-	def preparacion(long idOrden) {
-		Orden orden = getOrden(idOrden)
+	@Transactional(readOnly = false)
+	def preparando(String uuidOrden) {
+		Orden orden = getOrden(uuidOrden)
 		ordenService.marcarOrden(orden, OrdenStateEnPreparacion.EN_PREPARACION)
 	
 		/* TODO
@@ -104,11 +95,24 @@ class OrdenController {
 		render SUCCESS
 	}
 	
-	
-	@Transactional(readOnly = false)
 	@Secured(['permitAll'])
-	def terminado(long idOrden) {
-		Orden orden = getOrden(idOrden)
+	@Transactional(readOnly = false)
+	def cancelado(String uuidOrden) {
+		Orden orden = getOrden(uuidOrden)
+		ordenService.marcarOrden(orden, OrdenStateCancelado.CANCELADO)
+	
+		/* TODO
+		 * Notificar mozo
+		 */
+		
+		orden.save(flush:true)
+		render SUCCESS
+	}
+
+	@Secured(['permitAll'])
+	@Transactional(readOnly = false)
+	def terminado(String uuidOrden) {
+		Orden orden = getOrden(uuidOrden)
 		ordenService.marcarOrden(orden, OrdenStateTerminado.TERMINADO)
 	
 		/* TODO
@@ -118,41 +122,26 @@ class OrdenController {
 		orden.save(flush:true)
 		render SUCCESS
 	}
-	
-	
-	@Transactional(readOnly = false)
+
 	@Secured(['permitAll'])
-	def entregado(long idOrden) {
-		Orden orden = getOrden(idOrden)
+	@Transactional(readOnly = false)
+	def entregado(String uuidOrden) {
+		Orden orden = getOrden(uuidOrden)
 		ordenService.marcarOrden(orden, OrdenStateEntregado.ENTREGADO)
 	
 		/* TODO
-		 * Notificar cocina
+		 * Notificar mozo
 		 */
 		
 		orden.save(flush:true)
 		render SUCCESS
 	}
-	
-	
-	@Transactional(readOnly = false)
-	@Secured(['permitAll'])
-	def cancelado(long idOrden) {
-		Orden orden = getOrden(idOrden)
-		ordenService.marcarOrden(orden, OrdenStateCancelado.CANCELADO)
-	
-		/* TODO
-		 * Notificar cocina
-		 */
-		
-		orden.save(flush:true)
-		render SUCCESS
-	}
+
 	
 	def list(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Orden.list(params), model:[ordenInstanceCount: Orden.count()]
-    }
+		params.max = Math.min(max ?: 10, 100)
+		respond Orden.list(params), model:[ordenInstanceCount: Orden.count()]
+	}
 
 	/*
     def show(Orden ordenInstance) {
@@ -173,19 +162,19 @@ class OrdenController {
     }
     */
 
-    @Transactional
-    def save(Orden ordenInstance) {
-        if (ordenInstance == null) {
-            notFound()
-            return
-        }
+	@Transactional
+	def save(Orden ordenInstance) {
+		if (ordenInstance == null) {
+			notFound()
+			return
+		}
 
-        if (ordenInstance.hasErrors()) {
-            respond ordenInstance.errors, view:'create'
-            return
-        }
+		if (ordenInstance.hasErrors()) {
+			respond ordenInstance.errors, view:'create'
+			return
+		}
 
-        ordenInstance.save flush:true
+		ordenInstance.save flush:true
 
         request.withFormat {
             form {
@@ -196,55 +185,55 @@ class OrdenController {
         }
     }
 
-    @Transactional
-    def update(Orden ordenInstance) {
-        if (ordenInstance == null) {
-            notFound()
-            return
-        }
+	@Transactional
+	def update(Orden ordenInstance) {
+		if (ordenInstance == null) {
+			notFound()
+			return
+		}
 
-        if (ordenInstance.hasErrors()) {
-            respond ordenInstance.errors, view:'edit'
-            return
-        }
+		if (ordenInstance.hasErrors()) {
+			respond ordenInstance.errors, view:'edit'
+			return
+		}
 
-        ordenInstance.save flush:true
+		ordenInstance.save flush:true
 
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Orden.label', default: 'Orden'), ordenInstance.id])
-                redirect ordenInstance
-            }
-            '*'{ respond ordenInstance, [status: OK] }
-        }
-    }
+		request.withFormat {
+			form {
+				flash.message = message(code: 'default.updated.message', args: [message(code: 'Orden.label', default: 'Orden'), ordenInstance.id])
+				redirect ordenInstance
+			}
+			'*'{ respond ordenInstance, [status: OK] }
+		}
+	}
 
-    @Transactional
-    def delete(Orden ordenInstance) {
+	@Transactional
+	def delete(Orden ordenInstance) {
 
-        if (ordenInstance == null) {
-            notFound()
-            return
-        }
+		if (ordenInstance == null) {
+			notFound()
+			return
+		}
 
-        ordenInstance.delete flush:true
+		ordenInstance.delete flush:true
 
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Orden.label', default: 'Orden'), ordenInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
-    }
+		request.withFormat {
+			form {
+				flash.message = message(code: 'default.deleted.message', args: [message(code: 'Orden.label', default: 'Orden'), ordenInstance.id])
+				redirect action:"index", method:"GET"
+			}
+			'*'{ render status: NO_CONTENT }
+		}
+	}
 
-    protected void notFound() {
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'ordenInstance.label', default: 'Orden'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
+	protected void notFound() {
+		request.withFormat {
+			form {
+				flash.message = message(code: 'default.not.found.message', args: [message(code: 'ordenInstance.label', default: 'Orden'), params.id])
+				redirect action: "index", method: "GET"
+			}
+			'*'{ render status: NOT_FOUND }
+		}
+	}
 }

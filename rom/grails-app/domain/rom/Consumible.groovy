@@ -19,7 +19,12 @@ class Consumible {
     
 	static	constraints = {
 		nombre blank: false, maxSize: 100, validator: { val, obj ->
-			return Consumible.list().find{ it.subrubro.nombre == obj.subrubro.nombre && it.nombre == val && it.id != obj.id } == null
+			return Consumible.list().find{
+					it.class == obj.class &&
+					it.subrubro.nombre == obj.subrubro.nombre &&
+					it.nombre == val &&
+					it.id != obj.id
+				} == null
 		}
 		descripcion nullable:true, maxSize: 150
     }
@@ -30,9 +35,9 @@ class Consumible {
 		return "${nombre}";
 	}
 	
-//	public String getPrecioFormateado() {
-//		def formatter = java.text.NumberFormat.currencyInstance
-//		return formatter.format(precio);
-//		//return String.format('\$%1', precio)
-//	}
+	public String getPrecioFormateado() {
+		def formatter = java.text.NumberFormat.currencyInstance
+		return formatter.format(precios[0].valor);
+		//return String.format('\$%1', precios[0])
+	}
 }

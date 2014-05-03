@@ -15,18 +15,20 @@ class Orden {
 //	static	hasMany		= []	// tells GORM to associate other domain objects for a 1-n or n-m mapping
 //	static	mappedBy	= []	// specifies which property should be used in a mapping 
 	
+	String uuid
 	Pedido pedido
 	Consumible consumible
+	Agregado agregado
 	Precio precio
 	OrdenState estado
-	long codigo
 	StateTimer timer
 	
 	static	belongsTo	= Pedido	// tells GORM to cascade commands: e.g., delete this object if the "parent" is deleted.
 	
-	public Orden(long unCodigo, Consumible unConsumible, Precio unPrecio) {
-		codigo = unCodigo
+	public Orden(String unUUID, Consumible unConsumible, Agregado unAgregado, Precio unPrecio) {
+		uuid = unUUID
 		consumible = unConsumible
+		agregado = unAgregado
 		precio = unPrecio
 		initTimer()
 		marcarPendiente()
@@ -43,6 +45,8 @@ class Orden {
     }
     
 	static	constraints = {
+		id column: 'uuid', generator: 'assigned', type: 'string' 
+		agregado blank: true, nullable: true
     }
 	
 	private void marcarPendiente() {
