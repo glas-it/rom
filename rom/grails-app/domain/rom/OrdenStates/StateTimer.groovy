@@ -45,7 +45,9 @@ class StateTimer {
 	}
 	
 	def getTime(String state) {
-		return total[state]
+		if (total[state] == null)
+			return 0;
+		return total[state] / 1000
 	}
 	
 	public void finalState() {

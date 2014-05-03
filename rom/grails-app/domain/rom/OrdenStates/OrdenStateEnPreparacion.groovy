@@ -8,7 +8,7 @@ import rom.Orden;
  */
 class OrdenStateEnPreparacion extends OrdenState {
 
-	public static final String EN_PREPARACION = "EnPreparacion";
+	public static final String EN_PREPARACION = "En Preparacion";
 	
 	public OrdenStateEnPreparacion() {
 		nombre = EN_PREPARACION;

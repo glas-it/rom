@@ -81,6 +81,13 @@
 					</g:link>
 				</li>
 			</sec:ifAnyGranted>
+			<sec:ifAnyGranted roles='DUENIO'>
+				<li class="controlleractive">
+					<g:link controller="orden" action="list">
+						<g:message code="orden.label" default="Orden"/>
+					</g:link>
+				</li>
+			</sec:ifAnyGranted>
 			<%--<sec:ifAnyGranted roles='ADMIN'>
 				<g:render template="/_menu/admin"/>
 			</sec:ifAnyGranted>														
