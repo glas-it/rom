@@ -64,15 +64,8 @@ class OrdenController {
 	@Transactional(readOnly = false)
 	@Secured(['permitAll'])
 	def foo() {
-		StateTimer st = new StateTimer()
-		st.start("EstadoUno")
-		println st.total
-		//st.changeState("EstadoDOS")
-		//println st.total
-		TimeDuration dUno = TimeCategory.minus(new Date() + 1, new Date())
-		println "DiffUno:" + dUno
-		println "en milisegundo:" + dUno.toMilliseconds()
-		render SUCCESS
+		Orden orden = getOrden(1)
+		render orden.timer.total 
 	}
 	
 	
@@ -156,17 +149,12 @@ class OrdenController {
 		render SUCCESS
 	}
 	
-	
-	def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Orden.list(params), model:[ordenInstanceCount: Orden.count()]
-    }
-
 	def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Orden.list(params), model:[ordenInstanceCount: Orden.count()]
     }
 
+	/*
     def show(Orden ordenInstance) {
         respond ordenInstance
     }
@@ -174,6 +162,16 @@ class OrdenController {
     def create() {
         respond new Orden(params)
     }
+    
+    def edit(Orden ordenInstance) {
+        respond ordenInstance
+    }
+    
+    def index(Integer max) {
+        params.max = Math.min(max ?: 10, 100)
+        respond Orden.list(params), model:[ordenInstanceCount: Orden.count()]
+    }
+    */
 
     @Transactional
     def save(Orden ordenInstance) {
@@ -196,10 +194,6 @@ class OrdenController {
             }
             '*' { respond ordenInstance, [status: CREATED] }
         }
-    }
-
-    def edit(Orden ordenInstance) {
-        respond ordenInstance
     }
 
     @Transactional
