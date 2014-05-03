@@ -120,10 +120,13 @@ class BootStrap {
 		JSON.registerObjectMarshaller(Orden) {
 			def res = [:]
 			res["class"] = "Orden"
-			res["id"] = it.id
-			res["consumible"] = it.consumible
+			res["id"] = it.uuid
+			res["idRubro"] = it.consumible.subrubro.rubro.id
+			res["idSubrubro"] = it.consumible.subrubro.id
+			res["idConsumicion"] = it.consumible.id
+			res["idAgregado"] = (it.agregado != null) ? it.agregado.id : null
 			res["precio"] = it.precio
-			res["estado"] = it.estado
+			res["estado"] = it.estado.nombre
 			return res
 		}
 		// ENTRADA

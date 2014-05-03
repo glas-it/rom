@@ -22,7 +22,7 @@ class OrdenStateTerminado extends OrdenState {
 	
 	@Override
 	public void marcarEntregado(Orden orden) {
-		orden.estado = new OrdenStateTerminado()
+		orden.estado = new OrdenStateEntregado()
 	}
 	
 	/*
