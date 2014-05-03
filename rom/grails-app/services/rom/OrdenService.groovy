@@ -22,6 +22,8 @@ class OrdenService {
 			orden.marcarEntregado()
 		else if (transicion == OrdenStateCancelado.CANCELADO)
 			orden.marcarCancelado()
+		else if (transicion == OrdenStateRechazado.RECHAZADO)
+			orden.marcarRechazado()
 		else
 			throw new TransicionInvalidaOrdenException()
     }

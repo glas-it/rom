@@ -8,6 +8,10 @@ import org.codehaus.groovy.grails.web.json.*
 import grails.transaction.Transactional
 import rom.OrdenStates.*
 
+
+import groovy.time.*;
+
+
 /**
  * OrdenController
  * A controller class handles incoming web requests and performs actions such as redirects, rendering views and so on.
@@ -38,12 +42,29 @@ class OrdenController {
 			pedido.addOrden(orden)
 		}
 		
-		pedido.save()
+		pedido.save(flush:true)
 		
 		/* TODO
 		 * Notificar cocina
 		 */
+		println "ORDENES:" + pedido.ordenes
 		
+		render SUCCESS + " " + orden.id
+	}
+	
+	
+	
+	@Transactional(readOnly = false)
+	@Secured(['permitAll'])
+	def foo() {
+		StateTimer st = new StateTimer()
+		st.start("EstadoUno")
+		println st.total
+		//st.changeState("EstadoDOS")
+		//println st.total
+		TimeDuration dUno = TimeCategory.minus(new Date() + 1, new Date())
+		println "DiffUno:" + dUno
+		println "en milisegundo:" + dUno.toMilliseconds()
 		render SUCCESS
 	}
 	
@@ -61,12 +82,17 @@ class OrdenController {
 	}
 	
 	@Secured(['permitAll'])
+	def getOrden(long idOrden) {
+		Orden orden = Orden.findById(idOrden)
+		if (! orden)
+			throw new Exception("Orden inexistente")
+		return orden
+	}
+	
+	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
 	def preparando(String uuidOrden) {
 		Orden orden = Orden.findByUuid(uuidOrden)
-		if (! orden)
-			throw new Exception("Orden inexistente")
-			
 		ordenService.marcarOrden(orden, OrdenStateEnPreparacion.EN_PREPARACION)
 	
 		/* TODO
@@ -128,7 +154,21 @@ class OrdenController {
 		orden.save(flush:true)
 		render SUCCESS
 	}
-
+	
+	@Transactional(readOnly = false)
+	@Secured(['permitAll'])
+	def cancelado(long idOrden) {
+		Orden orden = getOrden(idOrden)
+		ordenService.marcarOrden(orden, OrdenStateCancelado.CANCELADO)
+	
+		/* TODO
+		 * Notificar cocina
+		 */
+		
+		orden.save(flush:true)
+		render SUCCESS
+	}
+	
 	def index(Integer max) {
 		params.max = Math.min(max ?: 10, 100)
 		respond Orden.list(params), model:[ordenInstanceCount: Orden.count()]

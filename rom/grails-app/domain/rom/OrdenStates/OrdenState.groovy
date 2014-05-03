@@ -32,4 +32,8 @@ class OrdenState {
 	public void marcarCancelado(Orden orden) {
 		throw new TransicionInvalidaOrdenException()
 	}
+	
+	public void marcarRechazado(Orden orden) {
+		throw new TransicionInvalidaOrdenException()
+	}
 }
