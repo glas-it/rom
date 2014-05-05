@@ -9,6 +9,7 @@ class BootStrap {
 	def duenioService
 	
 	def mozoService
+	def pedidoService
 	
     def init = { servletContext ->
 		def rolDuenio = new Rol(authority: 'DUENIO').save()
@@ -44,6 +45,7 @@ class BootStrap {
 			res['activo'] = it.activo
 			res['capacidad'] = it.capacidad
 			res['numero'] = it.numero
+			res['mozo'] = it.abierta ? pedidoService.getPedidoByMesa(it).mozo.nombre : ""
 			return res
 		}
 		

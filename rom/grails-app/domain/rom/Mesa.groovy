@@ -40,4 +40,9 @@ class Mesa {
 	public void cerrar() {
 		abierta = false
 	}
+
+	public String getUsername() {
+		Pedido pedido = Pedido.findByMesa(this)
+		return pedido.mozo.username
+	}
 }

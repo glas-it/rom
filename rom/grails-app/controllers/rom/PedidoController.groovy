@@ -44,13 +44,13 @@ class PedidoController {
 	
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
-	def mozo(long idMozo) {
+	def mozo(String username) {
 		def criteria = Pedido.createCriteria()
 		def result = criteria.list {
 			and {
 				eq("activo", true)
 				mozo {
-					eq("id", idMozo)
+					eq("username", username)
 				}
 			}
 		}
