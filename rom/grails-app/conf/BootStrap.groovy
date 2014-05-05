@@ -1,5 +1,6 @@
 import rom.Exceptions.MesaConErroresException
 import rom.seguridad.*
+import rom.OrdenStates.*
 import grails.converters.JSON
 import rom.*
 
@@ -15,23 +16,11 @@ class BootStrap {
 		def rolCocina = new Rol(authority: 'COCINA').save()
 		def rolMozo = new Rol(authority: 'MOZO').save()
 		def usuarioAdmin = new Usuario(username: 'admin', password: '12345678').save()
+		UsuarioRol.create(usuarioAdmin, rolAdmin)
 		def duenio = new Duenio(username: 'duenio', password:'duenio', email:'test@test.com')
 		duenioService.crearDuenio(duenio)
-		/*def mozo = new Mozo(username: "asd", nombre: "Juan", apellido: "Perez", numeroLegajo: 123456)
-		mozo.accountExpired = false
-		mozo.accountLocked = false
-		mozo.passwordExpired = false
-		mozo.activo = true
-		mozo.restaurant = duenio.restaurant
-		mozo.password = duenio.restaurant.id
-		mozo.save()
-		*/
-
-		UsuarioRol.create(usuarioAdmin, rolAdmin)
-		//UsuarioRol.create(mozo, rolMozo)
-		
 		def mozo = new Mozo(nombre:"Juan", apellido:"Perez", numeroLegajo:4567, activo:true, 
-			username:"fafafa")
+			username:"asd")
 		mozoService.crearMozo(mozo, duenio)
 		
 		Mesa mesa = null
@@ -122,16 +111,25 @@ class BootStrap {
 			return res
 		}
 		
+		JSON.registerObjectMarshaller(StateTimer) {
+			def res = [:]
+			res["class"] = "StateTimer"
+			res["tiempo"] = it.created.getTime()
+			return res
+		}
+
 		JSON.registerObjectMarshaller(Orden) {
 			def res = [:]
 			res["class"] = "Orden"
 			res["id"] = it.uuid
+			res["mesa"] = it.pedido.mesa.numero
 			res["idRubro"] = it.consumible.subrubro.rubro.id
 			res["idSubrubro"] = it.consumible.subrubro.id
 			res["idConsumicion"] = it.consumible.id
 			res["idAgregado"] = (it.agregado != null) ? it.agregado.id : null
 			res["precio"] = it.precio
 			res["estado"] = it.estado.nombre
+			res["creado"] = it.timer
 			return res
 		}
 		// ENTRADA

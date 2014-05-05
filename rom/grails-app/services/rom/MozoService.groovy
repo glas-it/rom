@@ -16,6 +16,7 @@ class MozoService {
 		mozo.accountExpired = false
 		mozo.accountLocked = false
 		mozo.passwordExpired = false
+		mozo.enabled = true
 		mozo.restaurant = duenio.restaurant
 		mozo.password = mozo.restaurant.id.toString()
 		if (!mozo.save()) {

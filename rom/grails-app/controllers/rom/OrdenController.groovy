@@ -67,7 +67,6 @@ class OrdenController {
 		def results = criteria.list {
 			and {
 				ne("estado", new OrdenStateCancelado())
-				ne("estado", new OrdenStateEntregado())
 			}	
 		} 
 		render results as JSON

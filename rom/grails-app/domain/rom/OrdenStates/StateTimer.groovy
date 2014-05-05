@@ -13,6 +13,7 @@ class StateTimer {
 	
 	Map total;
 	String actualState
+	Date created
 	Date acumTime
 	
 	static	belongsTo	= Orden	// tells GORM to cascade commands: e.g., delete this object if the "parent" is deleted.
@@ -31,6 +32,7 @@ class StateTimer {
 		total = [:]
 		total[actualState] = 0 as long
 		acumTime = new Date()
+		created = new Date()
 	}
 	
 	public void changeState(String nextState) {
