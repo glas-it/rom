@@ -12,17 +12,17 @@
 		<div class="col-md-2">
 			<label for="precio" class="control-label"><g:message code="agregado.precio.label" default="Precio" /><span class="required-indicator">*</span></label>
 		</div>
-		<div class="col-md-4 ${hasErrors(bean: agregadoInstance, field: 'precio', 'error')} required">
-			<g:field class="form-control precio" name="precio" type="number" value="${fieldValue(bean: agregadoInstance, field: 'precio')}" required=""/>
-			<span class="help-inline">${hasErrors(bean: agregadoInstance, field: 'precio', 'error')}</span>
+		<div class="col-md-4 ${hasErrors(bean: agregadoInstance.precios[0], field: 'valor', 'error')} required">
+			<g:field class="form-control precio" name="precios[0].valor" type="number" value="${fieldValue(bean: agregadoInstance.precios[0], field: 'valor')}" required=""/>
+			<span class="help-inline">${hasErrors(bean: agregadoInstance.precios[0], field: 'valor', 'error')}</span>
 		</div>
 </div>
 </br>
-<div class="${hasErrors(bean: agregadoInstance, field: 'descripcion', 'error')} ">
+<div class="${hasErrors(bean: agregadoInstance?.precios[0], field: 'descripcion', 'error')} ">
 	<label for="descripcion" class="control-label"><g:message code="agregado.descripcion.label" default="Descripcion" /></label>
 	<div>
-		<g:textArea class="form-control descripcion" name="descripcion" maxlength="150" value="${agregadoInstance?.descripcion}" />
-		<span class="help-inline">${hasErrors(bean: agregadoInstance, field: 'descripcion', 'error')}</span>
+		<g:textArea class="form-control descripcion" name="precios[0].descripcion" maxlength="150" value="${agregadoInstance?.precios[0].descripcion}" />
+		<span class="help-inline">${hasErrors(bean: agregadoInstance?.precios[0], field: 'descripcion', 'error')}</span>
 	</div>
 </div>
 </br>

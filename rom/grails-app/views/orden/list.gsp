@@ -10,9 +10,21 @@
 </head>
 
 <body>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#Menu').hide();
+		if ($('.prev.disabled') !== undefined)
+			$('.prev.disabled').hide()
+		if ($('.next.disabled') !== undefined)
+			$('.next.disabled').hide()
+		
+	});
+</script>
+	
 
 <section id="list-orden" class="first">
-
+	<div class="panel panel-default tab-content">
+	<div class="panel-body">
 	<table class="table table-bordered margin-top-medium">
 		<thead>
 			<tr>
@@ -39,7 +51,7 @@
 		<g:each in="${ordenInstanceList}" status="i" var="ordenInstance">
 			<tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
 						
-				<td>${ordenInstance.pedido.mozo.username}</td>
+				<td>${ordenInstance.pedido.mozo.nombre}</td>
 			
 				<td>${ordenInstance.estado.nombre}</td>
 			
@@ -74,6 +86,8 @@
 		</g:each>
 		</tbody>
 	</table>
+	</div>
+	</div>
 	<div>
 		<bs:paginate total="${ordenInstanceCount}" />
 	</div>

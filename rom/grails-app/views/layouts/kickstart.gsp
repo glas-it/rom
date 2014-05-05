@@ -18,10 +18,14 @@
 	
 	<%-- Manual switch for the skin can be found in /view/_menu/_config.gsp --%>
 	<r:require modules="jquery"/> <%-- jQuery is required for Bootstrap! --%>
-	<r:require modules="bootstrap"/>
-	<r:require modules="bootstrap_utils"/>
+<%--	<r:require modules="bootstrap"/>--%>
+	
+<%--	<r:require modules="bootstrap_utils"/>--%>
 
 	<r:layoutResources />
+	<link rel="stylesheet" media="screen, projection" type="text/css" href="${resource(dir: 'css', file: 'bootstrap.css')}" />
+	<link rel="stylesheet" media="screen, projection" type="text/css" href="${resource(dir: 'css', file: 'estilos.css')}" />
+	
 	<g:layoutHead />
 
 	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -64,6 +68,7 @@
 	
 	<!-- Included Javascript files and other resources -->
 	<r:layoutResources />
+	<script src="js/bootstrap.js"></script>
 </body>
 
 </html>

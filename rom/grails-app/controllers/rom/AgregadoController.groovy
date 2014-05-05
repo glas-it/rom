@@ -16,8 +16,9 @@ class AgregadoController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
 	def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Agregado.list(params), model:[agregadoInstanceCount: Agregado.count()]
+       /* params.max = Math.min(max ?: 10, 100)
+        respond Agregado.list(params), model:[agregadoInstanceCount: Agregado.count()]*/
+		redirect action:'list'
     }
 
 	def list(Integer max) {

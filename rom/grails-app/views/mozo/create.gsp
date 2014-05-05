@@ -11,7 +11,7 @@
 <body>
 
 	<section id="create-mozo" class="first">
-
+		
 		<g:form action="save" class="form-horizontal" role="form" >
 			<g:render template="form"/>
 

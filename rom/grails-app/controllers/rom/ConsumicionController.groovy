@@ -39,7 +39,12 @@ class ConsumicionController {
     }
 
     def create() {
-        respond new Consumicion(params)
+		Consumicion consumicion = new Consumicion()
+		consumicion.addToPrecios(new Precio())
+		consumicion.addToPrecios(new Precio())
+		consumicion.addToPrecios(new Precio())
+		consumicion.addToPrecios(new Precio())
+        respond consumicion
     }
 	
 	@Secured(['permitAll'])
@@ -64,18 +69,22 @@ class ConsumicionController {
             notFound()
             return
         }
-
-        if (consumicionInstance.hasErrors()) {
+		consumicionInstance.precios = consumicionInstance.precios.findAll { (it.descripcion && !it.descripcion.isAllWhitespace()) || (it.valor > 0) }
+        consumicionInstance.validate()
+		render consumicionInstance as JSON
+		return
+		if (consumicionInstance.hasErrors()) {
+			// agrego los precios que falten
             respond consumicionInstance.errors, view:'create'
             return
         }
-
+		
         consumicionInstance.save flush:true
-
+		
         request.withFormat {
             form {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'consumicionInstance.label', default: 'Consumicion'), consumicionInstance.id])
-                redirect consumicionInstance
+                redirect action:'create', consumicionInstance
             }
             '*' { respond consumicionInstance, [status: CREATED] }
         }

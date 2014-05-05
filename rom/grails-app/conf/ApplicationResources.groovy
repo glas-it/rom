@@ -4,9 +4,8 @@ modules = {
     }
 	
 	overrides {
-		'bootstrap-css' {
-			resource id: 'bootstrap-css', url:'/css/bootstrap.css'
+		'bootstrap' {
+			resource url: [dir: 'css', file:'estilos.css']
 		}
 	}
-
 }

@@ -11,22 +11,24 @@
 <body>
 
 	<section id="create-consumicion" class="first">
-
-		<g:hasErrors bean="${consumicionInstance}">
-		<div class="alert alert-danger">
-			<g:renderErrors bean="${consumicionInstance}" as="list" />
-		</div>
-		</g:hasErrors>
-
-		<g:form action="save" class="form-horizontal" role="form" >
-			<g:render template="form"/>
-
-			<div class="form-actions margin-top-medium">
-				<g:submitButton name="create" class="btn btn-primary" value="${message(code: 'default.button.create.label', default: 'Create')}" />
-	            <button class="btn" type="reset"><g:message code="default.button.reset.label" default="Reset" /></button>
+		<div class="panel panel-default tab-content">
+			<div class="panel-body">
+			<g:hasErrors bean="${consumicionInstance}">
+				<div class="alert alert-danger">
+					<g:renderErrors bean="${consumicionInstance}" as="list" />
+				</div>
+			</g:hasErrors>
+	
+			<g:form action="save" class="form-horizontal" role="form" >
+				<g:render template="form"/>
+	
+				<div class="form-actions margin-top-medium">
+					<g:submitButton name="create" class="btn btn-primary" value="${message(code: 'default.button.create.label', default: 'Create')}" />
+		            <button class="btn btn-danger btn-sm" type="reset"><g:message code="default.button.reset.label" default="Reset" /></button>
+				</div>
+			</g:form>
 			</div>
-		</g:form>
-
+		</div>
 	</section>
 
 </body>

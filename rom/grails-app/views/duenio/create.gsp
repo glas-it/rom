@@ -11,7 +11,8 @@
 <body>
 
 	<section id="create-duenio" class="first">
-
+		<div class="panel panel-default tab-content">
+		<div class="panel-body">
 		<g:hasErrors bean="${duenioInstance}">
 		<div class="alert alert-danger">
 			<g:renderErrors bean="${duenioInstance}" as="list" />
@@ -26,7 +27,8 @@
 	            <button class="btn" type="reset"><g:message code="default.button.reset.label" default="Reset" /></button>
 			</div>
 		</g:form>
-
+	</div>
+	</div>
 	</section>
 
 </body>
