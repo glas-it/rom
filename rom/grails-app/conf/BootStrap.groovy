@@ -130,6 +130,7 @@ class BootStrap {
 			res["precio"] = it.precio
 			res["estado"] = it.estado.nombre
 			res["creado"] = it.timer
+			res["username"]= it.pedido.mozo.username
 			return res
 		}
 		// ENTRADA
