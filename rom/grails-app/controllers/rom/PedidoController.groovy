@@ -85,7 +85,7 @@ class PedidoController {
 	def index(Integer max) {
 		params.max = Math.min(max ?: 10, 100)
 		respond Pedido.list(params), model:[pedidoInstanceCount: Pedido.count()]
-	}
+	} 
 
 	def list(Integer max) {
 		params.max = Math.min(max ?: 10, 100)
