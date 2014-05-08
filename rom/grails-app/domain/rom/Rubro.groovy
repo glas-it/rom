@@ -16,6 +16,8 @@ class Rubro {
 	
 	String nombre
 	
+	boolean aCocina
+	
     static	mapping = {
 		sort "orden"
     }

@@ -15,6 +15,7 @@ class Subrubro {
 	
 	String nombre
 	int orden
+	boolean aCocina
 	
     static	mapping = {
 		sort "orden"

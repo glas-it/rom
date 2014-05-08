@@ -70,6 +70,18 @@ class PedidoController {
 	}
 	
 	
+	
+	@Secured(['permitAll'])
+	@Transactional(readOnly = false)
+	def byMesa(long idRestaurant, long nroMesa) {
+		Mesa mesa = Mesa.findByNumeroAndRestaurant(nroMesa, Restaurant.findById(idRestaurant))
+		if (! mesa)
+			throw new Exception("Mesa inexistente en Restaurant")
+		Pedido pedido = pedidoService.getPedidoByMesaId(mesa.id)
+		render pedido as JSON
+	}
+	
+	
 	def index(Integer max) {
 		params.max = Math.min(max ?: 10, 100)
 		respond Pedido.list(params), model:[pedidoInstanceCount: Pedido.count()]
