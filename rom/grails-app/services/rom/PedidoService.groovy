@@ -2,6 +2,8 @@ package rom
 
 import grails.transaction.Transactional;
 
+import rom.PedidoStates.*
+
 /**
  * PedidoService
  * A service class encapsulates the core business logic of a Grails application
@@ -24,8 +26,11 @@ class PedidoService {
 	def getPedidoByMesa(Mesa unaMesa) {
 		def criteria = Pedido.createCriteria()
 		def result = criteria.list{
-			eq("activo", true)
 			and {
+				or {
+					eq("estado", new PedidoStateAbierto())
+					eq("estado", new PedidoStateCerrado())
+				}
 				mesa {
 					eq("id", unaMesa.id)
 				}

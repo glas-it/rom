@@ -21,11 +21,11 @@ class PedidoStateCerrado extends PedidoState {
 	}
 	
 	public void marcarPagado(Pedido pedido) {
-		throw new TransicionInvalidaPedidoException("Transicion de pedido inválida");
+		pedido.estado = new PedidoStatePagado();
 	}
 	
 	public void marcarAnulado(Pedido pedido) {
-		pedido.estado = new PedidoEstadoAnulado();
+		pedido.estado = new PedidoStateAnulado();
 	}
 	/*
 	 * Methods of the Domain Class

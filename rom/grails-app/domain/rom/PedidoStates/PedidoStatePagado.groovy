@@ -21,7 +21,7 @@ class PedidoStatePagado extends PedidoState {
 	}
 	
 	public void marcarAnulado(Pedido pedido) {
-		pedido.estado = new PedidoEstadoAnulado();
+		pedido.estado = new PedidoStateAnulado();
 	}
 	
 	/*

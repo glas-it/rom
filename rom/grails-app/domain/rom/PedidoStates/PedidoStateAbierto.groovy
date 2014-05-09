@@ -21,11 +21,11 @@ class PedidoStateAbierto extends PedidoState {
 	}
 	
 	public void marcarCerrado(Pedido pedido) {
-		pedido.estado = new PedidoEstadoCerrado();
+		pedido.estado = new PedidoStateCerrado();
 	}
 	
 	public void marcarAnulado(Pedido pedido) {
-		pedido.estado = new PedidoEstadoAnulado();
+		pedido.estado = new PedidoStateAnulado();
 	}
 	
 	/*

@@ -22,6 +22,7 @@ class Orden {
 	OrdenState estado
 	StateTimer timer
 	
+	//static embedded = ['timer']
 	static	belongsTo	= Pedido	// tells GORM to cascade commands: e.g., delete this object if the "parent" is deleted.
 	
 	public Orden(String unUUID, Consumible unConsumible, Agregado unAgregado, Precio unPrecio) {
@@ -29,18 +30,14 @@ class Orden {
 		consumible = unConsumible
 		agregado = unAgregado
 		precio = unPrecio
-		initTimer()
-		marcarPendiente()
-	}
-	
-	private void initTimer(){
 		timer = new StateTimer()
-		timer.orden = this
+		marcarPendiente()
 	}
 	
 		
     static	mapping = {
 		estado type: OrdenStateUserType
+		timer cascade: 'all-delete-orphan'
     }
     
 	static	constraints = {

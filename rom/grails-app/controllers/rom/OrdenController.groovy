@@ -39,7 +39,7 @@ class OrdenController {
 			Precio precio = Precio.findByConsumibleAndDescripcion(consumible, plato.precio.descripcion)
 			if (consumible == null || precio == null) throw new Exception("Consumible inexistente")
 			Orden orden = new Orden(plato.id, consumible, agregados, precio)
-			pedido.addOrden(orden)
+			pedido.addToOrdenes(orden)
 		}
 		
 		pedido.save(flush:true)

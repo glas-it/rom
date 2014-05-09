@@ -5,6 +5,7 @@ import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured;
+import rom.PedidoStates.*
 
 
 /**
@@ -36,7 +37,9 @@ class PedidoController {
 		}
 		
 		Pedido pedido = new Pedido(mesa, mozo, comensales)
-		pedido.abrir()
+		println "TIMER  0 :" + pedido.timer.total
+		pedido.marcarAbierto()
+		println "TIMER  1 :" + pedido.timer.total
 		pedido.save()
 		
 		render "SUCCESS: idPedido: " + pedido.id.toString() + " Mesa:" + mesa.toString() + " Mozo:" + mozo.toString()
@@ -48,7 +51,10 @@ class PedidoController {
 		def criteria = Pedido.createCriteria()
 		def result = criteria.list {
 			and {
-				eq("activo", true)
+				or{
+					eq("estado", new PedidoStateAbierto())
+					eq("estado", new PedidoStateCerrado())
+				}
 				mozo {
 					eq("username", username)
 				}
@@ -64,7 +70,7 @@ class PedidoController {
 		Mesa mesa = Mesa.findByNumeroAndRestaurant(nroMesa, Restaurant.findById(idRestaurant))
 		Pedido pedido = pedidoService.getPedidoByMesaId(mesa.id)
 
-		pedido.cerrar()
+		pedido.marcarCerrado()
 		pedido.save()
 		render "SUCCESS: pedido de mesa " + nroMesa + " cerrado"
 	}
