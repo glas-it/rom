@@ -62,21 +62,21 @@
 				<td>${ordenInstance.precio.getPrecioFormateado()}</td>
 				
 				<g:if test="${ordenInstance.timer.getTime("Pendiente") != 0}">
-				    <td>${ordenInstance.timer.getTime("Pendiente") as int}''</td>
+				    <td>${ordenInstance.timer.getTime("Pendiente") as int}'</td>
 				</g:if>
 				<g:else>
 				    <td>-</td>
 				</g:else>
 				
 				<g:if test="${ordenInstance.timer.getTime("En Preparacion") != 0}">
-				    <td>${ordenInstance.timer.getTime("En Preparacion") as int}''</td>
+				    <td>${ordenInstance.timer.getTime("En Preparacion") as int}'</td>
 				</g:if>
 				<g:else>
 				    <td>-</td>
 				</g:else>
 				
 				<g:if test="${ordenInstance.timer.getTime("Terminado") != 0}">
-				    <td>${ordenInstance.timer.getTime("Terminado") as int}''</td>
+				    <td>${ordenInstance.timer.getTime("Terminado") as int}'</td>
 				</g:if>
 				<g:else>
 				    <td>-</td>

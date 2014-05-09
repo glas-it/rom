@@ -3,7 +3,6 @@ package rom
 import rom.OrdenStates.OrdenState;
 import rom.OrdenStates.OrdenStatePendiente;
 import rom.OrdenStates.OrdenStateUserType;
-import rom.OrdenStates.StateTimer;
 
 
 /**

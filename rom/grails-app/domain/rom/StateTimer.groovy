@@ -1,6 +1,4 @@
-package rom.OrdenStates
-
-import rom.Orden;
+package rom
 
 import groovy.time.*;
 /**
@@ -9,14 +7,14 @@ import groovy.time.*;
  */
 class StateTimer {
 
-	Orden orden
+	//Orden orden
 	
 	Map total;
 	String actualState
 	Date created
 	Date acumTime
 	
-	static	belongsTo	= Orden	// tells GORM to cascade commands: e.g., delete this object if the "parent" is deleted.
+//	static	belongsTo	= Orden	// tells GORM to cascade commands: e.g., delete this object if the "parent" is deleted.
 //	static	hasOne		= []	// tells GORM to associate another domain object as an owner in a 1-1 mapping
 	static	hasMany		= [total:long]	// tells GORM to associate other domain objects for a 1-n or n-m mapping
 //	static	mappedBy	= []	// specifies which property should be used in a mapping 
@@ -49,7 +47,7 @@ class StateTimer {
 	def getTime(String state) {
 		if (total[state] == null)
 			return 0;
-		return total[state] / 1000
+		return (total[state] / 1000) / 60
 	}
 	
 	public void finalState() {

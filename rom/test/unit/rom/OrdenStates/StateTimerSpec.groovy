@@ -1,6 +1,7 @@
 package rom.OrdenStates
 
 import grails.test.mixin.TestFor
+import rom.StateTimer;
 import spock.lang.Specification
 
 /**
