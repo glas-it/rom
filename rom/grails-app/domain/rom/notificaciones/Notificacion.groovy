@@ -6,27 +6,21 @@ package rom.notificaciones
  */
 class Notificacion {
 
-	public static final String COCINA = "Cocina";
-	public static final String BARRA = "Barra";
-	public static final String MOZO = "Mozo";
+	public static final long ADMIN = -1;
+	public static final long COCINA = -2;
+	public static final long BARRA = -3;
 	
-	String mensaje
-	String tipoDestino
-	long idMozoDestino
+	long idOrigen, idDestino
+	String uuidOrden, estado
 	
-	boolean fueEnviada = false
+	boolean fueEnviada
 	
-	public Notificacion(String unTipoDestino, String unMensaje) {
-		if (unTipoDestino != COCINA && unTipoDestino != BARRA)
-			throw new Exception("Destino de notificacion invalida")
-		tipoDestino = unTipoDestino
-		mensaje = unMensaje
-	}
-	
-	public Notificacion(long idMozo, String unMensaje) {
-		tipoDestino = MOZO
-		idMozoDestino = idMozo
-		mensaje = unMensaje
+	public Notificacion(long unOrigen, long unDestino, String unaOrden, String unEstado) {
+		idOrigen = unOrigen
+		idDestino = unDestino
+		uuidOrden = unaOrden
+		estado = unEstado
+		fueEnviada = false
 	}
 	
     static	mapping = {

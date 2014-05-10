@@ -9,6 +9,7 @@ import org.codehaus.groovy.grails.web.json.*
 import grails.transaction.Transactional
 import rom.OrdenStates.*
 
+import rom.notificaciones.Notificacion
 
 import groovy.time.*;
 
@@ -89,11 +90,6 @@ class OrdenController {
 	def preparando(String uuidOrden) {
 		Orden orden = getOrden(uuidOrden)
 		ordenService.marcarOrden(orden, OrdenStateEnPreparacion.EN_PREPARACION)
-	
-		/* TODO
-		 * Notificar mozo
-		 */
-		
 		orden.save(flush:true)
 		render SUCCESS
 	}
@@ -103,11 +99,6 @@ class OrdenController {
 	def cancelado(String uuidOrden) {
 		Orden orden = getOrden(uuidOrden)
 		ordenService.marcarOrden(orden, OrdenStateCancelado.CANCELADO)
-	
-		/* TODO
-		 * Notificar mozo
-		 */
-		
 		orden.save(flush:true)
 		render SUCCESS
 	}
@@ -131,11 +122,6 @@ class OrdenController {
 		Orden orden = getOrden(uuidOrden)
 		ordenService.marcarOrden(orden, OrdenStateRechazado.RECHAZADO)
 		orden.addObservaciones(observaciones)
-		
-		/* TODO
-		 * Notificar mozo
-		 */
-		
 		orden.save(flush:true)
 		render SUCCESS
 	}
@@ -146,11 +132,6 @@ class OrdenController {
 	def entregado(String uuidOrden) {
 		Orden orden = getOrden(uuidOrden)
 		ordenService.marcarOrden(orden, OrdenStateEntregado.ENTREGADO)
-	
-		/* TODO
-		 * Notificar mozo
-		 */
-		
 		orden.save(flush:true)
 		render SUCCESS
 	}
@@ -161,9 +142,7 @@ class OrdenController {
 		Orden orden = getOrden(uuidOrden)
 		ordenService.marcarOrden(orden, OrdenStateAnulado.ANULADO)
 	
-		/* TODO
-		 * Notificar mozo
-		 */
+		crearNotificacionMozo(orden)
 		
 		orden.save(flush:true)
 		render SUCCESS
@@ -174,7 +153,8 @@ class OrdenController {
 	@Transactional(readOnly = false)
 	def crearNotificacionMozo(Orden orden) {
 		Mozo mozo = orden.pedido.mozo
-		Notificacion notificacion = new Notificacion(mozo.id, orden.uuid + " " + orden.estado.nombre)
+		Notificacion notificacion = new Notificacion(Notificacion.ADMIN, mozo.id, orden.uuid, 
+			orden.estado.nombre)
 		notificacion.save()
 	}
 	

@@ -3,7 +3,6 @@ package rom
 
 import static org.springframework.http.HttpStatus.*
 
-
 import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
 import grails.converters.JSON
@@ -23,6 +22,8 @@ import rom.notificaciones.Notificacion
 class RestaurantController {
 
 	def springSecurityService
+	
+	def notificacionService
 	
     static allowedMethods = [update: "PUT"]
 
@@ -61,23 +62,22 @@ class RestaurantController {
 		}
 	}
 	
-	/*
 	@Secured(['permitAll'])
-	def notificacionMozo(long idMozo) {
-		def criteria = Orden.createCriteria()
-		def result = criteria.list {
-			and {
-				eq("tipoDestino", Notificacion.MOZO)
-				eq("idMozoDestino", idMozo)
-				eq("fueEnviada", false)
-			}
-		}
-		if (result.size() > 1)
-			render result as JSON
-		else
-			render [result] as JSON
-	}*/
-
+	@Transactional(readOnly = false)
+	def notificacionMozo(String username) {
+		Mozo mozo = Mozo.findByUsername(username)
+		if (! mozo)
+			throw new Exception("Mozo inexistente")
+		def notificaciones = notificacionService.getNotificacionByDestino(mozo.id)
+		render notificaciones as JSON
+	}
+	
+	@Secured(['permitAll'])
+	def notificacionCocina() {
+		def notificaciones = notificacionService.getNotificacionByDestino(Notificacion.COCINA)
+		render notificaciones as JSON
+	}
+	
 	
     @Transactional
     def update(Restaurant restaurantInstance) {
