@@ -36,4 +36,8 @@ class OrdenState {
 	public void marcarRechazado(Orden orden) {
 		throw new TransicionInvalidaOrdenException()
 	}
+	
+	public void marcarAnulado(Orden orden) {
+		orden.estado = new OrdenStateAnulado()
+	}
 }

@@ -1,6 +1,7 @@
 package rom.OrdenStates
 
 import rom.Orden;
+import rom.Exceptions.TransicionInvalidaOrdenException
 
 /**
  * OrdenStateTerminado
@@ -27,7 +28,11 @@ class OrdenStateTerminado extends OrdenState {
 	
 	@Override
 	public void marcarRechazado(Orden orden) {
+		if (orden.fueRechazada)
+			throw new TransicionInvalidaOrdenException()
+		orden.fueRechazada = true
 		orden.estado = new OrdenStateRechazado()
+		
 	}
 	
 	

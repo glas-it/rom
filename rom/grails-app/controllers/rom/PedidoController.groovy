@@ -66,6 +66,23 @@ class PedidoController {
 	
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
+	def cambioMozo(long idRestaurant, String username, long nroMesa) {
+		Mesa mesa = Mesa.findByNumeroAndRestaurant(nroMesa, Restaurant.findById(idRestaurant))
+		Mozo nuevoMozo = Mozo.findByUsername(username)
+		if ( ! nuevoMozo )
+			throw new Exception("Mozo inexistente");
+		
+		Pedido pedido = pedidoService.getPedidoByMesaId(mesa.id)
+		
+		pedido.setNuevoMozo(nuevoMozo)
+		
+		pedido.save()
+		render "SUCCESS: nuevo mozoId " + nuevoMozo.id 
+	}
+	
+	
+	@Secured(['permitAll'])
+	@Transactional(readOnly = false)
 	def cierre(long idRestaurant, long nroMesa) {
 		Mesa mesa = Mesa.findByNumeroAndRestaurant(nroMesa, Restaurant.findById(idRestaurant))
 		Pedido pedido = pedidoService.getPedidoByMesaId(mesa.id)
@@ -74,6 +91,35 @@ class PedidoController {
 		pedido.save()
 		render "SUCCESS: pedido de mesa " + nroMesa + " cerrado"
 	}
+	
+	
+	@Secured(['permitAll'])
+	@Transactional(readOnly = false)
+	def pago(long idRestaurant, long nroMesa) {
+		Mesa mesa = Mesa.findByNumeroAndRestaurant(nroMesa, Restaurant.findById(idRestaurant))
+		Pedido pedido = pedidoService.getPedidoByMesaId(mesa.id)
+
+		/*
+		 * TODO
+		 * Cuestiones de metodo de pago y demas!
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 */
+		
+		pedido.marcarPagado()
+		pedido.save()
+		render "SUCCESS: pedido de mesa " + nroMesa + " pagado"
+	}
+	
+	
+
 	
 	
 	

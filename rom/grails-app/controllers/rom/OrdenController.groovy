@@ -2,6 +2,7 @@ package rom
 
 
 import static org.springframework.http.HttpStatus.*
+
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 import org.codehaus.groovy.grails.web.json.*
@@ -38,7 +39,9 @@ class OrdenController {
 			Consumible agregados = Agregado.findById(plato.idAgregado)
 			Precio precio = Precio.findByConsumibleAndDescripcion(consumible, plato.precio.descripcion)
 			if (consumible == null || precio == null) throw new Exception("Consumible inexistente")
+			
 			Orden orden = new Orden(plato.id, consumible, agregados, precio)
+			orden.addObservaciones(plato.observaciones)
 			pedido.addToOrdenes(orden)
 		}
 		
@@ -65,8 +68,9 @@ class OrdenController {
 	def cocina() {
 		def criteria = Orden.createCriteria()
 		def results = criteria.list {
-			and {
+			or {
 				ne("estado", new OrdenStateCancelado())
+				ne("estado", new OrdenStateAnulado())
 			}	
 		} 
 		render results as JSON
@@ -114,6 +118,20 @@ class OrdenController {
 		Orden orden = getOrden(uuidOrden)
 		ordenService.marcarOrden(orden, OrdenStateTerminado.TERMINADO)
 	
+		crearNotificacionMozo(orden)
+		
+		orden.save(flush:true)
+		render SUCCESS
+	}
+	
+	
+	@Secured(['permitAll'])
+	@Transactional(readOnly = false)
+	def rechazado(String uuidOrden, String observaciones) {
+		Orden orden = getOrden(uuidOrden)
+		ordenService.marcarOrden(orden, OrdenStateRechazado.RECHAZADO)
+		orden.addObservaciones(observaciones)
+		
 		/* TODO
 		 * Notificar mozo
 		 */
@@ -121,6 +139,7 @@ class OrdenController {
 		orden.save(flush:true)
 		render SUCCESS
 	}
+
 
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
@@ -135,7 +154,31 @@ class OrdenController {
 		orden.save(flush:true)
 		render SUCCESS
 	}
+	
+	@Secured(['permitAll'])
+	@Transactional(readOnly = false)
+	def anulado(String uuidOrden) {
+		Orden orden = getOrden(uuidOrden)
+		ordenService.marcarOrden(orden, OrdenStateAnulado.ANULADO)
+	
+		/* TODO
+		 * Notificar mozo
+		 */
+		
+		orden.save(flush:true)
+		render SUCCESS
+	}
 
+	
+	@Secured(['permitAll'])
+	@Transactional(readOnly = false)
+	def crearNotificacionMozo(Orden orden) {
+		Mozo mozo = orden.pedido.mozo
+		Notificacion notificacion = new Notificacion(mozo.id, orden.uuid + " " + orden.estado.nombre)
+		notificacion.save()
+	}
+	
+	
 	
 	def list(Integer max) {
 		params.max = Math.min(max ?: 10, 100)

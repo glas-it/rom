@@ -43,6 +43,8 @@ class OrdenStateUserType implements UserType {
 			return new OrdenStateCancelado()
 		else if (name == OrdenStateRechazado.RECHAZADO)
 			return new OrdenStateRechazado()
+		else if (name == OrdenStateAnulado.ANULADO)
+			return new OrdenStateAnulado()
 		else
 			return null
 	}
@@ -85,7 +87,10 @@ class OrdenStateUserType implements UserType {
 			
 			case OrdenStateRechazado.RECHAZADO:
 				return new OrdenStateRechazado()
-				
+			
+			case OrdenStateAnulado.ANULADO:
+				return new OrdenStateAnulado()	
+					
 			default:
 				throw new RuntimeException("El estado de la orden esta corrupto")
 		}

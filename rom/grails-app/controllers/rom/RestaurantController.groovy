@@ -3,6 +3,7 @@ package rom
 
 import static org.springframework.http.HttpStatus.*
 
+
 import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
 import grails.converters.JSON
@@ -11,6 +12,7 @@ import grails.converters.JSON
 import grails.plugin.springsecurity.SpringSecurityService;
 import grails.transaction.Transactional
 
+import rom.notificaciones.Notificacion
 
 /**
  * RestaurantController
@@ -58,6 +60,23 @@ class RestaurantController {
 			render "[]"
 		}
 	}
+	
+	/*
+	@Secured(['permitAll'])
+	def notificacionMozo(long idMozo) {
+		def criteria = Orden.createCriteria()
+		def result = criteria.list {
+			and {
+				eq("tipoDestino", Notificacion.MOZO)
+				eq("idMozoDestino", idMozo)
+				eq("fueEnviada", false)
+			}
+		}
+		if (result.size() > 1)
+			render result as JSON
+		else
+			render [result] as JSON
+	}*/
 
 	
     @Transactional

@@ -22,8 +22,14 @@ class BootStrap {
 		duenioService.crearDuenio(duenio)
 		def mozo = new Mozo(nombre:"Juan", apellido:"Perez", numeroLegajo:4567, activo:true, 
 			username:"asd")
+		def mozoDos = new Mozo(nombre:"Pedro", apellido:"Martinez", numeroLegajo:1234, activo:true,
+			username:"pmar")
+
 		mozoService.crearMozo(mozo, duenio)
+		mozoService.crearMozo(mozoDos, duenio)
+
 		
+				
 		Mesa mesa = null
 		for (i in 1..5) {
 			mesa = new Mesa()
@@ -132,7 +138,9 @@ class BootStrap {
 			res["precio"] = it.precio
 			res["estado"] = it.estado.nombre
 			res["creado"] = it.timer
-			res["username"]= it.pedido.mozo.username
+			res["username"] = it.pedido.mozo.username
+			res["fueRechazada"] = it.fueRechazada
+			res["observaciones"] = it.observaciones
 			return res
 		}
 		// ENTRADA

@@ -40,13 +40,9 @@ class Pedido {
 		timer = new StateTimer()
 	}
 	
-	
-	/*
-	public boolean addOrden(Orden orden) {
-		orden.pedido = this;
-		return ordenes.add(orden)
-	}*/
-	
+	public void setNuevoMozo(Mozo nuevoMozo) {
+		mozo = nuevoMozo
+	}
 	
 	public void marcarAbierto() {
 		if (mesa == null)

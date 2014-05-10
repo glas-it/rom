@@ -21,8 +21,9 @@ class Orden {
 	Precio precio
 	OrdenState estado
 	StateTimer timer
+	boolean fueRechazada = false
+	String observaciones
 	
-	//static embedded = ['timer']
 	static	belongsTo	= Pedido	// tells GORM to cascade commands: e.g., delete this object if the "parent" is deleted.
 	
 	public Orden(String unUUID, Consumible unConsumible, Agregado unAgregado, Precio unPrecio) {
@@ -32,6 +33,7 @@ class Orden {
 		precio = unPrecio
 		timer = new StateTimer()
 		marcarPendiente()
+		observaciones = ""
 	}
 	
 		
@@ -43,7 +45,13 @@ class Orden {
 	static	constraints = {
 		id column: 'uuid', generator: 'assigned', type: 'string' 
 		agregado blank: true, nullable: true
+		observaciones nullable: true
     }
+	
+	public void addObservaciones(String unaObservacion) {
+		if ( unaObservacion && ! unaObservacion.isAllWhitespace())
+			this.observaciones = unaObservacion + "-" + this.observaciones
+	}
 	
 	private void marcarPendiente() {
 		estado = new OrdenStatePendiente();
@@ -73,6 +81,11 @@ class Orden {
 	public void marcarRechazado() {
 		this.estado.marcarRechazado(this);
 		timer.changeState(estado.nombre)
+	}
+	
+	public void marcarAnulado() {
+		this.estado.marcarAnulado(this);
+		timer.finalState()
 	}
 	
 	/*
