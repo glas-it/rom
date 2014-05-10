@@ -1,4 +1,5 @@
 import rom.Exceptions.MesaConErroresException
+
 import rom.seguridad.*
 import rom.OrdenStates.*
 import grails.converters.JSON
@@ -32,7 +33,7 @@ class BootStrap {
 				
 		Mesa mesa = null
 		for (i in 1..5) {
-			mesa = new Mesa()
+			mesa = new MesaUnitaria()
 			mesa.numero = i
 			mesa.restaurant = duenio.restaurant
 			mesa.activo = true
@@ -43,14 +44,27 @@ class BootStrap {
 			mesa.save()
 		}
 		
-		JSON.registerObjectMarshaller(Mesa) {
+		JSON.registerObjectMarshaller(MesaUnitaria) {
 			def res = [:]
-			res["class"] = "Mesa"
+			res["class"] = "MesaUnitaria"
 			res['id'] = it.id
 			res['abierta'] = it.abierta
 			res['activo'] = it.activo
 			res['capacidad'] = it.capacidad
 			res['numero'] = it.numero
+			res['mozo'] = it.abierta ? pedidoService.getPedidoByMesaId(it.id).mozo.nombre : ""
+			return res
+		}
+		
+		JSON.registerObjectMarshaller(MesaComposite) {
+			def res = [:]
+			res["class"] = "MesaComposite"
+			res['id'] = it.id
+			res['abierta'] = it.abierta
+			res['activo'] = it.activo
+			res['capacidad'] = it.capacidad
+			res['numero'] = it.numero
+			res['mesas'] = it.mesas.collect{ it.id }
 			res['mozo'] = it.abierta ? pedidoService.getPedidoByMesaId(it.id).mozo.nombre : ""
 			return res
 		}

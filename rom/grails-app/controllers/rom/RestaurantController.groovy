@@ -25,6 +25,8 @@ class RestaurantController {
 	
 	def notificacionService
 	
+	def mesaService
+	
     static allowedMethods = [update: "PUT"]
 
 	def index(Integer max) {
@@ -54,13 +56,17 @@ class RestaurantController {
 	}
 	
 	@Secured(['permitAll'])
-	def mesas() {
-		try {
-			render Mesa.list() as JSON
-		} catch(Exception) {
-			render "[]"
-		}
+	def mesasOcupadas(long idRestaurant) {
+		Restaurant resto = Restaurant.findById(idRestaurant)
+		render mesaService.getMesasOcupadas(resto) as JSON
 	}
+	
+	@Secured(['permitAll'])
+	def mesasDisponibles(long idRestaurant) {
+		Restaurant resto = Restaurant.findById(idRestaurant)
+		render mesaService.getMesasDisponibles(resto) as JSON
+	}
+	
 	
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
