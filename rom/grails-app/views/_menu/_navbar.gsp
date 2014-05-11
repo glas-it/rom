@@ -48,7 +48,7 @@
 			<sec:ifAnyGranted roles='DUENIO'>
 				<li class="controlleractive">
 					<g:link controller="rubro" action="index">
-						<g:message code="rubro.label" default="Rubro"/>
+						<g:message code="rubro.label" default="Rubros"/>
 					</g:link>
 				</li>
 			</sec:ifAnyGranted>
@@ -62,7 +62,7 @@
 			<sec:ifAnyGranted roles='DUENIO'>
 				<li class="controlleractive">
 					<g:link controller="subrubro" action="index">
-						<g:message code="subrubro.label" default="Subrubro"/>
+						<g:message code="subrubro.label" default="Subrubros"/>
 					</g:link>
 				</li>
 			</sec:ifAnyGranted>
@@ -70,21 +70,28 @@
 			<sec:ifAnyGranted roles='DUENIO'>
 				<li class="controlleractive">
 					<g:link controller="consumicion" action="index">
-						<g:message code="consumicion.label" default="Consumicion"/>
+						<g:message code="consumicion.label" default="Consumiciones"/>
 					</g:link>
 				</li>
 			</sec:ifAnyGranted>
 			<sec:ifAnyGranted roles='DUENIO'>
 				<li class="controlleractive">
 					<g:link controller="agregado" action="index">
-						<g:message code="agregado.label" default="Agregado"/>
+						<g:message code="agregado.label" default="Agregados"/>
 					</g:link>
 				</li>
 			</sec:ifAnyGranted>
 			<sec:ifAnyGranted roles='DUENIO'>
 				<li class="controlleractive">
 					<g:link controller="orden" action="list">
-						<g:message code="orden.label" default="Orden"/>
+						<g:message code="orden.label" default="Órdenes"/>
+					</g:link>
+				</li>
+			</sec:ifAnyGranted>
+			<sec:ifAnyGranted roles='DUENIO'>
+				<li class="controlleractive">
+					<g:link controller="pedido" action="list">
+						<g:message code="pedido.label" default="Pedidos"/>
 					</g:link>
 				</li>
 			</sec:ifAnyGranted>

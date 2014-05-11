@@ -44,7 +44,8 @@
 				<th>En Preparación</th>
 			
 				<th>Terminado</th>
-			
+				
+				<th>Acciones</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -81,7 +82,12 @@
 				<g:else>
 				    <td>-</td>
 				</g:else>
-			
+				
+				<td>
+					<g:link action="anular" id="${ordenInstance.id}">
+						<i class="glyphicon glyphicon-remove"></i>
+					</g:link>					
+				</td>
 			</tr>
 		</g:each>
 		</tbody>
