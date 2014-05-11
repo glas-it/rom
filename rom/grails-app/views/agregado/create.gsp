@@ -11,23 +11,26 @@
 <body>
 
 	<section id="create-agregado" class="first">
-		<g:hasErrors bean="${agregadoInstance}">
-		<div class="alert alert-danger">
-			<g:renderErrors bean="${agregadoInstance}" as="list" />
-		</div>
-		</g:hasErrors>
-
-		<g:form action="save" class="form-horizontal" role="form" >
-			<div class="tab-content">
-				<g:render template="form"/>
-		
-				<div class="form-actions margin-top-medium">
-					<g:submitButton name="create" class="btn btn-primary" value="${message(code: 'default.button.create.label', default: 'Create')}" />
-		            <button class="btn btn-danger" type="reset"><g:message code="default.button.reset.label" default="Reset" /></button>
+		<div class="panel panel-default tab-content">
+			<div class="panel-body">
+				<g:hasErrors bean="${agregadoInstance}">
+				<div class="alert alert-danger">
+					<g:renderErrors bean="${agregadoInstance}" as="list" />
 				</div>
+				</g:hasErrors>
+		
+				<g:form action="save" class="form-horizontal" role="form" >
+					<div class="tab-content">
+						<g:render template="form"/>
+				
+						<div class="form-actions margin-top-medium">
+							<g:submitButton name="create" class="btn btn-primary" value="${message(code: 'default.button.create.label', default: 'Create')}" />
+				            <button class="btn btn-danger" type="reset"><g:message code="default.button.reset.label" default="Reset" /></button>
+						</div>
+					</div>
+				</g:form>
 			</div>
-		</g:form>
-
+		</div>
 	</section>
 
 </body>

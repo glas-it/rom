@@ -12,6 +12,6 @@ class Consumicion extends Consumible {
     }
     
 	static	constraints = {
-		descripcion nullable: false, blank: false
+		
     }
 }

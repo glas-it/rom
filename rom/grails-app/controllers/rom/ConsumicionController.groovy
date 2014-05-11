@@ -40,10 +40,6 @@ class ConsumicionController {
 
     def create() {
 		Consumicion consumicion = new Consumicion()
-		consumicion.addToPrecios(new Precio())
-		consumicion.addToPrecios(new Precio())
-		consumicion.addToPrecios(new Precio())
-		consumicion.addToPrecios(new Precio())
         respond consumicion
     }
 	
@@ -69,13 +65,10 @@ class ConsumicionController {
             notFound()
             return
         }
-		consumicionInstance.precios = consumicionInstance.precios.findAll { (it.descripcion && !it.descripcion.isAllWhitespace()) || (it.valor > 0) }
-        consumicionInstance.validate()
-		render consumicionInstance as JSON
-		return
+		consumicionInstance.precios = consumicionInstance.precios.findAll {it}
+		consumicionInstance.validate()
 		if (consumicionInstance.hasErrors()) {
-			// agrego los precios que falten
-            respond consumicionInstance.errors, view:'create'
+            respond consumicionInstance, view:'create'
             return
         }
 		
@@ -84,7 +77,7 @@ class ConsumicionController {
         request.withFormat {
             form {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'consumicionInstance.label', default: 'Consumicion'), consumicionInstance.id])
-                redirect action:'create', consumicionInstance
+                redirect consumicionInstance
             }
             '*' { respond consumicionInstance, [status: CREATED] }
         }
@@ -100,8 +93,7 @@ class ConsumicionController {
             notFound()
             return
         }
-
-        if (consumicionInstance.hasErrors()) {
+		if (consumicionInstance.hasErrors()) {
             respond consumicionInstance.errors, view:'edit'
             return
         }

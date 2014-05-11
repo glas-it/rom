@@ -78,7 +78,7 @@
 			
 				<td>${fieldValue(bean: consumicionInstance, field: "nombre")}</td>
 
-				<td>${fieldValue(bean: consumicionInstance, field: "descripcion")}</td>
+				<td>${fieldValue(bean: consumicionInstance, field: "detalle")}</td>
 			
 				<td>${consumicionInstance?.precios[0]?.getPrecioFormateado()}</td>
 				

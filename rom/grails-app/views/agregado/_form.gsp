@@ -1,6 +1,6 @@
 <%@ page import="rom.Agregado" %>
 
-
+<br/>
 <div class="row">
 		<div class="col-md-2">
 			<label for="nombre" class="control-label"><g:message code="agregado.nombre.label" default="Nombre" /><span class="required-indicator">*</span></label>
@@ -10,22 +10,14 @@
 				<span class="help-inline">${hasErrors(bean: agregadoInstance, field: 'nombre', 'error')}</span>
 		</div>
 		<div class="col-md-2">
-			<label for="precio" class="control-label"><g:message code="agregado.precio.label" default="Precio" /><span class="required-indicator">*</span></label>
+			<label for="detalle" class="control-label"><g:message code="agregado.precio.label" default="Detalle" /></label>
 		</div>
-		<div class="col-md-4 ${hasErrors(bean: agregadoInstance.precios[0], field: 'valor', 'error')} required">
-			<g:field class="form-control precio" name="precios[0].valor" type="number" value="${fieldValue(bean: agregadoInstance.precios[0], field: 'valor')}" required=""/>
-			<span class="help-inline">${hasErrors(bean: agregadoInstance.precios[0], field: 'valor', 'error')}</span>
+		<div class="col-md-4 ${hasErrors(bean: agregadoInstance, field: 'detalle', 'error')}">
+			<g:field class="form-control" name="agregadoInstance.detalle" type="text" value="${fieldValue(bean: agregadoInstance, field: 'detalle')}"/>
+			<span class="help-inline">${hasErrors(bean: agregadoInstance, field: 'detalle', 'error')}</span>
 		</div>
 </div>
-</br>
-<div class="${hasErrors(bean: agregadoInstance?.precios[0], field: 'descripcion', 'error')} ">
-	<label for="descripcion" class="control-label"><g:message code="agregado.descripcion.label" default="Descripcion" /></label>
-	<div>
-		<g:textArea class="form-control descripcion" name="precios[0].descripcion" maxlength="150" value="${agregadoInstance?.precios[0].descripcion}" />
-		<span class="help-inline">${hasErrors(bean: agregadoInstance?.precios[0], field: 'descripcion', 'error')}</span>
-	</div>
-</div>
-</br>
+<br/>
 <div class="row">
 	<div class="col-md-2">
 		<label for="subrubro" class="control-label"><g:message code="agregado.subrubro.label" default="Subrubro" /><span class="required-indicator">*</span></label>
@@ -40,8 +32,10 @@
 	</div>
 	<div class="col-md-4 ${hasErrors(bean: agregadoInstance, field: 'activo', 'error')} ">
 		<div>
-			<bs:checkBox name="activo" value="${agregadoInstance?.activo}" checked="${agregadoInstance?.activo}" />
+			<g:checkBox name="activo" value="${agregadoInstance?.activo}" checked="${agregadoInstance?.activo}" />
 			<span class="help-inline">${hasErrors(bean: agregadoInstance, field: 'activo', 'error')}</span>
 		</div>
 	</div>
 </div>
+<br/>
+<g:render template="/precio/table" model="[consumibleInstance: agregadoInstance]"/>

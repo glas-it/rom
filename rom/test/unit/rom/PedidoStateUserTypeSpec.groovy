@@ -1,6 +1,9 @@
+
 package rom
 
+
 import grails.test.mixin.TestFor
+import rom.PedidoStates.PedidoStateUserType;
 import spock.lang.Specification
 
 /**

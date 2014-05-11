@@ -28,7 +28,7 @@
 			
 				<g:sortableColumn property="nombre" title="${message(code: 'agregado.nombre.label', default: 'Nombre')}" />
 			
-				<g:sortableColumn property="precio" title="${message(code: 'agregado.precio.label', default: 'Precio')}" />
+				<th>${message(code: 'agregado.precio.label', default: 'Precio')}</th>
 			
 				<g:sortableColumn property="descripcion" title="${message(code: 'agregado.descripcion.label', default: 'Descripcion')}" />
 			
@@ -40,13 +40,13 @@
 		</thead>
 		<tbody>
 		<g:each in="${agregadoInstanceList}" status="i" var="agregadoInstance">
-				<tr class="${agregadoInstance.activo == true ? 'even' : 'odd'}">
+				<tr class="${agregadoInstance.activo == true ? 'success' : 'failure'}">
 			
 				<td style="overflow: hidden;"><g:link action="show" id="${agregadoInstance.id}">${fieldValue(bean: agregadoInstance, field: "nombre")}</g:link></td>
 			
-				<td>${agregadoInstance.getPrecioFormateado()}</td>
+				<td>${fieldValue(bean: agregadoInstance, field: "detalle")}</td>
 			
-				<td>${fieldValue(bean: agregadoInstance, field: "descripcion")}</td>
+				<td>${agregadoInstance.getPrecioFormateado()}</td>
 			
 				<td>${fieldValue(bean: agregadoInstance, field: "subrubro")}</td>
 				

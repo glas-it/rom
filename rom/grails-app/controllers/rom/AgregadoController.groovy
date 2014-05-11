@@ -40,8 +40,9 @@ class AgregadoController {
             notFound()
             return
         }
-
-        if (agregadoInstance.hasErrors()) {
+		agregadoInstance.precios = agregadoInstance.precios.findAll{it}
+        agregadoInstance.validate()
+		if (agregadoInstance.hasErrors()) {
             respond agregadoInstance.errors, view:'create'
             return
         }

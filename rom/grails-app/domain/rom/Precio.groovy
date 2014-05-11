@@ -17,7 +17,7 @@ class Precio {
     }
     
 	static	constraints = {
-		valor min: 0 as float
+		valor min: 0.0 as float
 		descripcion nullable:true, maxSize: 150
     }
 	

@@ -25,7 +25,7 @@
 	<r:layoutResources />
 	<link rel="stylesheet" media="screen, projection" type="text/css" href="${resource(dir: 'css', file: 'bootstrap.css')}" />
 	<link rel="stylesheet" media="screen, projection" type="text/css" href="${resource(dir: 'css', file: 'estilos.css')}" />
-	
+	<script src="${resource(dir: 'js', file:'cymait_dinamicTable.js')}"></script>
 	<g:layoutHead />
 
 	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -37,6 +37,9 @@
 </head>
 
 <body>
+	<div id="baseURL" style="display:none">
+		<g:createLink uri="/"/>
+	</div>
 	<g:render template="/_menu/navbar"/>														
 
 	<!-- Enable to overwrite Header by individual page -->
@@ -65,10 +68,9 @@
 		<!-- Insert a modal dialog for registering (for an open site registering is possible on any page) -->
 		<g:render template="/_common/modals/registerDialog" model="[item: item]"/>
 	</g:else>
-	
 	<!-- Included Javascript files and other resources -->
 	<r:layoutResources />
-	<script src="js/bootstrap.js"></script>
+	<script src="${resource(dir: 'js', file: 'bootstrap.js')}"></script>
 </body>
 
 </html>

@@ -11,7 +11,7 @@ import grails.transaction.Transactional
  * A controller class handles incoming web requests and performs actions such as redirects, rendering views and so on.
  */
 @Transactional(readOnly = true)
-@Secured('permitAll')
+@Secured(['permitAll'])
 class ConsumibleController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -47,7 +47,6 @@ class ConsumibleController {
         }
 
         consumibleInstance.save flush:true
-
         request.withFormat {
             form {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'consumibleInstance.label', default: 'Consumible'), consumibleInstance.id])
@@ -57,6 +56,10 @@ class ConsumibleController {
         }
     }
 
+	def addPrecio(Long cantFilas) {
+		render(template: '/precio/create', model: [precioInstance: new Precio(), i: cantFilas])
+	}
+	
     def edit(Consumible consumibleInstance) {
         respond consumibleInstance
     }
