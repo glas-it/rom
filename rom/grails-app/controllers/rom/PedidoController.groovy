@@ -2,8 +2,10 @@ package rom
 
 
 import static org.springframework.http.HttpStatus.*
+
 import grails.transaction.Transactional
 import grails.converters.JSON
+import org.codehaus.groovy.grails.web.json.*
 import grails.plugin.springsecurity.annotation.Secured;
 import rom.PedidoStates.*
 
@@ -20,29 +22,37 @@ class PedidoController {
 
 	def pedidoService
 	
+	def mesaService
+	
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
-	def apertura(long idRestaurant, String usernameMozo, long nroMesa, int comensales) {
+	def apertura(long idRestaurant, String usernameMozo, String nroMesas, int comensales) {
 		Restaurant restaurant = Restaurant.findById(idRestaurant)
-		Mesa mesa = Mesa.findByNumeroAndRestaurant(nroMesa, restaurant)
-		if (mesa == null || ! mesa.activo || mesa.abierta) {
-			render "ERROR: No se puede procesa mesa"
-			return
-		}	
+
+		JSONArray idMesas = new JSONArray(nroMesas)
+		Mesa mesa = getMesaParaApertura(idMesas, restaurant)
 		
 		Mozo mozo = Mozo.findByUsernameAndRestaurant(usernameMozo, restaurant);
-		if (mozo == null) {
-			render "ERROR: mozo inexistente"
-			return
-		}
+		if (mozo == null)
+			throw new Exception("Mozo " + usernameMozo + " inexistente")
 		
 		Pedido pedido = new Pedido(mesa, mozo, comensales)
-		println "TIMER  0 :" + pedido.timer.total
 		pedido.marcarAbierto()
-		println "TIMER  1 :" + pedido.timer.total
 		pedido.save()
 		
 		render "SUCCESS: idPedido: " + pedido.id.toString() + " Mesa:" + mesa.toString() + " Mozo:" + mozo.toString()
+	}
+	
+	private Mesa getMesaParaApertura(List nroMesas, Restaurant restaurant) {
+		if (nroMesas.size() <= 0)
+			throw new Exception("Parametro nroMesas invalido")
+		Mesa mesa = null
+		if (nroMesas.size() == 1) {
+			mesa = mesaService.getMesaUnitaria(nroMesas[0], restaurant)
+		} else {
+			mesa = mesaService.crearMesaComposite(nroMesas, restaurant)
+		}			
+		return mesa
 	}
 	
 	@Secured(['permitAll'])
@@ -66,8 +76,8 @@ class PedidoController {
 	
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
-	def cambioMozo(long idRestaurant, String username, long nroMesa) {
-		Mesa mesa = Mesa.findByNumeroAndRestaurant(nroMesa, Restaurant.findById(idRestaurant))
+	def cambioMozo(long idRestaurant, String username, long idMesa) {
+		Mesa mesa = Mesa.findByIdAndRestaurant(idMesa, Restaurant.findById(idRestaurant))
 		Mozo nuevoMozo = Mozo.findByUsername(username)
 		if ( ! nuevoMozo )
 			throw new Exception("Mozo inexistente");
@@ -83,20 +93,20 @@ class PedidoController {
 	
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
-	def cierre(long idRestaurant, long nroMesa) {
-		Mesa mesa = Mesa.findByNumeroAndRestaurant(nroMesa, Restaurant.findById(idRestaurant))
+	def cierre(long idRestaurant, long idMesa) {
+		Mesa mesa = Mesa.findByIdAndRestaurant(idMesa, Restaurant.findById(idRestaurant))
 		Pedido pedido = pedidoService.getPedidoByMesaId(mesa.id)
 
 		pedido.marcarCerrado()
 		pedido.save()
-		render "SUCCESS: pedido de mesa " + nroMesa + " cerrado"
+		render "SUCCESS: pedido de mesa " + mesa.id + " cerrado"
 	}
 	
 	
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
-	def pago(long idRestaurant, long nroMesa) {
-		Mesa mesa = Mesa.findByNumeroAndRestaurant(nroMesa, Restaurant.findById(idRestaurant))
+	def pago(long idRestaurant, long idMesa) {
+		Mesa mesa = Mesa.findByIdAndRestaurant(idMesa, Restaurant.findById(idRestaurant))
 		Pedido pedido = pedidoService.getPedidoByMesaId(mesa.id)
 
 		/*
@@ -115,7 +125,7 @@ class PedidoController {
 		
 		pedido.marcarPagado()
 		pedido.save()
-		render "SUCCESS: pedido de mesa " + nroMesa + " pagado"
+		render "SUCCESS: pedido de mesa " + mesa.id + " pagado"
 	}
 	
 	
@@ -125,12 +135,33 @@ class PedidoController {
 	
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
-	def byMesa(long idRestaurant, long nroMesa) {
-		Mesa mesa = Mesa.findByNumeroAndRestaurant(nroMesa, Restaurant.findById(idRestaurant))
+	def byMesa(long idRestaurant, long idMesa) {
+		Mesa mesa = Mesa.findByIdAndRestaurant(idMesa, Restaurant.findById(idRestaurant))
 		if (! mesa)
 			throw new Exception("Mesa inexistente en Restaurant")
 		Pedido pedido = pedidoService.getPedidoByMesaId(mesa.id)
 		render pedido as JSON
+	}
+	
+	
+	@Secured(['permitAll'])
+	@Transactional(readOnly = false)
+	def agregarMesa(long idRestaurant, long idMesaCompuesta, long idMesa) {
+		Restaurant resto = Restaurant.findById(idRestaurant)
+		
+		mesaService.agregarMesa(idMesaCompuesta, idMesa, resto)
+		
+		render "SUCCESS"
+	}
+	
+	@Secured(['permitAll'])
+	@Transactional(readOnly = false)
+	def quitarMesa(long idRestaurant, long idMesaCompuesta, long idMesa) {
+		Restaurant resto = Restaurant.findById(idRestaurant)
+		
+		mesaService.quitarMesa(idMesaCompuesta, idMesa, resto)
+		
+		render "SUCCESS"
 	}
 	
 	
