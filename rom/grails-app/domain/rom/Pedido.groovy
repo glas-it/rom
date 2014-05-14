@@ -71,8 +71,6 @@ class Pedido {
 	
 	private void cerrarMesa() {
 		mesa?.cerrar()
-		if (mesa.getClass() == MesaComposite)
-			mesa.delete()
 	}
 	
 	/*

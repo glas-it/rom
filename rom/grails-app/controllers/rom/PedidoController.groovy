@@ -44,8 +44,9 @@ class PedidoController {
 		pedido.marcarAbierto()
 		pedido.save()
 		
-		String rta = (mesa as JSON).toString()
-		render "{'success':true, 'mesa': " + rta + "}"
+		/* Por el amor del dios en el que creas, no descomentes esta línea!!! */
+		//String rta = (mesa as JSON).toString()
+		render "{'success':true}"//, 'mesa': " + rta + "}"
 	}
 	
 	private Mesa getMesaParaApertura(List idMesas, Restaurant restaurant) {

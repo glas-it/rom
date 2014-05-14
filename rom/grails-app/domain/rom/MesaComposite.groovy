@@ -1,12 +1,11 @@
 package rom
 
-import com.nanlabs.grails.plugin.logicaldelete.LogicalDelete;
+//import com.nanlabs.grails.plugin.logicaldelete.LogicalDelete;
 
 /**
  * MesaComposite
  * A domain class describes the data object and it's mapping to the database
  */
-@LogicalDelete
 class MesaComposite extends Mesa {
 
 	static	hasMany		= [mesas: Mesa]	// tells GORM to associate other domain objects for a 1-n or n-m mapping
@@ -29,12 +28,12 @@ class MesaComposite extends Mesa {
 	
 	@Override
 	public void cerrar() {
-		def mesasCopia = copiarListaMesas()
+		/*def mesasCopia = copiarListaMesas()
 		for (mesa in mesasCopia) {
-			mesa.cerrar()
-			this.removeFromMesas(mesa)
+			removeMesa(mesa)
 			mesa.save()
-		}
+		}*/
+		mesas.each{ it.cerrar() }
 		abierta = false
 		activo = false
 	}
