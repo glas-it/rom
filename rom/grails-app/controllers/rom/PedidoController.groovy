@@ -109,11 +109,6 @@ class PedidoController {
 	
 	
 	@Secured(['permitAll'])
-	def anular(Pedido pedidoInstance) {
-		redirect action:'list'
-	}
-	
-	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
 	def pago(long idRestaurant, long idMesa) {
 		Mesa mesa = Mesa.findByIdAndRestaurant(idMesa, Restaurant.findById(idRestaurant))

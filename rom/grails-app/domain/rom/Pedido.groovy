@@ -60,13 +60,19 @@ class Pedido {
 	public void marcarPagado() {
 		this.estado.marcarPagado(this);
 		timer.finalState()
-		mesa?.cerrar()
+		cerrarMesa()
 	}
 	
 	public void marcarAnulado() {
 		this.estado.marcarAnulado(this);
 		timer.finalState()
+		cerrarMesa()
+	}
+	
+	private void cerrarMesa() {
 		mesa?.cerrar()
+		if (mesa.getClass() == MesaComposite)
+			mesa.delete()
 	}
 	
 	/*

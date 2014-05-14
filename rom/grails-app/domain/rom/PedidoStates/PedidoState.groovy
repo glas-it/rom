@@ -18,15 +18,15 @@ class PedidoState {
     }
 	
 	public void marcarCerrado(Pedido pedido) {
-		throw new TransicionInvalidaPedidoException("Transicion de pedido inválida");
+		throw new TransicionInvalidaPedidoException();
 	}
 	
 	public void marcarPagado(Pedido pedido) {
-		throw new TransicionInvalidaPedidoException("Transicion de pedido inválida");
+		throw new TransicionInvalidaPedidoException();
 	}
 	
 	public void marcarAnulado(Pedido pedido) {
-		throw new TransicionInvalidaPedidoException("Transicion de pedido inválida");
+		throw new TransicionInvalidaPedidoException();
 	}
 	
 	
