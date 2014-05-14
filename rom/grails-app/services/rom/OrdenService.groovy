@@ -41,16 +41,8 @@ class OrdenService {
 				return true;
 				
 			marcarOrden(orden, OrdenStateAnulado.ANULADO)
-
 			
-			long idDuenio = orden.pedido.mozo.restaurant.duenio.id
-			long idCocina = orden.pedido.mozo.restaurant.cocina.id
-			if (anulaIndividual) {
-				long idMozo = orden.pedido.mozo.id	
-				notificacionService.crearNotificacion(idDuenio, idMozo, orden.uuid,
-				 orden.estado.nombre)
-			}
-			notificacionService.crearNotificacion(idDuenio, idCocina, orden.uuid, orden.estado.nombre)
+			notificar(orden, anulaIndividual)
 
 			orden.save(flush:true)
 			return true
@@ -58,6 +50,20 @@ class OrdenService {
 			return false
 		}
 		
+	}
+	
+	public void notificar(Orden orden, boolean anulaIndividual) {
+		Mozo mozo = orden.pedido.mozo
+		Restaurant resto = mozo.restaurant
+		Duenio duenio = resto.duenio
+		Cocina cocina = Cocina.findByRestaurant(resto)
+		
+		if (anulaIndividual) {
+			notificacionService.crearNotificacion(duenio.id, mozo.id, orden.uuid,
+				orden.estado.nombre)
+		}
+		notificacionService.crearNotificacion(duenio.id, cocina.id, orden.uuid, orden.estado.nombre)
+
 	}
 
 

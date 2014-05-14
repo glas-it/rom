@@ -14,7 +14,7 @@ class Consumible {
 	
 	static	belongsTo	= Subrubro	// tells GORM to cascade commands: e.g., delete this object if the "parent" is deleted.	
 	static	hasMany		= [ precios: Precio ]	// tells GORM to associate other domain objects for a 1-n or n-m mapping
-	String nombre, descripcion
+	String nombre, detalle
 	
 	boolean activo
 	
@@ -34,7 +34,7 @@ class Consumible {
 			return val && val.size() > 0 && !val.any{it && !it.validate()}
 		}
 		
-		descripcion nullable: true, blank: true
+		detalle nullable: true, blank: true
     }
 	
 	

@@ -87,8 +87,8 @@ class RestaurantController {
 	}
 	
 	@Secured(['permitAll'])
-	def notificacionCocina() {
-		def notificaciones = notificacionService.getNotificacionByDestino(Notificacion.COCINA)
+	def notificacionCocina(long idCocina) {
+		def notificaciones = notificacionService.getNotificacionByDestino(idCocina)
 		render notificaciones as JSON
 	}
 	

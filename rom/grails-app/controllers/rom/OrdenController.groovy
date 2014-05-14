@@ -142,8 +142,8 @@ class OrdenController {
 
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
-	def anulado(String uuidOrden, boolean anulaIndividual) {
-		if (ordenService.anularOrden(uuidOrden, anulaIndividual)) {
+	def anulado(String uuidOrden) {
+		if (ordenService.anularOrden(uuidOrden, true)) {
 			render SUCCESS
 			return
 		}
