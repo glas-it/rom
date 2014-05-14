@@ -27,25 +27,21 @@ class MesaService {
 		}
     }
 	
-	public Mesa crearMesaComposite(List nroMesas, Restaurant restaurant) {
+	public Mesa crearMesaComposite(List idMesasList, Restaurant restaurant) {
 		MesaComposite mesaComposite = new MesaComposite()
-		for (idMesa in nroMesas)
+		for (idMesa in idMesasList)
 			mesaComposite.addToMesas(getMesaUnitaria(idMesa, restaurant))
-		mesaComposite.numero = getMesaUnitaria(nroMesas[0], restaurant).numero
+		mesaComposite.numero = getMesaUnitaria(idMesasList[0], restaurant).numero
 		mesaComposite.restaurant = mesaComposite.mesas[0].restaurant
 		mesaComposite.save(flush:true)
 		return mesaComposite
 	}
 	
-	public MesaUnitaria getMesaUnitaria(int nroMesa, Restaurant restaurant) {
-		MesaUnitaria mesa = MesaUnitaria.findByNumeroAndRestaurant(nroMesa, restaurant)
-		if (mesa == null || ! mesa.activo || mesa.abierta) {
-			throw new Exception ("No se puede procesar la mesa " + nroMesa.toString())
-		}
-		return mesa
+	public Mesa getMesa(long idMesa, Restaurant restaurant){
+		return Mesa.findByIdAndRestaurant(idMesa, Restaurant.findById(idRestaurant))
 	}
-	
-	public MesaUnitaria getMesaUnitariaById(long idMesa, Restaurant restaurant) {
+
+	public MesaUnitaria getMesaUnitaria(long idMesa, Restaurant restaurant) {
 		MesaUnitaria mesa = MesaUnitaria.findByIdAndRestaurant(idMesa, restaurant)
 		if (mesa == null || ! mesa.activo || mesa.abierta) {
 			throw new Exception ("No se puede procesar la mesa " + idMesa.toString())
@@ -61,16 +57,18 @@ class MesaService {
 		return mesa
 	}
 	
-	public void agregarMesa(long idMesaComposite,long idMesa, Restaurant restaurant) {
+	public void agregarMesa(long idMesaComposite, long idMesa, Restaurant restaurant) {
 		MesaComposite mesaComposite = getMesaComposite(idMesaComposite, restaurant)
-		MesaUnitaria mesaUnitaria = getMesaUnitariaById(idMesa, restaurant)
+		MesaUnitaria mesaUnitaria = getMesaUnitaria(idMesa, restaurant)
 		mesaComposite.addMesa(mesaUnitaria)
+		mesaComposite.save(flush:true)
 	}
 	
 	public void quitarMesa(long idMesaComposite,long idMesa, Restaurant restaurant) {
 		MesaComposite mesaComposite = getMesaComposite(idMesaComposite, restaurant)
 		MesaUnitaria mesaUnitaria = MesaUnitaria.findByIdAndRestaurant(idMesa, restaurant)
 		mesaComposite.removeMesa(mesaUnitaria)
+		mesaComposite.save(flush:true)
 	}
 	
 	def getMesasDisponibles(Restaurant restaurant) {

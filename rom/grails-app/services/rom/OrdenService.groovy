@@ -2,7 +2,7 @@ package rom
 
 import rom.Exceptions.TransicionInvalidaOrdenException
 import rom.OrdenStates.*
-
+import rom.notificaciones.Notificacion
 import grails.transaction.Transactional;
 
 /**
@@ -11,6 +11,8 @@ import grails.transaction.Transactional;
  */
 @Transactional
 class OrdenService {
+
+	def notificacionService
 
     def marcarOrden(Orden orden, String transicion) {
 		println "TRANSICION: " + transicion
@@ -29,4 +31,41 @@ class OrdenService {
 		else
 			throw new TransicionInvalidaOrdenException()
     }
+
+
+    public boolean anularOrden(String uuidOrden, boolean anulaIndividual) {
+    	try {
+	    	Orden orden = Orden.findByUuid(uuidOrden)
+	    	if (! orden) return false
+	    	if (orden.estado.nombre == OrdenStateAnulado.ANULADO)
+				return true;
+				
+			marcarOrden(orden, OrdenStateAnulado.ANULADO)
+			
+			notificar(orden, anulaIndividual)
+
+			orden.save(flush:true)
+			return true
+		} catch (Exception e) {
+			return false
+		}
+		
+	}
+	
+	public void notificar(Orden orden, boolean anulaIndividual) {
+		Mozo mozo = orden.pedido.mozo
+		Restaurant resto = mozo.restaurant
+		Duenio duenio = resto.duenio
+		Cocina cocina = Cocina.findByRestaurant(resto)
+		
+		if (anulaIndividual) {
+			notificacionService.crearNotificacion(duenio.id, mozo.id, orden.uuid,
+				orden.estado.nombre)
+		}
+		notificacionService.crearNotificacion(duenio.id, cocina.id, orden.uuid, orden.estado.nombre)
+
+	}
+
+
+
 }

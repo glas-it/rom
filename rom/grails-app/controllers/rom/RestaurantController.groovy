@@ -67,6 +67,14 @@ class RestaurantController {
 		render mesaService.getMesasDisponibles(resto) as JSON
 	}
 	
+	@Secured(['permitAll'])
+	def mesas(long idRestaurant) {
+		Restaurant resto = Restaurant.findById(idRestaurant)
+		List total = mesaService.getMesasDisponibles(resto)
+		total += mesaService.getMesasOcupadas(resto)
+		render total as JSON
+	}
+	
 	
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
@@ -79,8 +87,8 @@ class RestaurantController {
 	}
 	
 	@Secured(['permitAll'])
-	def notificacionCocina() {
-		def notificaciones = notificacionService.getNotificacionByDestino(Notificacion.COCINA)
+	def notificacionCocina(long idCocina) {
+		def notificaciones = notificacionService.getNotificacionByDestino(idCocina)
 		render notificaciones as JSON
 	}
 	
