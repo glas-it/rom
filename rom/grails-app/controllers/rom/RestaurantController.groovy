@@ -67,6 +67,14 @@ class RestaurantController {
 		render mesaService.getMesasDisponibles(resto) as JSON
 	}
 	
+	@Secured(['permitAll'])
+	def mesas(long idRestaurant) {
+		Restaurant resto = Restaurant.findById(idRestaurant)
+		List total = mesaService.getMesasDisponibles(resto)
+		total += mesaService.getMesasOcupadas(resto)
+		render total as JSON
+	}
+	
 	
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)

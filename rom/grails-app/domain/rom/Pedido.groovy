@@ -59,13 +59,13 @@ class Pedido {
 	
 	public void marcarPagado() {
 		this.estado.marcarPagado(this);
-		timer.changeState(estado.nombre)
+		timer.finalState()
 		mesa?.cerrar()
 	}
 	
 	public void marcarAnulado() {
 		this.estado.marcarAnulado(this);
-		timer.changeState(estado.nombre)
+		timer.finalState()
 		mesa?.cerrar()
 	}
 	

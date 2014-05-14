@@ -21,17 +21,18 @@ import groovy.time.*;
 @Secured("hasRole('DUENIO')")
 class OrdenController {
 
-	private String SUCCESS = "{success: true}"
-	
+	private String SUCCESS = "{'success': true}"
+		
 	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", alta: "POST"]
 	
 	def pedidoService
 	def ordenService
-	
+	def notificacionService
+
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
-	def alta(long idRestaurant, long nroMesa, String platos) {
-		Mesa mesa = Mesa.findByNumeroAndRestaurant(nroMesa, Restaurant.findById(idRestaurant))
+	def alta(long idRestaurant, long idMesa, String platos) {
+		Mesa mesa = Mesa.findByIdAndRestaurant(idMesa, Restaurant.findById(idRestaurant))
 		Pedido pedido = pedidoService.getPedidoByMesaId(mesa.id)
 		JSONArray ordenes = new JSONArray(platos)
 		for(plato in ordenes) {
@@ -107,9 +108,12 @@ class OrdenController {
 	def terminado(String uuidOrden) {
 		Orden orden = getOrden(uuidOrden)
 		ordenService.marcarOrden(orden, OrdenStateTerminado.TERMINADO)
-	
-		crearNotificacionMozo(orden)
 		
+		long idCocina = orden.pedido.mozo.restaurant.cocina.id
+		long idMozo = orden.pedido.mozo.id
+		notificacionService.crearNotificacion(idCocina, idMozo, orden.uuid,
+			 orden.estado.nombre)
+
 		orden.save(flush:true)
 		render SUCCESS
 	}
@@ -135,26 +139,16 @@ class OrdenController {
 		render SUCCESS
 	}
 	
-	@Secured(['permitAll'])
-	@Transactional(readOnly = false)
-	def anulado(String uuidOrden) {
-		Orden orden = getOrden(uuidOrden)
-		ordenService.marcarOrden(orden, OrdenStateAnulado.ANULADO)
-	
-		crearNotificacionMozo(orden)
-		
-		orden.save(flush:true)
-		render SUCCESS
-	}
 
-	
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
-	def crearNotificacionMozo(Orden orden) {
-		Mozo mozo = orden.pedido.mozo
-		Notificacion notificacion = new Notificacion(Notificacion.ADMIN, mozo.id, orden.uuid, 
-			orden.estado.nombre)
-		notificacion.save()
+	def anulado(String uuidOrden, boolean anulaIndividual) {
+		if (ordenService.anularOrden(uuidOrden, anulaIndividual)) {
+			render SUCCESS
+			return
+		}
+		render "{'success': false}"
+
 	}
 	
 	

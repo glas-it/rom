@@ -5,10 +5,6 @@ package rom.notificaciones
  * A domain class describes the data object and it's mapping to the database
  */
 class Notificacion {
-
-	public static final long ADMIN = -1;
-	public static final long COCINA = -2;
-	public static final long BARRA = -3;
 	
 	long idOrigen, idDestino
 	String uuidOrden, estado

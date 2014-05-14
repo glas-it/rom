@@ -2,13 +2,14 @@ package rom
 
 
 import static org.springframework.http.HttpStatus.*
-
 import grails.transaction.Transactional
 import grails.converters.JSON
+
 import org.codehaus.groovy.grails.web.json.*
+
 import grails.plugin.springsecurity.annotation.Secured;
 import rom.PedidoStates.*
-
+import rom.notificaciones.Notificacion
 
 /**
  * PedidoController
@@ -20,17 +21,20 @@ class PedidoController {
 
 	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", apertura: "POST", cierre: "POST"]
 
-	def pedidoService
+	private String SUCCESS = "{'success': true}"
 	
+	def pedidoService
 	def mesaService
+	def ordenService
+	def notificacionService
 	
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
-	def apertura(long idRestaurant, String usernameMozo, String nroMesas, int comensales) {
+	def apertura(long idRestaurant, String usernameMozo, String idMesas, int comensales) {
 		Restaurant restaurant = Restaurant.findById(idRestaurant)
 
-		JSONArray idMesas = new JSONArray(nroMesas)
-		Mesa mesa = getMesaParaApertura(idMesas, restaurant)
+		JSONArray idMesasList = new JSONArray(idMesas)
+		Mesa mesa = getMesaParaApertura(idMesasList, restaurant)
 		
 		Mozo mozo = Mozo.findByUsernameAndRestaurant(usernameMozo, restaurant);
 		if (mozo == null)
@@ -40,17 +44,18 @@ class PedidoController {
 		pedido.marcarAbierto()
 		pedido.save()
 		
-		render "SUCCESS: idPedido: " + pedido.id.toString() + " Mesa:" + mesa.toString() + " Mozo:" + mozo.toString()
+		String rta = (mesa as JSON).toString()
+		render "{'success':true, 'mesa': " + rta + "}"
 	}
 	
-	private Mesa getMesaParaApertura(List nroMesas, Restaurant restaurant) {
-		if (nroMesas.size() <= 0)
-			throw new Exception("Parametro nroMesas invalido")
+	private Mesa getMesaParaApertura(List idMesas, Restaurant restaurant) {
+		if (idMesas.size() <= 0)
+			throw new Exception("Parametro idMesas invalido")
 		Mesa mesa = null
-		if (nroMesas.size() == 1) {
-			mesa = mesaService.getMesaUnitaria(nroMesas[0], restaurant)
+		if (idMesas.size() == 1) {
+			mesa = mesaService.getMesaUnitaria(idMesas[0], restaurant)
 		} else {
-			mesa = mesaService.crearMesaComposite(nroMesas, restaurant)
+			mesa = mesaService.crearMesaComposite(idMesas, restaurant)
 		}			
 		return mesa
 	}
@@ -87,7 +92,7 @@ class PedidoController {
 		pedido.setNuevoMozo(nuevoMozo)
 		
 		pedido.save()
-		render "SUCCESS: nuevo mozoId " + nuevoMozo.id 
+		render SUCCESS 
 	}
 	
 	
@@ -99,7 +104,7 @@ class PedidoController {
 
 		pedido.marcarCerrado()
 		pedido.save()
-		render "SUCCESS: pedido de mesa " + mesa.id + " cerrado"
+		render SUCCESS
 	}
 	
 	
@@ -125,22 +130,40 @@ class PedidoController {
 		
 		pedido.marcarPagado()
 		pedido.save()
-		render "SUCCESS: pedido de mesa " + mesa.id + " pagado"
+		render SUCCESS
 	}
-	
-	
 
-	
+
+	@Secured(['permitAll'])
+	@Transactional(readOnly = false)
+	def anular(long idRestaurant, long idMesa) {
+		Mesa mesa = Mesa.findByIdAndRestaurant(idMesa, Restaurant.findById(idRestaurant))
+		Pedido pedido = pedidoService.getPedidoByMesaId(mesa.id)
+		
+		pedido.ordenes.each{ ordenService.anularOrden(it.uuid, false) }
+		pedido.marcarAnulado()	
+		pedido.save()
+
+		long idDuenio = pedido.mozo.restaurant.duenio.id
+		notificacionService.crearNotificacion(idDuenio, pedido.mozo.id, pedido.id.toString(), pedido.estado.nombre)
+		render SUCCESS
+	}
 	
 	
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
 	def byMesa(long idRestaurant, long idMesa) {
 		Mesa mesa = Mesa.findByIdAndRestaurant(idMesa, Restaurant.findById(idRestaurant))
-		if (! mesa)
-			throw new Exception("Mesa inexistente en Restaurant")
-		Pedido pedido = pedidoService.getPedidoByMesaId(mesa.id)
-		render pedido as JSON
+		if (! mesa) {
+			render "{'success': false}"
+			return
+		}
+			
+		try {
+			render pedidoService.getPedidoByMesaId(mesa.id) as JSON
+		} catch (Exception e){
+			render "{'success': false}"
+		}
 	}
 	
 	
@@ -151,7 +174,7 @@ class PedidoController {
 		
 		mesaService.agregarMesa(idMesaCompuesta, idMesa, resto)
 		
-		render "SUCCESS"
+		render SUCCESS
 	}
 	
 	@Secured(['permitAll'])
@@ -161,7 +184,7 @@ class PedidoController {
 		
 		mesaService.quitarMesa(idMesaCompuesta, idMesa, resto)
 		
-		render "SUCCESS"
+		render SUCCESS
 	}
 	
 	
