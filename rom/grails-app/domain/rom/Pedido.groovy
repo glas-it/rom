@@ -21,6 +21,8 @@ class Pedido {
 	PedidoState estado
 	StateTimer timer
 	
+	String motivoAnulacion
+	
 	//static embedded = ['timer']
 	static	hasMany		= [ordenes : Orden]	// tells GORM to associate other domain objects for a 1-n or n-m mapping
 	
@@ -31,6 +33,7 @@ class Pedido {
 	}
 	
 	static	constraints = {
+		motivoAnulacion blank: true, nullable: true
 	}
 	
 	public Pedido(Mesa unaMesa, Mozo unMozo, int cantComensales) {
@@ -63,14 +66,23 @@ class Pedido {
 		cerrarMesa()
 	}
 	
-	public void marcarAnulado() {
+	public void marcarAnulado(motivo) {
 		this.estado.marcarAnulado(this);
+		motivoAnulacion = motivo
 		timer.finalState()
 		cerrarMesa()
 	}
 	
 	private void cerrarMesa() {
 		mesa?.cerrar()
+	}
+	
+	def anulado() {
+		return estado.anulado()
+	}
+	
+	def pagado() {
+		return estado.pagado()
 	}
 	
 	/*

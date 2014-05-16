@@ -24,6 +24,8 @@ class Orden {
 	boolean fueRechazada = false
 	String observaciones
 	
+	String motivoAnulacion
+	
 	static	belongsTo	= Pedido	// tells GORM to cascade commands: e.g., delete this object if the "parent" is deleted.
 	
 	public Orden(String unUUID, Consumible unConsumible, Agregado unAgregado, Precio unPrecio) {
@@ -46,7 +48,16 @@ class Orden {
 		id column: 'uuid', generator: 'assigned', type: 'string' 
 		agregado blank: true, nullable: true
 		observaciones nullable: true
+		motivoAnulacion nullable: true, blank: true
     }
+	
+	def anulado() {
+		return estado.anulado()
+	}
+	
+	def cancelado() {
+		return estado.cancelado()
+	}
 	
 	public void addObservaciones(String unaObservacion) {
 		if ( unaObservacion && ! unaObservacion.isAllWhitespace())

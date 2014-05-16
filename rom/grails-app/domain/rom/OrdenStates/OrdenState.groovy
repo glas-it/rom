@@ -16,6 +16,14 @@ class OrdenState {
     
 	static	constraints = {
     }
+		
+	def anulado() {
+		return false
+	}
+	
+	def cerrado() {
+		return false
+	}
 	
 	public void marcarEnPreparacion(Orden orden) {
 		throw new TransicionInvalidaOrdenException()	

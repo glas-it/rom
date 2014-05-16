@@ -84,9 +84,9 @@
 				</g:else>
 				
 				<td>
-					<g:link action="anular" id="${ordenInstance.id}">
-						<i class="glyphicon glyphicon-remove"></i>
-					</g:link>					
+					<g:if test="${!ordenInstance.anulado()}">
+						<g:render template="/_common/modals/botonAnular" model="[item: ordenInstance]"/>
+					</g:if>					
 				</td>
 			</tr>
 		</g:each>

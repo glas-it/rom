@@ -14,6 +14,10 @@ class PedidoStateAnulado extends PedidoState {
 	static	constraints = {
     }
 	
+	def anulado() {
+		return true
+	}
+	
 	public PedidoStateAnulado() {
 		nombre = ANULADO
 	}

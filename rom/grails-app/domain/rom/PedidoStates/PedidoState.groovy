@@ -17,6 +17,14 @@ class PedidoState {
 	static	constraints = {
     }
 	
+	def anulado() {
+		return false
+	}
+	
+	def pagado() {
+		return false
+	}
+	
 	public void marcarCerrado(Pedido pedido) {
 		throw new TransicionInvalidaPedidoException();
 	}

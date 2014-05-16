@@ -137,17 +137,23 @@ class PedidoController {
 
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
-	def anular(long idRestaurant, long idMesa) {
-		Mesa mesa = Mesa.findByIdAndRestaurant(idMesa, Restaurant.findById(idRestaurant))
-		Pedido pedido = pedidoService.getPedidoByMesaId(mesa.id)
-		
-		pedido.ordenes.each{ ordenService.anularOrden(it.uuid, false) }
-		pedido.marcarAnulado()	
-		pedido.save()
-
-		long idDuenio = pedido.mozo.restaurant.duenio.id
-		notificacionService.crearNotificacion(idDuenio, pedido.mozo.id, pedido.id.toString(), pedido.estado.nombre)
-		render SUCCESS
+	def anular() {
+		//try {
+			def pedido = Pedido.get(params.id)
+			if (!pedido) {
+				flash.message = "El pedido no existe"
+				redirect action: 'list'
+			}
+			pedido.ordenes.each{ ordenService.anularOrden(it.uuid, false) }
+			pedido.marcarAnulado(params.motivo)
+			pedido.save()
+			long idDuenio = pedido.mozo.restaurant.duenio.id
+			notificacionService.crearNotificacion(idDuenio, pedido.mozo.id, pedido.id.toString(), pedido.estado.nombre)
+			flash.message = "El pedido ha sido anulado exitosamente"
+			redirect action: 'list'
+//		} catch(Exception) {
+//			flash.message = "Hubo un error al anular el pedido"
+//		}
 	}
 	
 	

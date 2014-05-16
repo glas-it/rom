@@ -142,12 +142,22 @@ class OrdenController {
 
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
-	def anulado(String uuidOrden) {
-		if (ordenService.anularOrden(uuidOrden, true)) {
-			render SUCCESS
-			return
+	def anular() {
+		def orden = Orden.get(params.id)
+		if (!orden) {
+			flash.message = "No existe tal orden"
+			redirect action: 'list'
 		}
-		render "{'success': false}"
+		orden.motivoAnulacion = params.motivo
+		if (ordenService.anularOrden(orden.uuid, true)) {
+			orden = Orden.get(params.id)
+			orden.save()
+			flash.message = "La orden ha sido anulada correctamente"
+			redirect action: 'list'
+		} else {
+			flash.message = "Hubo un error al anular la orden"
+			redirect action: 'list'
+		}
 
 	}
 	

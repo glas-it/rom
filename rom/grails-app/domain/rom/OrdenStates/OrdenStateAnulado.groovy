@@ -16,6 +16,10 @@ class OrdenStateAnulado extends OrdenState {
 	static	constraints = {
     }
 	
+	def anulado() {
+		return true
+	}
+	
 	public OrdenStateAnulado(){
 		nombre = ANULADO
 	}

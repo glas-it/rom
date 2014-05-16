@@ -16,6 +16,10 @@ class PedidoStatePagado extends PedidoState {
 	static	constraints = {
     }
 	
+	def pagado() {
+		return true
+	}
+	
 	public PedidoStatePagado() {
 		nombre = PAGADO
 	}
