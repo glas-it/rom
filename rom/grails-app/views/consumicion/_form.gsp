@@ -27,12 +27,18 @@
 		<g:select class="form-control" id="subrubro" name="subrubro.id" from="${rom.Subrubro.list()}" optionKey="id" required="" value="${consumicionInstance?.subrubro?.id}"/>
 		<span class="help-inline">${hasErrors(bean: consumicionInstance, field: 'subrubro', 'error')}</span>
 	</div>
-	<div class="col-md-2">
+	<div class="col-md-1">
 		<label for="activo" class="control-label"><g:message code="consumicion.activo.label" default="Activo" /></label>
 	</div>
-	<div class="col-md-4 ${hasErrors(bean: consumicionInstance, field: 'activo', 'error')} ">
+	<div class="col-md-2 ${hasErrors(bean: consumicionInstance, field: 'activo', 'error')} ">
 		<g:checkBox name="activo" value="${consumicionInstance?.activo}" checked="${consumicionInstance?.activo}" />
 		<span class="help-inline">${hasErrors(bean: consumicionInstance, field: 'activo', 'error')}</span>
+	</div>
+	<div class="col-md-1">
+		<label for="aCocina" class="control-label"><g:message code="consumicion.aCocina.label" default="A cocina"/></label>
+	</div>
+	<div class="col-md-2">
+		<g:checkBox name="aCocina" value="${consumicionInstance?.aCocina}" checked="${consumicionInstance?.aCocina}"/>
 	</div>
 </div>
 </br>  

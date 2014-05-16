@@ -27,10 +27,10 @@
 		<span class="help-inline">${hasErrors(bean: agregadoInstance, field: 'subrubro', 'error')}</span>
 	</div>
 	
-	<div class="col-md-2">
+	<div class="col-md-1">
 		<label for="activo" class="control-label"><g:message code="agregado.activo.label" default="Activo" /></label>
 	</div>
-	<div class="col-md-4 ${hasErrors(bean: agregadoInstance, field: 'activo', 'error')} ">
+	<div class="col-md-2 ${hasErrors(bean: agregadoInstance, field: 'activo', 'error')} ">
 		<div>
 			<g:checkBox name="activo" value="${agregadoInstance?.activo}" checked="${agregadoInstance?.activo}" />
 			<span class="help-inline">${hasErrors(bean: agregadoInstance, field: 'activo', 'error')}</span>

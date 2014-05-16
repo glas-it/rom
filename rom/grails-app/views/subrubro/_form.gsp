@@ -62,6 +62,10 @@
 		<g:select class="form-control" id="rubro" name="rubro.id" from="${rom.Rubro.list()}" optionKey="id" required="" value="${subrubroInstance?.rubro?.id}" class="many-to-one"/>
 		<span class="help-inline">${hasErrors(bean: subrubroInstance, field: 'rubro', 'error')}</span>
 	</div>
-	<div class = "col-md-2"></div>
-	<div class = "col-md-4"></div>
+	<div class="col-md-2">
+		<label for="aCocina" class="control-label"><g:message code="consumicion.aCocina.label" default="a cocina"/></label>
+	</div>
+	<div class="col-md-4">
+		<g:checkBox name="aCocina" value="${subrubroInstance?.aCocina}" checked="${subrubroInstance?.aCocina}"/>
+	</div>
 </div>

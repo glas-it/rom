@@ -16,6 +16,14 @@
 		<span class="help-inline">${hasErrors(bean: rubroInstance, field: 'orden', 'error')}</span>
 	</div>
 </div>
+<div class="row">
+	<div class="col-md-2">
+		<label for="aCocina" class="control-label"><g:message code="consumicion.aCocina.label" default="a cocina"/></label>
+	</div>
+	<div class="col-md-4">
+		<g:checkBox name="aCocina" value="${rubroInstance?.aCocina}" checked="${rubroInstance?.aCocina}"/>
+	</div>
+</div>
 
 
 

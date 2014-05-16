@@ -40,6 +40,7 @@ class ConsumicionController {
 
     def create() {
 		Consumicion consumicion = new Consumicion()
+		consumicion.aCocina = true
         respond consumicion
     }
 	
