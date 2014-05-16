@@ -22,9 +22,7 @@ class Orden {
 	OrdenState estado
 	StateTimer timer
 	boolean fueRechazada = false
-	String observaciones
-	
-	String motivoAnulacion
+	String observaciones, motivoAnulacion
 	
 	static	belongsTo	= Pedido	// tells GORM to cascade commands: e.g., delete this object if the "parent" is deleted.
 	

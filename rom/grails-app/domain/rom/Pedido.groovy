@@ -13,14 +13,13 @@ class Pedido {
 //	static	belongsTo	= []	// tells GORM to cascade commands: e.g., delete this object if the "parent" is deleted.	
 //	static	mappedBy	= []	// specifies which property should be used in a mapping 	
 	//static	hasOne		= StateTimer	// tells GORM to associate another domain object as an owner in a 1-1 mapping
-	
+	Date dateCreated
 	
 	Mesa mesa
 	Mozo mozo
 	int comensales
 	PedidoState estado
 	StateTimer timer
-	
 	String motivoAnulacion
 	
 	//static embedded = ['timer']
@@ -66,11 +65,13 @@ class Pedido {
 		cerrarMesa()
 	}
 	
-	public void marcarAnulado(motivo) {
+
+	public void marcarAnulado(String motivo) {
 		this.estado.marcarAnulado(this);
 		motivoAnulacion = motivo
 		timer.finalState()
 		cerrarMesa()
+		motivoAnulacion = motivo
 	}
 	
 	private void cerrarMesa() {

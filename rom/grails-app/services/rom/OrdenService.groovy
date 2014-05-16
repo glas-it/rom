@@ -33,7 +33,7 @@ class OrdenService {
     }
 
 
-    public boolean anularOrden(String uuidOrden, boolean anulaIndividual) {
+    public boolean anularOrden(String uuidOrden, boolean anulaIndividual, String motivo) {
     	try {
 	    	Orden orden = Orden.findByUuid(uuidOrden)
 	    	if (! orden) return false
@@ -41,7 +41,8 @@ class OrdenService {
 				return true;
 				
 			marcarOrden(orden, OrdenStateAnulado.ANULADO)
-			
+			orden.motivoAnulacion = motivo
+
 			notificar(orden, anulaIndividual)
 
 			orden.save(flush:true)

@@ -140,6 +140,16 @@ class OrdenController {
 	}
 	
 
+
+	/*
+
+
+
+	NACHO: ESTE METODO ES PARA QUE LO USES DESDE LA PANTALLA!!!!!
+
+
+
+	*/
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
 	def anular() {
