@@ -75,20 +75,10 @@ class RestaurantController {
 		render total as JSON
 	}
 	
-	
+		
 	@Secured(['permitAll'])
-	@Transactional(readOnly = false)
-	def notificacionMozo(String username) {
-		Mozo mozo = Mozo.findByUsername(username)
-		if (! mozo)
-			throw new Exception("Mozo inexistente")
-		def notificaciones = notificacionService.getNotificacionByDestino(mozo.id)
-		render notificaciones as JSON
-	}
-	
-	@Secured(['permitAll'])
-	def notificacionCocina(long idCocina) {
-		def notificaciones = notificacionService.getNotificacionByDestino(idCocina)
+	def notificacion(long idDestino) {
+		def notificaciones = notificacionService.getNotificacionByDestino(idDestino)
 		render notificaciones as JSON
 	}
 	

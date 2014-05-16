@@ -22,7 +22,7 @@ class Orden {
 	OrdenState estado
 	StateTimer timer
 	boolean fueRechazada = false
-	String observaciones
+	String observaciones, motivoAnulacion
 	
 	static	belongsTo	= Pedido	// tells GORM to cascade commands: e.g., delete this object if the "parent" is deleted.
 	
@@ -46,6 +46,7 @@ class Orden {
 		id column: 'uuid', generator: 'assigned', type: 'string' 
 		agregado blank: true, nullable: true
 		observaciones nullable: true
+		motivoAnulacion nullable: true
     }
 	
 	public void addObservaciones(String unaObservacion) {

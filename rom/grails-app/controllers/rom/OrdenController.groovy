@@ -140,10 +140,20 @@ class OrdenController {
 	}
 	
 
+
+	/*
+
+
+
+	NACHO: ESTE METODO ES PARA QUE LO USES DESDE LA PANTALLA!!!!!
+
+
+
+	*/
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
-	def anulado(String uuidOrden) {
-		if (ordenService.anularOrden(uuidOrden, true)) {
+	def anulado(String uuidOrden, String motivo) {
+		if (ordenService.anularOrden(uuidOrden, true, motivo)) {
 			render SUCCESS
 			return
 		}

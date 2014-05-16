@@ -1,5 +1,6 @@
 
 <%@ page import="rom.Pedido" %>
+<%@ page import="rom.PedidoStates.*" %>
 <!DOCTYPE html>
 <html>
 
@@ -25,6 +26,31 @@
 <section id="list-orden" class="first">
 	<div class="panel panel-default tab-content">
 	<div class="panel-body">
+	<g:form action="filter" method="GET" class="form-horizontal" role="form" >
+		
+		<div class="row form-group" >
+			<div class="col-md-1">
+				<label for="estado" class="control-label">Estado</label>
+			</div>
+			<div class="col-md-3">
+				<g:select class="form-control" id="estadoNombre" name="estadoNombre"
+				 from="${[PedidoStateAbierto.ABIERTO, PedidoStateCerrado.CERRADO,
+					 PedidoStatePagado.PAGADO, PedidoStateAnulado.ANULADO]}" class="form-control many-to-one"
+				 noSelection="['':'Seleccione un estado']"/>
+			</div>
+			<div class="col-md-1">
+				<label for="fecha" class="control-label">Fecha</label>
+			</div>
+			<div class="col-md-3">
+				<g:field type="date" name="fecha" value="${formatDate(format:'dd-MM-yyyy',date:new Date())}" />
+			</div>
+		</div>
+		<div class="form-actions margin-top-medium">
+			<g:submitButton name="buscar" class="btn btn-primary" value="${message(code: 'default.button.buscar.label', default: 'Buscar')}"/>
+		</div>
+			
+	</g:form>
+	</div>	
 	<table class="table table-bordered margin-top-medium">
 		<thead>
 			<tr>			
@@ -65,7 +91,6 @@
 		</g:each>
 		</tbody>
 	</table>
-	</div>
 	</div>
 	<div>
 		<bs:paginate total="${pedidoInstanceCount}" />

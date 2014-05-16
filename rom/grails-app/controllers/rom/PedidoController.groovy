@@ -35,6 +35,7 @@ class PedidoController {
 
 		JSONArray idMesasList = new JSONArray(idMesas)
 		Mesa mesa = getMesaParaApertura(idMesasList, restaurant)
+		String rta = (mesa as JSON).toString()
 		
 		Mozo mozo = Mozo.findByUsernameAndRestaurant(usernameMozo, restaurant);
 		if (mozo == null)
@@ -46,7 +47,7 @@ class PedidoController {
 		
 		/* Por el amor del dios en el que creas, no descomentes esta línea!!! */
 		//String rta = (mesa as JSON).toString()
-		render "{'success':true}"//, 'mesa': " + rta + "}"
+		render "{'success':true}, 'mesa': " + rta + "}"
 	}
 	
 	private Mesa getMesaParaApertura(List idMesas, Restaurant restaurant) {
@@ -137,12 +138,12 @@ class PedidoController {
 
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
-	def anular(long idRestaurant, long idMesa) {
+	def anular(long idRestaurant, long idMesa, String motivo) {
 		Mesa mesa = Mesa.findByIdAndRestaurant(idMesa, Restaurant.findById(idRestaurant))
 		Pedido pedido = pedidoService.getPedidoByMesaId(mesa.id)
 		
-		pedido.ordenes.each{ ordenService.anularOrden(it.uuid, false) }
-		pedido.marcarAnulado()	
+		pedido.ordenes.each{ ordenService.anularOrden(it.uuid, false, null) }
+		pedido.marcarAnulado(motivo)
 		pedido.save()
 
 		long idDuenio = pedido.mozo.restaurant.duenio.id
@@ -197,6 +198,18 @@ class PedidoController {
 	def list(Integer max) {
 		params.max = Math.min(max ?: 10, 100)
 		respond Pedido.list(params), model:[pedidoInstanceCount: Pedido.count()]
+	}
+
+	@Secured(['permitAll'])
+	def filter(Integer max) {
+		println "ESTADO " + params.estadoNombre
+		println "FECHA " + params.fecha
+		Integer offset = params.offset ? params.int("offset") : 0
+		params.max = Math.min(max ?: 10, 100)
+		PedidoFilter filtro = new PedidoFilter(estadoNombre: params.estadoNombre, fecha: params.fecha)
+		
+		def pedidos = pedidoService.filter(filtro, params.max, offset)
+		respond pedidos, model:[pedidoInstanceCount: pedidos.size()], view:'list'
 	}
 
 	def show(Pedido pedidoInstance) {
@@ -285,4 +298,9 @@ class PedidoController {
 			'*'{ render status: NOT_FOUND }
 		}
 	}
+}
+
+class PedidoFilter {
+	String estadoNombre
+	String fecha
 }
