@@ -66,9 +66,12 @@ class MesaService {
 	
 	public void quitarMesa(long idMesaComposite,long idMesa, Restaurant restaurant) {
 		MesaComposite mesaComposite = getMesaComposite(idMesaComposite, restaurant)
-		MesaUnitaria mesaUnitaria = MesaUnitaria.findByIdAndRestaurant(idMesa, restaurant)
+		def mesaUnitaria = mesaComposite.mesas.find { it.id == idMesa }
+		if (! mesaUnitaria)
+			throw new Exception("Mesa unitaria " + idMesa.toString() + " no presente en mesa Compuesta")
 		mesaComposite.removeMesa(mesaUnitaria)
 		mesaComposite.save(flush:true)
+		mesaUnitaria.save(flush:true)
 	}
 	
 	def getMesasDisponibles(Restaurant restaurant) {

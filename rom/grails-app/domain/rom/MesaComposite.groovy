@@ -49,7 +49,8 @@ class MesaComposite extends Mesa {
 		this.addToMesas(mesa)
 	}
 	
-	public void removeMesa(Mesa mesa) {
+	public void removeMesa(Mesa aRemover) {
+		def mesa = this.mesas.find{ it.id == aRemover.id }
 		mesa.cerrar()
 		this.removeFromMesas(mesa)
 	}
