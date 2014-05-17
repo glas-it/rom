@@ -47,7 +47,7 @@ class PedidoController {
 		
 		/* Por el amor del dios en el que creas, no descomentes esta línea!!! */
 		//String rta = (mesa as JSON).toString()
-		render "{'success':true}, 'mesa': " + rta + "}"
+		render "{'success':true, 'mesa': " + rta + "}"
 	}
 	
 	private Mesa getMesaParaApertura(List idMesas, Restaurant restaurant) {
@@ -170,7 +170,7 @@ class PedidoController {
 		try {
 			render pedidoService.getPedidoByMesaId(mesa.id) as JSON
 		} catch (Exception e){
-			render "{'success': false}"
+			render "{'success': false, 'mesa':"+(mesa as JSON)+"}"
 		}
 	}
 	
