@@ -94,7 +94,7 @@ class PedidoController {
 		pedido.setNuevoMozo(nuevoMozo)
 		
 		pedido.save()
-		render SUCCESS 
+		render pedido as JSON
 	}
 	
 	
@@ -103,9 +103,12 @@ class PedidoController {
 	def cierre(long idRestaurant, long idMesa) {
 		Mesa mesa = Mesa.findByIdAndRestaurant(idMesa, Restaurant.findById(idRestaurant))
 		Pedido pedido = pedidoService.getPedidoByMesaId(mesa.id)
-
-		pedido.marcarCerrado()
-		pedido.save()
+		if (pedido.ordenes.size() > 0) {
+			pedido.marcarCerrado()
+			pedido.save()
+		} else {
+			pedido.marcarAnulado("Pedido sin órdenes")
+		}
 		render SUCCESS
 	}
 	
