@@ -54,11 +54,7 @@ class PedidoController {
 		if (idMesas.size() <= 0)
 			throw new Exception("Parametro idMesas invalido")
 		Mesa mesa = null
-		if (idMesas.size() == 1) {
-			mesa = mesaService.getMesaUnitaria(idMesas[0], restaurant)
-		} else {
-			mesa = mesaService.crearMesaComposite(idMesas, restaurant)
-		}			
+		mesa = mesaService.crearMesaComposite(idMesas, restaurant)
 		return mesa
 	}
 	
@@ -182,9 +178,8 @@ class PedidoController {
 	@Transactional(readOnly = false)
 	def agregarMesa(long idRestaurant, long idMesaCompuesta, long idMesa) {
 		Restaurant resto = Restaurant.findById(idRestaurant)
-		
 		mesaService.agregarMesa(idMesaCompuesta, idMesa, resto)
-		
+
 		render SUCCESS
 	}
 	

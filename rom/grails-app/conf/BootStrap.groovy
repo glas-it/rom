@@ -64,7 +64,9 @@ class BootStrap {
 			res['activo'] = it.activo
 			res['capacidad'] = it.capacidad
 			res['numero'] = it.numero
-			res['mesas'] = it.mesas.collect{ it.id }
+			res['mesas'] = it.mesas.collect {mesaJuntada ->
+				return [id: mesaJuntada.id, numero: mesaJuntada.numero, capacidad: mesaJuntada.capacidad]
+			}
 			res['mozo'] = it.abierta ? pedidoService.getPedidoByMesaId(it.id).mozo.nombre : ""
 			return res
 		}
