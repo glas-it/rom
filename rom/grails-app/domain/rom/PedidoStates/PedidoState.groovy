@@ -25,6 +25,10 @@ class PedidoState {
 		return false
 	}
 	
+	def cerrado() {
+		return false
+	}
+	
 	public void marcarCerrado(Pedido pedido) {
 		throw new TransicionInvalidaPedidoException();
 	}

@@ -27,6 +27,10 @@ class PedidoStateCerrado extends PedidoState {
 	public void marcarAnulado(Pedido pedido) {
 		pedido.estado = new PedidoStateAnulado();
 	}
+	
+	def cerrado() {
+		return true
+	}
 	/*
 	 * Methods of the Domain Class
 	 */

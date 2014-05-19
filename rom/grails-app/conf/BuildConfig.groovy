@@ -70,6 +70,7 @@ grails.project.dependency.resolution = {
         runtime ":resources:1.2.7"
 		compile ":kickstart-with-bootstrap:1.1.0"
 		compile ':spring-security-core:2.0-RC2'
+		compile ":rendering:1.0.0"
         // Uncomment these (or add new ones) to enable additional resources capabilities
         //runtime ":zipped-resources:1.0.1"
         //runtime ":cached-resources:1.1"
