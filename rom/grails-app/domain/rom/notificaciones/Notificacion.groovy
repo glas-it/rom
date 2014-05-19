@@ -7,15 +7,16 @@ package rom.notificaciones
 class Notificacion {
 	
 	long idOrigen, idDestino
-	String uuidOrden, estado
+	String titulo
+	String mensaje
 	
 	boolean fueEnviada
 	
-	public Notificacion(long unOrigen, long unDestino, String unaOrden, String unEstado) {
+	public Notificacion(long unOrigen, long unDestino, String unTitulo, String unMensaje) {
 		idOrigen = unOrigen
 		idDestino = unDestino
-		uuidOrden = unaOrden
-		estado = unEstado
+		mensaje = unMensaje
+		titulo = unTitulo
 		fueEnviada = false
 	}
 	

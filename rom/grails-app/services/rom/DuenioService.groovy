@@ -27,7 +27,19 @@ class DuenioService {
 			passwordExpired: false
 		)
 		cocina.save()
+		Cocina barra = new Cocina(
+			username: "barra",
+			password: duenio.id.toString(),
+			email: duenio.email,
+			restaurant: duenio.restaurant,
+			enabled: true,
+			accountExpired: false,
+			accountLocked: false,
+			passwordExpired: false
+		)
+		barra.save()
 		UsuarioRol.create duenio as Usuario, Rol.findByAuthority('DUENIO')
 		UsuarioRol.create cocina as Usuario, Rol.findByAuthority('COCINA')
+		UsuarioRol.create barra as Usuario, Rol.findByAuthority('COCINA')
 	}
 }

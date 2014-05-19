@@ -57,16 +57,13 @@ class OrdenService {
 		Mozo mozo = orden.pedido.mozo
 		Restaurant resto = mozo.restaurant
 		Duenio duenio = resto.duenio
-		Cocina cocina = Cocina.findByRestaurant(resto)
+		Cocina cocina = Cocina.findByUsername((orden.consumible.aCocina) ? "cocina" : "barra")
 		
 		if (anulaIndividual) {
-			notificacionService.crearNotificacion(duenio.id, mozo.id, orden.uuid,
-				orden.estado.nombre)
+			notificacionService.crearNotificacion(duenio.id, mozo.id, "Mesa " + orden.pedido.mesa.numero, 
+				"Se anuló: " + orden.consumible.toString())
 		}
-		notificacionService.crearNotificacion(duenio.id, cocina.id, orden.uuid, orden.estado.nombre)
-
+		notificacionService.crearNotificacion(duenio.id, cocina.id,  "Mesa " + orden.pedido.mesa.numero, 
+				"Se anuló: " + orden.consumible.toString())
 	}
-
-
-
 }

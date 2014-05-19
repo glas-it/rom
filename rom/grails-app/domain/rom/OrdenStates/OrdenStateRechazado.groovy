@@ -29,7 +29,7 @@ class OrdenStateRechazado extends OrdenState{
 //	}
 	
 	@Override
-	public void marcarEnPreparacion(Orden orden) {
-		orden.estado = new OrdenStateEnPreparacion();
+	public void marcarPendiente(Orden orden) {
+		orden.estado = new OrdenStatePendiente();
 	}
 }

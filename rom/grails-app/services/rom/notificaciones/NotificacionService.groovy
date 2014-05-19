@@ -29,9 +29,8 @@ class NotificacionService {
 		}
 	}
 
-	def crearNotificacion(long origen, long destino, String uuid, String estado) {
-		Notificacion notificacion = new Notificacion(origen, destino, uuid, 
-			estado)
+	def crearNotificacion(long origen, long destino, String titulo, String mensaje) {
+		Notificacion notificacion = new Notificacion(origen, destino, titulo, mensaje)
 		notificacion.save(flush:true)
 	}
 	

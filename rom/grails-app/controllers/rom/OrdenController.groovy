@@ -10,6 +10,7 @@ import org.codehaus.groovy.grails.web.json.*
 import grails.transaction.Transactional
 import rom.OrdenStates.*
 import rom.notificaciones.Notificacion
+import rom.seguridad.Usuario
 import groovy.time.*;
 
 
@@ -66,13 +67,18 @@ class OrdenController {
 	
 	// Para que la cocina pueda pedir el listado de las ordenes
 	@Secured(['permitAll'])
-	def cocina() {
+	def all(String username) {
 		def criteria = Orden.createCriteria()
 		def results = criteria.list {
-			or {
-				ne("estado", new OrdenStateCancelado())
-				ne("estado", new OrdenStateAnulado())
-			}	
+			and {
+				or {
+					ne("estado", new OrdenStateCancelado())
+					ne("estado", new OrdenStateAnulado())
+				}
+				consumible {
+					eq("aCocina", username == "cocina")
+				}
+			}
 		} 
 		render results as JSON
 	}
@@ -105,14 +111,14 @@ class OrdenController {
 
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
-	def terminado(String uuidOrden) {
+	def terminado(String username, String uuidOrden) {
 		Orden orden = getOrden(uuidOrden)
 		ordenService.marcarOrden(orden, OrdenStateTerminado.TERMINADO)
 		
-		long idCocina = orden.pedido.mozo.restaurant.cocina.id
+		Usuario usuario = Usuario.findByUsername(username)
 		long idMozo = orden.pedido.mozo.id
-		notificacionService.crearNotificacion(idCocina, idMozo, orden.uuid,
-			 orden.estado.nombre)
+		notificacionService.crearNotificacion(usuario.id, idMozo, "Mesa " + orden.pedido.mesa.numero, 
+			"Retirar: " + orden.consumible.toString())
 
 		orden.save(flush:true)
 		render SUCCESS
@@ -121,9 +127,12 @@ class OrdenController {
 	
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
-	def rechazado(String uuidOrden, String observaciones) {
+	def rechazado(String uuidOrden, boolean reordenar, String observaciones) {
 		Orden orden = getOrden(uuidOrden)
 		ordenService.marcarOrden(orden, OrdenStateRechazado.RECHAZADO)
+		if (reordenar) {
+			ordenService.marcarOrden(orden, OrdenStatePendiente.PENDIENTE)
+		}
 		orden.addObservaciones(observaciones)
 		orden.save(flush:true)
 		render SUCCESS
@@ -159,7 +168,7 @@ class OrdenController {
 			redirect action: 'list'
 		}
 		orden.motivoAnulacion = params.motivo
-		if (ordenService.anularOrden(orden.uuid, true)) {
+		if (ordenService.anularOrden(orden.uuid, true, params.motivo)) {
 			orden = Orden.get(params.id)
 			orden.save()
 			flash.message = "La orden ha sido anulada correctamente"

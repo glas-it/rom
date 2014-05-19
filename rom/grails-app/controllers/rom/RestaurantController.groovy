@@ -12,6 +12,7 @@ import grails.plugin.springsecurity.SpringSecurityService;
 import grails.transaction.Transactional
 
 import rom.notificaciones.Notificacion
+import rom.seguridad.Usuario
 
 /**
  * RestaurantController
@@ -77,8 +78,16 @@ class RestaurantController {
 	
 		
 	@Secured(['permitAll'])
-	def notificacion(long idDestino) {
-		def notificaciones = notificacionService.getNotificacionByDestino(idDestino)
+    @Transactional(readOnly = false)
+	def notificacion(long idRestaurant, String username) {
+        Restaurant restaurant = Restaurant.findById(idRestaurant)
+        Usuario usuario;
+        if (username != "cocina" && username != "barra") {
+            usuario = Mozo.findByUsernameAndRestaurant(username, restaurant)
+        } else {
+            usuario = Cocina.findByUsernameAndRestaurant(username, restaurant)
+        }
+		def notificaciones = notificacionService.getNotificacionByDestino(usuario.id)
 		render notificaciones as JSON
 	}
 	

@@ -1,5 +1,7 @@
 package rom.OrdenStates
 
+import rom.Orden;
+
 /**
  * OrdenStateEntregado
  * A domain class describes the data object and it's mapping to the database
@@ -17,6 +19,13 @@ class OrdenStateEntregado extends OrdenState {
     
 	static	constraints = {
     }
+
+	@Override
+	public void marcarRechazado(Orden orden) {
+		orden.estado = new OrdenStateRechazado()
+		orden.fueRechazada = true
+	}
+
 	
 	/*
 	 * Methods of the Domain Class

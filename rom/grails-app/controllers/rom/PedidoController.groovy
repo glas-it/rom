@@ -93,6 +93,15 @@ class PedidoController {
 		render pedido as JSON
 	}
 	
+	@Secured(['permitAll'])
+	@Transactional(readOnly = false)
+	def agregarComensales(long idRestaurant, int comensales, long idMesa) {
+		Mesa mesa = Mesa.findByIdAndRestaurant(idMesa, Restaurant.findById(idRestaurant))
+		Pedido pedido = pedidoService.getPedidoByMesaId(mesa.id)
+		pedido.comensales += comensales
+		pedido.save()
+		render SUCCESS
+	}
 	
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
@@ -144,11 +153,12 @@ class PedidoController {
 				flash.message = "El pedido no existe"
 				redirect action: 'list'
 			}
-			pedido.ordenes.each{ ordenService.anularOrden(it.uuid, false) }
+			pedido.ordenes.each{ ordenService.anularOrden(it.uuid, false, params.motivo) }
 			pedido.marcarAnulado(params.motivo)
 			pedido.save()
 			long idDuenio = pedido.mozo.restaurant.duenio.id
-			notificacionService.crearNotificacion(idDuenio, pedido.mozo.id, pedido.id.toString(), pedido.estado.nombre)
+			notificacionService.crearNotificacion(idDuenio, pedido.mozo.id, "Mesa " + pedido.mesa.numero, 
+				"Se anuló el pedido completo")
 			flash.message = "El pedido ha sido anulado exitosamente"
 			redirect action: 'list'
 		} catch(Exception) {
