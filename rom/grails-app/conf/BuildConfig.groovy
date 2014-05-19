@@ -51,7 +51,7 @@ grails.project.dependency.resolution = {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
 		runtime 'mysql:mysql-connector-java:5.1.27'
         // runtime 'org.postgresql:postgresql:9.3-1100-jdbc41'
-		runtime 'org.springframework:spring-test:3.1.0.RELEASE'
+//		runtime 'org.springframework:spring-test:3.1.0.RELEASE'
     }
 
     plugins {
@@ -70,7 +70,7 @@ grails.project.dependency.resolution = {
         runtime ":resources:1.2.7"
 		compile ":kickstart-with-bootstrap:1.1.0"
 		compile ':spring-security-core:2.0-RC2'
-		compile ":rendering:1.0.0"
+//		compile ":rendering:1.0.0"
         // Uncomment these (or add new ones) to enable additional resources capabilities
         //runtime ":zipped-resources:1.0.1"
         //runtime ":cached-resources:1.1"
