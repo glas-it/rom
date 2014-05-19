@@ -27,7 +27,8 @@ class PedidoController {
 	def mesaService
 	def ordenService
 	def notificacionService
-	
+	def xhmlDocumentService
+		
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
 	def apertura(long idRestaurant, String usernameMozo, String idMesas, int comensales) {
@@ -120,27 +121,26 @@ class PedidoController {
 	
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
-	def pago(long idRestaurant, long idMesa) {
-		Mesa mesa = Mesa.findByIdAndRestaurant(idMesa, Restaurant.findById(idRestaurant))
-		Pedido pedido = pedidoService.getPedidoByMesaId(mesa.id)
-
-		/*
-		 * TODO
-		 * Cuestiones de metodo de pago y demas!
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 */
-		
-		pedido.marcarPagado()
+	def pago() {
+		Pedido pedido = Pedido.get(params.id)
+		if (!pedido) {
+			flash.message = "El pedido no existe"
+			redirect action:'list'
+			return
+		}
+		//Mesa mesa = Mesa.findByIdAndRestaurant(idMesa, Restaurant.findById(idRestaurant))
+		//Pedido pedido = pedidoService.getPedidoByMesaId(mesa.id)
+		try {
+			pedido.tipoPago = params.tipoPago
+			pedido.marcarPagado()
+		} catch(Exception) {
+			flash.message = "El pedido no existe"
+			redirect action:'list'
+			return
+		}
 		pedido.save()
-		render SUCCESS
+		pedido.mesa.save()
+		redirect action:'list'
 	}
 
 
@@ -152,6 +152,7 @@ class PedidoController {
 			if (!pedido) {
 				flash.message = "El pedido no existe"
 				redirect action: 'list'
+				return
 			}
 			pedido.ordenes.each{ ordenService.anularOrden(it.uuid, false, params.motivo) }
 			pedido.marcarAnulado(params.motivo)
@@ -163,9 +164,20 @@ class PedidoController {
 			redirect action: 'list'
 		} catch(Exception) {
 			flash.message = "Hubo un error al anular el pedido"
+			redirect action:'list'
 		}
 	}
 	
+	def ticket() {
+		Pedido pedido = Pedido.get(params.id)
+		if (!pedido) {
+			flash.message = "el pedido no existe"
+			redirect action:'list'
+			return
+		}
+		def document = xhmlDocumentService.createDocument(template: 'ticket', model: [pedidoInstance: pedido])
+		renderPdf(filename:"ticket-${pedido.id}.pdf", document)
+	}
 	
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)

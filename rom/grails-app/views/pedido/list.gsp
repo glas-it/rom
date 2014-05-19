@@ -58,9 +58,9 @@
 				<td>
 					<g:if test="${!pedidoInstance.anulado()}">
 						<g:render template="/_common/modals/botonAnular" model="[item: pedidoInstance]"/>
-<%--						<g:link action="anular" id="${pedidoInstance.id}">--%>
-<%--							<i class="glyphicon glyphicon-remove"></i>--%>
-<%--						</g:link>--%>
+					</g:if>
+					<g:if test="${pedidoInstance.cerrado()}">
+						<g:render template="/_common/modals/botonCerrar" model="[item: pedidoInstance]"/>
 					</g:if>
 					<g:link action="show" id="${pedidoInstance.id}">
 						<i class="glyphicon glyphicon-usd"></i>

@@ -21,6 +21,9 @@ class Pedido {
 	PedidoState estado
 	StateTimer timer
 	String motivoAnulacion
+	Date fechaPago
+	
+	int tipoPago
 	
 	//static embedded = ['timer']
 	static	hasMany		= [ordenes : Orden]	// tells GORM to associate other domain objects for a 1-n or n-m mapping
@@ -64,7 +67,18 @@ class Pedido {
 		timer.finalState()
 		cerrarMesa()
 	}
+
+	public float total() {
+		float suma = 0.0
+		for (orden in ordenes) {
+			suma += orden.precio.valor
+		}
+		return suma
+	}
 	
+	public String totalFormateado() {
+		return java.text.NumberFormat.currencyInstance.format(total())
+	}		
 
 	public void marcarAnulado(String motivo) {
 		this.estado.marcarAnulado(this);
@@ -86,6 +100,9 @@ class Pedido {
 		return estado.pagado()
 	}
 	
+	def cerrado() {
+		return estado.cerrado()
+	}
 	/*
 	 * Methods of the Domain Class
 	 */
