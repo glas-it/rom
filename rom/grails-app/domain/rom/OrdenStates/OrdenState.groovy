@@ -21,6 +21,10 @@ class OrdenState {
 		return false
 	}
 	
+	def cancelado() {
+		return false
+	}
+	
 	def cerrado() {
 		return false
 	}

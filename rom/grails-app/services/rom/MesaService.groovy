@@ -33,7 +33,7 @@ class MesaService {
 			mesaComposite.addToMesas(getMesaUnitaria(idMesa, restaurant))
 		mesaComposite.numero = getMesaUnitaria(idMesasList[0], restaurant).numero
 		mesaComposite.restaurant = mesaComposite.mesas[0].restaurant
-		mesaComposite.save(flush:true)
+		mesaComposite.save(failOnError:true)
 		return mesaComposite
 	}
 	
@@ -83,6 +83,15 @@ class MesaService {
 				eq("abierta", false)
 			}
 		}
+	}
+	
+	def getMesas(Restaurant restaurant) {
+		def lista = getMesasDisponibles(restaurant)
+		println lista
+		lista += getMesasOcupadas(restaurant)
+		println lista
+		return lista
+		
 	}
 	
 	def getMesasOcupadas(Restaurant restaurant) {

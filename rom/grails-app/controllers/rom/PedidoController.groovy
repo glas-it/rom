@@ -4,6 +4,7 @@ package rom
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import grails.converters.JSON
+import grails.converters.XML;
 
 import org.codehaus.groovy.grails.web.json.*
 
@@ -16,7 +17,7 @@ import rom.notificaciones.Notificacion
  * A controller class handles incoming web requests and performs actions such as redirects, rendering views and so on.
  */
 @Transactional(readOnly = true)
-@Secured("hasRole('MOZO')")
+@Secured(["permitAll"])
 class PedidoController {
 
 	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", apertura: "POST", cierre: "POST"]
@@ -27,10 +28,10 @@ class PedidoController {
 	def mesaService
 	def ordenService
 	def notificacionService
-	def xhmlDocumentService
-		
+	def pdfRenderingService
+	
 	@Secured(['permitAll'])
-	@Transactional(readOnly = false)
+	@Transactional
 	def apertura(long idRestaurant, String usernameMozo, String idMesas, int comensales) {
 		Restaurant restaurant = Restaurant.findById(idRestaurant)
 
@@ -44,7 +45,7 @@ class PedidoController {
 		
 		Pedido pedido = new Pedido(mesa, mozo, comensales)
 		pedido.marcarAbierto()
-		pedido.save()
+		pedido.save(failOnError:true)
 		
 		/* Por el amor del dios en el que creas, no descomentes esta línea!!! */
 		//String rta = (mesa as JSON).toString()
@@ -131,10 +132,10 @@ class PedidoController {
 		//Mesa mesa = Mesa.findByIdAndRestaurant(idMesa, Restaurant.findById(idRestaurant))
 		//Pedido pedido = pedidoService.getPedidoByMesaId(mesa.id)
 		try {
-			pedido.tipoPago = params.tipoPago
+			pedido.tipoPago = params.medioPago
 			pedido.marcarPagado()
 		} catch(Exception) {
-			flash.message = "El pedido no existe"
+			flash.message = "El pedido no puede ser pagado"
 			redirect action:'list'
 			return
 		}
@@ -168,6 +169,7 @@ class PedidoController {
 		}
 	}
 	
+	@Secured(['permitAll'])
 	def ticket() {
 		Pedido pedido = Pedido.get(params.id)
 		if (!pedido) {
@@ -175,8 +177,12 @@ class PedidoController {
 			redirect action:'list'
 			return
 		}
-		def document = xhmlDocumentService.createDocument(template: 'ticket', model: [pedidoInstance: pedido])
-		renderPdf(filename:"ticket-${pedido.id}.pdf", document)
+		respond pedido
+//		def args = [template:"ticket", model:[pedidoInstance:pedido]]
+//		pdfRenderingService.render(args+[controller:this],response)
+//		response.setContentType("application/pdf")
+//		response.setHeader("Content-Disposition", "attachment; filename=ticket-${pedido.id}.pdf")
+//		renderPdf(template:"ticket", model:[pedidoInstance:pedido, pdfRendering:true])
 	}
 	
 	@Secured(['permitAll'])

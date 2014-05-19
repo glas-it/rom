@@ -60,11 +60,13 @@
 						<g:render template="/_common/modals/botonAnular" model="[item: pedidoInstance]"/>
 					</g:if>
 					<g:if test="${pedidoInstance.cerrado()}">
-						<g:render template="/_common/modals/botonCerrar" model="[item: pedidoInstance]"/>
+						<g:render template="/_common/modals/botonPagar" model="[item: pedidoInstance]"/>
 					</g:if>
-					<g:link action="show" id="${pedidoInstance.id}">
-						<i class="glyphicon glyphicon-usd"></i>
-					</g:link>
+					<g:if test="${pedidoInstance.cerrado() || pedidoInstance.pagado()}">
+						<g:link action="ticket" id="${pedidoInstance.id}">
+							<i class="glyphicon glyphicon-print"></i>Ticket
+						</g:link>
+					</g:if>
 				</td>
 			</tr>
 		</g:each>

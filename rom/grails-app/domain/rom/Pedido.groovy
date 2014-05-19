@@ -36,6 +36,7 @@ class Pedido {
 	
 	static	constraints = {
 		motivoAnulacion blank: true, nullable: true
+		fechaPago blank:true, nullable: true
 	}
 	
 	public Pedido(Mesa unaMesa, Mozo unMozo, int cantComensales) {
@@ -102,6 +103,16 @@ class Pedido {
 	
 	def cerrado() {
 		return estado.cerrado()
+	}
+	
+	def precios() {
+		def lista = []
+		for (Orden orden in ordenes) {
+			if (!orden.anulado() && !orden.cancelado()) {
+				lista.add(orden.precio)
+			}
+		}
+		return lista
 	}
 	/*
 	 * Methods of the Domain Class
