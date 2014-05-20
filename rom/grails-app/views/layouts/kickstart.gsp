@@ -71,6 +71,15 @@
 	<!-- Included Javascript files and other resources -->
 	<r:layoutResources />
 	<script src="${resource(dir: 'js', file: 'bootstrap.js')}"></script>
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			if ($('.prev.disabled') !== undefined)
+				$('.prev.disabled').hide()
+			if ($('.next.disabled') !== undefined)
+				$('.next.disabled').hide()
+		})
+	</script>
 </body>
 
 </html>
