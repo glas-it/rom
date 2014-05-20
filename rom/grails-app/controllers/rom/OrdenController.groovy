@@ -84,6 +84,30 @@ class OrdenController {
 	}
 	
 	@Secured(['permitAll'])
+	def byEstado(String username, String estado) {
+		def orden
+		if (estado == "Pendiente") {
+			orden = new OrdenStatePendiente()
+		} else if (estado == "En Preparacion") {
+			orden = new OrdenStateEnPreparacion()
+		} else if (estado == "Terminado") {
+			orden = new OrdenStateTerminado()
+		} else {
+			return "[]"
+		}
+		def criteria = Orden.createCriteria()
+		def results = criteria.list {
+			and {
+				eq("estado", orden)
+				consumible {
+					eq("aCocina", username == "cocina")
+				}
+			}
+		} 
+		render results as JSON
+	}
+	
+	@Secured(['permitAll'])
 	def getOrden(String uuidOrden) {
 		Orden orden = Orden.findByUuid(uuidOrden)
 		if (! orden)

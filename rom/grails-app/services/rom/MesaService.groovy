@@ -106,7 +106,7 @@ class MesaService {
 		
 		return mesasAbiertas.minus(inComposite)
 	}
-	
+
 	//private method
 	def getUnitariasEnCompuestas(Restaurant restaurant) {
 		def mesasAbiertas = MesaComposite.createCriteria().list {

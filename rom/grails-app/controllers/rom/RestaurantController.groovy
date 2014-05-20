@@ -26,7 +26,9 @@ class RestaurantController {
 	
 	def notificacionService
 	
-	def mesaService
+    def mesaService
+	
+    def pedidoService
 	
     static allowedMethods = [update: "PUT"]
 
@@ -75,8 +77,20 @@ class RestaurantController {
 		total += mesaService.getMesasOcupadas(resto)
 		render total as JSON
 	}
-	
-		
+
+    @Secured(['permitAll'])
+    def mesasByMozo(long idRestaurant, String username) {
+        Restaurant resto = Restaurant.findById(idRestaurant)
+        List total = []
+        for (Mesa mesa : mesaService.getMesasOcupadas(resto)) {
+            Pedido pedido = pedidoService.getPedidoByMesaId(mesa.id)
+            if (pedido.mozo.username == username) {
+                total += mesa
+            }
+        }
+        render total as JSON
+    }
+
 	@Secured(['permitAll'])
     @Transactional(readOnly = false)
 	def notificacion(long idRestaurant, String username) {
