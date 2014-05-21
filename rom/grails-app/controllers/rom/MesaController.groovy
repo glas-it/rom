@@ -3,6 +3,7 @@ package rom
 
 import static org.springframework.http.HttpStatus.*
 import rom.Exceptions.MesaConErroresException;
+import grails.converters.XML;
 import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
 
@@ -29,12 +30,13 @@ class MesaController {
 	def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
 		def duenio = Duenio.get(springSecurityService.currentUser.id)
-		def listaMesas = mesaService.getMesas(duenio.restaurant)
-		respond listaMesas, model:[mesaInstanceCount: listaMesas?.size()]
+		def listaMesas = mesaService.getMesas(duenio.restaurant, params)
+		[mesaInstanceList: listaMesas, mesaInstanceCount: listaMesas?.size()]
     }
 	
+	@Secured("hasRole('DUENIO')")
     def show(Mesa mesaInstance) {
-        respond mesaInstance
+        [mesaInstance: mesaInstance]
     }
 
     def create() {

@@ -12,15 +12,6 @@
 <body>
 
 <section id="list-consumicion" class="first">
-
-	<script type="text/javascript">
-		$(document).ready(function() {
-			if ($('.prev.disabled') !== undefined)
-				$('.prev.disabled').hide()
-			if ($('.next.disabled') !== undefined)
-				$('.next.disabled').hide()
-		})
-	</script>
 	<div class="panel panel-default tab-content">
 	<div class="panel-body">
 	<g:form action="filter" method="GET" class="form-horizontal" role="form" >

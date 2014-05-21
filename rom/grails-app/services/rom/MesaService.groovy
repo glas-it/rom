@@ -85,13 +85,23 @@ class MesaService {
 		}
 	}
 	
-	def getMesas(Restaurant restaurant) {
-		def lista = getMesasDisponibles(restaurant)
-		println lista
-		lista += getMesasOcupadas(restaurant)
-		println lista
-		return lista
-		
+	// TODO: terminar la query
+	def getMesas(Restaurant restaurant, map) {
+		def offset = 0
+		def max = 10
+		if (map.offset)
+			offset = map["offset"]
+		if (map.max)
+			max = map.max
+		def mesasAbiertas = Mesa.createCriteria().list {
+			and {
+				eq("restaurant", restaurant)
+			}
+			maxResults(max)
+			firstResult(offset)
+		}
+		def inComposite = getUnitariasEnCompuestas(restaurant)
+		return mesasAbiertas.minus(inComposite)
 	}
 	
 	def getMesasOcupadas(Restaurant restaurant) {

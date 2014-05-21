@@ -11,7 +11,8 @@
 <body>
 
 	<section id="create-mesa" class="first">
-
+		<div class="panel panel-default tab-content">
+		<div class="panel-body">
 		<g:form action="save" class="form-horizontal" role="form" >
 			<g:render template="form-create"/>
 
@@ -20,7 +21,8 @@
 	            <button class="btn" type="reset"><g:message code="default.button.reset.label" default="Reset" /></button>
 			</div>
 		</g:form>
-
+		</div>
+		</div>
 	</section>
 
 </body>
