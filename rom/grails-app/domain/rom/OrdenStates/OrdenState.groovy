@@ -25,6 +25,10 @@ class OrdenState {
 		return false
 	}
 	
+	def entregado() {
+		return false
+	}
+	
 	def cerrado() {
 		return false
 	}

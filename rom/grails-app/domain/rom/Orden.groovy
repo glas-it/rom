@@ -57,6 +57,11 @@ class Orden {
 		return estado.cancelado()
 	}
 	
+	def entregado() {
+		return estado.entregado()
+	}
+
+	
 	public void addObservaciones(String unaObservacion) {
 		if ( unaObservacion && ! unaObservacion.isAllWhitespace())
 			this.observaciones = unaObservacion + "-" + this.observaciones

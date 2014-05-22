@@ -26,6 +26,10 @@ class OrdenStateEntregado extends OrdenState {
 		orden.fueRechazada = true
 	}
 
+	@Override
+	def entregado() {
+		return true
+	}
 	
 	/*
 	 * Methods of the Domain Class

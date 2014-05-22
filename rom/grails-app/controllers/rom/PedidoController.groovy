@@ -231,6 +231,18 @@ class PedidoController {
 		params.max = Math.min(max ?: 10, 100)
 		respond Pedido.list(params), model:[pedidoInstanceCount: Pedido.count()]
 	}
+	
+	@Secured(['permitAll'])
+	def reporte() {
+		respond Pedido.list(params), model:[pedidoInstanceCount: Pedido.count()]
+	}
+	
+	@Secured(['permitAll'])
+	def getDatosReporte() {
+		/* los parametros vienen en params como k:v */
+		println "REQUEST::::" + params
+		render "DATOS A DEVOLVER"
+	}
 
 	@Secured(['permitAll'])
 	def filter(Integer max) {

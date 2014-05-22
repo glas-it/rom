@@ -71,7 +71,8 @@ class Pedido {
 
 	public float total() {
 		float suma = 0.0
-		for (orden in ordenes) {
+		def ordenesAFacturar = ordenes.findAll{ it.entregado() }
+		for (orden in ordenesAFacturar) {
 			suma += orden.precio.valor
 		}
 		return suma

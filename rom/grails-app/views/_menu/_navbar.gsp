@@ -95,6 +95,13 @@
 					</g:link>
 				</li>
 			</sec:ifAnyGranted>
+			<sec:ifAnyGranted roles='DUENIO'>
+				<li class="controlleractive">
+					<g:link controller="pedido" action="reporte">
+						<g:message code="pedido.label" default="Reportes"/>
+					</g:link>
+				</li>
+			</sec:ifAnyGranted>
 			<%--<sec:ifAnyGranted roles='ADMIN'>
 				<g:render template="/_menu/admin"/>
 			</sec:ifAnyGranted>														
