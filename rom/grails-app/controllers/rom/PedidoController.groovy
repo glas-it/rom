@@ -24,6 +24,8 @@ class PedidoController {
 
 	private String SUCCESS = "{'success': true}"
 	
+	private String FAIL = "{'success': false}"
+	
 	def pedidoService
 	def mesaService
 	def ordenService
@@ -226,6 +228,11 @@ class PedidoController {
 		redirect action:'list'
 	} 
 
+	@Secured(['permitAll'])
+	def agregarPromocion(Long idPromocion, Long idRestaurant, Long idMesa) {
+		render FAIL
+	}
+	
 	@Secured(['permitAll'])
 	def list(Integer max) {
 		params.max = Math.min(max ?: 10, 100)

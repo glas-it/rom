@@ -15,6 +15,9 @@ import grails.transaction.Transactional
 @Secured("hasRole('DUENIO')")
 class PromocionController {
 
+	private static String SUCCESS_TRUE = "{'success':true}"
+	private static String SUCCESS_FALSE = "{'success':false}"
+	
 	def springSecurityService
 	
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -69,7 +72,17 @@ class PromocionController {
     def edit(Promocion promocionInstance) {
         respond promocionInstance
     }
-
+	
+	@Secured(['permitAll'])
+	def validar(Long idPromocion, Long idRestaurant) {
+		def promocion = Promocion.get(idPromocion)
+		if (!promocion) {
+			render SUCCESS_FALSE
+			return
+		}
+		render promocion.esValida() ? SUCCESS_TRUE : SUCCESS_FALSE
+	}
+	
     @Transactional
     def update(Promocion promocionInstance) {
         if (promocionInstance == null) {

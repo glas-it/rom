@@ -1,5 +1,7 @@
 package rom
 
+import java.text.DateFormat;
+
 import org.grails.databinding.BindingFormat;
 
 import com.sun.org.apache.bcel.internal.generic.RETURN;
@@ -51,6 +53,15 @@ class Promocion {
 	 */
 	@Override	// Override toString for a nicer / more descriptive UI 
 	public String toString() {
-		return "${fechaDesde.format('dd-MM-yyyy') - fechaHasta.format('dd-MM-yyyy')}"
+		return "${fechaDesde.format('dd-MM-yyyy')}" + " - " +  "${fechaHasta.format('dd-MM-yyyy')}"
+	}
+	
+	def esValida() {
+		return enFecha() && cantidadCupones > 0
+	}
+	
+	private boolean enFecha() {
+		def hoy = Date.parse('yyyy-MM', new Date().format('yyyy-MM'))
+		return (fechaInicio.compareTo(hoy) <= 0) && (fechaFin.compareTo(hoy) >= 0)
 	}
 }
