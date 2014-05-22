@@ -2,6 +2,7 @@ package rom
 
 
 import static org.springframework.http.HttpStatus.*
+import grails.converters.JSON;
 import grails.plugin.springsecurity.SpringSecurityService;
 import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional

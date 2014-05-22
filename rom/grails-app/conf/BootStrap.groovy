@@ -141,7 +141,16 @@ class BootStrap {
 			res["tiempo"] = it.created.getTime()
 			return res
 		}
-
+		
+		JSON.registerObjectMarshaller(Promocion) {
+			def res = [:]
+			res["class"] = "Promocion"
+			res["nombre"] = it.nombre
+			res["fechaInicio"] = it.fechaInicio.time
+			res["fechaFin"] = it.fechaFin.time
+			return res
+		}
+		
 		JSON.registerObjectMarshaller(Orden) {
 			def res = [:]
 			res["class"] = "Orden"
