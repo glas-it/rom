@@ -2,6 +2,7 @@ package rom
 
 
 import static org.springframework.http.HttpStatus.*
+import grails.plugin.springsecurity.SpringSecurityService;
 import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
 
@@ -13,6 +14,8 @@ import grails.transaction.Transactional
 @Secured("hasRole('DUENIO')")
 class PromocionController {
 
+	def springSecurityService
+	
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
 	def index(Integer max) {
@@ -29,7 +32,8 @@ class PromocionController {
     }
 
     def create() {
-        respond new Promocion(params)
+		def restaurant = Duenio.get(springSecurityService.currentUser?.id).restaurant
+        [promocionInstance: new Promocion(params), restaurantInstance: restaurant]
     }
 
     @Transactional

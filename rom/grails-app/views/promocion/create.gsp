@@ -18,10 +18,9 @@
 					<g:renderErrors bean="${promocionInstance}" as="list" />
 				</div>
 				</g:hasErrors>
-		
 				<g:form action="save" class="form-horizontal" role="form" >
 					<g:render template="form"/>
-		
+					<g:hiddenField name="restaurant.id" value="${restaurantInstance?.id}" />
 					<div class="form-actions margin-top-medium">
 						<g:submitButton name="create" class="btn btn-primary" value="${message(code: 'default.button.create.label', default: 'Create')}" />
 			            <button class="btn" type="reset"><g:message code="default.button.reset.label" default="Reset" /></button>

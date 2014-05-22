@@ -1,5 +1,7 @@
 package rom
 
+import org.grails.databinding.BindingFormat;
+
 import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 /**
@@ -14,25 +16,34 @@ class Promocion {
 	
 	Restaurant restaurant
 	
+	@BindingFormat('yyyy-MM')
 	Date fechaInicio
+	@BindingFormat('yyyy-MM')
 	Date fechaFin
 	Integer cantidadCupones
 	
-	Double porcentajeDescuento
+	Integer porcentajeDescuento
+	
+	String nombre, descripcion
 	
     static	mapping = {
     }
     
 	static	constraints = {
-		fechaInicio nullable: false, blank: false, validator: {val, obj ->
-			return val.after(new Date()) && val.before(obj.fechaFin)
+		
+		nombre nullable: false, blank: false, size: 1..50
+		
+		descripcion nullable: false, blank: false, size: 1..250
+		
+		fechaInicio nullable: false, blank: false, validator: {val->
+			return val.format('yyyy-MM').compareTo(new Date().format('yyyy-MM')) <= 0 
 		}
-		fechaFin nullable: false, blank: false, validator: {val->
-			return val.after(new Date())
+		fechaFin nullable: false, blank: false, validator: {val, obj->
+			return val.format('yyyy-MM').compareTo(obj.fechaInicio.format('yyyy-MM')) <= 0
 		}
 		cantidadCupones nullable: false, blank: false, min: 1, max: 999999	
 		
-		porcentajeDescuento nullable: false, blank: false, min: 0.0D, max: 1.0D
+		porcentajeDescuento nullable: false, blank: false, min: 0, max: 100
     }
 	
 	/*

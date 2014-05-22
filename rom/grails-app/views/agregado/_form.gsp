@@ -5,16 +5,16 @@
 		<div class="col-md-2">
 			<label for="nombre" class="control-label"><g:message code="agregado.nombre.label" default="Nombre" /><span class="required-indicator">*</span></label>
 		</div>
-		<div class="col-md-4 ${hasErrors(bean: agregadoInstance, field: 'nombre', 'error')} required">
+		<div class="col-md-4 ${hasErrors(bean: agregadoInstance, field: 'nombre', 'has-error')} required">
 				<g:textField class="form-control nombre" name="nombre" maxlength="100" required="" value="${agregadoInstance?.nombre}"/>
-				<span class="help-inline">${hasErrors(bean: agregadoInstance, field: 'nombre', 'error')}</span>
+				<span class="help-inline">${hasErrors(bean: agregadoInstance, field: 'nombre', 'has-error')}</span>
 		</div>
 		<div class="col-md-2">
 			<label for="detalle" class="control-label"><g:message code="agregado.precio.label" default="Detalle" /></label>
 		</div>
-		<div class="col-md-4 ${hasErrors(bean: agregadoInstance, field: 'detalle', 'error')}">
+		<div class="col-md-4 ${hasErrors(bean: agregadoInstance, field: 'detalle', 'has-error')}">
 			<g:field class="form-control" name="agregadoInstance.detalle" type="text" value="${fieldValue(bean: agregadoInstance, field: 'detalle')}"/>
-			<span class="help-inline">${hasErrors(bean: agregadoInstance, field: 'detalle', 'error')}</span>
+			<span class="help-inline">${hasErrors(bean: agregadoInstance, field: 'detalle', 'has-error')}</span>
 		</div>
 </div>
 <br/>
