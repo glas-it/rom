@@ -224,14 +224,19 @@ class PedidoController {
 	}
 	
 	
+	@Secured(['permitAll'])
+	def agregarPromocion(Long idPromocion, Long idRestaurant, Long idMesa) {
+		try {
+			pedidoService.agregarPromocion(idPromocion, idRestaurant, idMesa)
+			render SUCCESS
+		} catch(Exception) {
+			render FAIL
+		}
+	}
+	
 	def index(Integer max) {
 		redirect action:'list'
 	} 
-
-	@Secured(['permitAll'])
-	def agregarPromocion(Long idPromocion, Long idRestaurant, Long idMesa) {
-		render FAIL
-	}
 	
 	@Secured(['permitAll'])
 	def list(Integer max) {
