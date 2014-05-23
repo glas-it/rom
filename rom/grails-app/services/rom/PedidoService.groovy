@@ -4,6 +4,7 @@ import grails.transaction.Transactional;
 
 import rom.PedidoStates.*
 import java.text.SimpleDateFormat
+import java.util.Calendar.*
 
 /**
  * PedidoService
@@ -74,6 +75,25 @@ class PedidoService {
 			}
 			if (filtro.fecha) {
 				eq("dateCreated", filtro.fecha)
+			}
+		}
+	}
+	
+	
+	def getPedidosByFechas(Date desde, Date hasta) {
+		Calendar cal = Calendar.getInstance()
+		cal.setTime(hasta)
+		cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE))
+		cal.set(Calendar.HOUR_OF_DAY,23);
+		cal.set(Calendar.MINUTE,59);
+		cal.set(Calendar.SECOND,59);
+		hasta = cal.getTime()
+		
+		def criteria = Pedido.createCriteria()
+		return criteria.list{
+			and {
+				between ("fechaPago", desde.clearTime(), hasta)
+				eq("estado", new PedidoStatePagado())
 			}
 		}
 	}

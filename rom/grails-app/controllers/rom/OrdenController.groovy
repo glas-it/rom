@@ -57,14 +57,6 @@ class OrdenController {
 	}
 	
 	
-	
-	@Transactional(readOnly = false)
-	@Secured(['permitAll'])
-	def foo() {
-		Orden orden = getOrden(1)
-		render orden.timer.total 
-	}
-	
 	// Para que la cocina pueda pedir el listado de las ordenes
 	@Secured(['permitAll'])
 	def all(String username) {
@@ -173,16 +165,6 @@ class OrdenController {
 	}
 	
 
-
-	/*
-
-
-
-	NACHO: ESTE METODO ES PARA QUE LO USES DESDE LA PANTALLA!!!!!
-
-
-
-	*/
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
 	def anular() {

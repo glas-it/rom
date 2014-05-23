@@ -144,7 +144,23 @@ class PedidoController {
 		redirect action:'list'
 	}
 
+	
+	/*
+	 * WS hecho para poder correr el script con datos para pruebas
+	 */
+	@Secured(['permitAll'])
+	@Transactional(readOnly = false)
+	def pagoWS(long idRestaurant, long idMesa, int tipoPago) {
+		Mesa mesa = Mesa.findByIdAndRestaurant(idMesa, Restaurant.findById(idRestaurant))
+		Pedido pedido = pedidoService.getPedidoByMesaId(mesa.id)
+		pedido.tipoPago = tipoPago
+		pedido.marcarPagado()
+		pedido.save()
+		pedido.mesa.save()
+		render SUCCESS
+	}
 
+	
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
 	def anular() {
@@ -241,7 +257,9 @@ class PedidoController {
 	def getDatosReporte() {
 		/* los parametros vienen en params como k:v */
 		println "REQUEST::::" + params
-		render "DATOS A DEVOLVER"
+		
+		def res = [["a",1],["b",2],["c",3]]
+		render res as JSON
 	}
 
 	@Secured(['permitAll'])

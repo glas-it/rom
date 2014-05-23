@@ -18,10 +18,8 @@ function requestData() {
         url: 'getDatosReporte',
         data: {"saludo":"foo bar"},
         success: function(datos) {
-            //chart.series[0].data = datos;
             alert(datos);
-            chart.series[0].data = [["a",1],["b",2],["c",3]];
-            chart.load()   
+            chart.series[0].setData(datos, true);
         },
         cache: false
     });
@@ -31,10 +29,7 @@ $(function () {
 	chart = new Highcharts.Chart({
     	chart: {
             renderTo: 'container',
-            type: 'column'/*,
-            events: {
-                load: requestData
-            }*/
+            type: 'column'
         },
         title: {
             text: 'Facturación'
@@ -104,10 +99,6 @@ $(function () {
 	$("#buscarButton").click( requestData );
 
 });
-
-
-
-
 
 </script>
 
