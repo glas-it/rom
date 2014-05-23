@@ -131,6 +131,26 @@ class PedidoService {
 				between ("fechaPago", desde.clearTime(), hasta)
 				eq("estado", new PedidoStatePagado())
 			}
+			order("fechaPago", "asc")
 		}
+	}
+	
+	def parsearRespuesta(List pedidos) {
+		Calendar cal = Calendar.getInstance()
+		def meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre" ,"Octubre","Noviembre","Diciembre"]
+		def respuesta = []
+		def mesAnterior = ""
+		for (pedido in pedidos) {
+			cal.setTime(pedido.fechaPago)
+			String mesActual = meses[cal.get(Calendar.MONTH)]
+			
+			if (mesActual != mesAnterior) {
+				respuesta.add( [mesActual, pedido.total()] )
+				mesAnterior = mesActual
+			}
+			else
+				respuesta[-1][1] += pedido.total()
+		}
+		return respuesta
 	}
 }

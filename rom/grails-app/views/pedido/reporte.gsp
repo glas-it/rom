@@ -23,7 +23,6 @@ function requestData() {
         url: 'getDatosReporte',
         data: params,
         success: function(datos) {
-            //alert(datos);
             chart.series[0].setData(datos, true);
         },
         cache: false

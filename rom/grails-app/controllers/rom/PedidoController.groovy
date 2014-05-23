@@ -270,12 +270,16 @@ class PedidoController {
 		Date desde = new Date(params.fechaInicio)
 		Date hasta = new Date(params.fechaFin)
 		
-		def resultados = pedidoService.getPedidosPagadosByFechas(desde, hasta)
-		println "RESULTADO::" + resultados
+		def pedidos = pedidoService.getPedidosPagadosByFechas(desde, hasta)
+		println "PEDIDOS::::::::" + pedidos
+		def respuesta = pedidoService.parsearRespuesta(pedidos)
+		println "RESPUESTA::::::" + respuesta 
 		
+		//println "RESPUESTAJJJJJJOTASON::::::" + [respuesta] as JSON
 		
-		def res = [["a",1],["b",2],["c",3]]
-		render res as JSON
+		def foo = [["Ene",1],["Feb",2],["Mar",3]]
+		
+		render respuesta as JSON
 	}
 
 	@Secured(['permitAll'])
