@@ -1,8 +1,10 @@
 package rom
 
 import grails.transaction.Transactional;
-
+import rom.Exceptions.BusinessException;
+import rom.Exceptions.ServiceException;
 import rom.PedidoStates.*
+
 import java.text.SimpleDateFormat
 import java.util.Calendar.*
 
@@ -13,6 +15,35 @@ import java.util.Calendar.*
 @Transactional
 class PedidoService {
 
+	def agregarPromocion(idPromocion, idRestaurant, idMesa) {
+		def promocion = Promocion.get(idPromocion)
+		def mesa = Mesa.get(idMesa)
+		def restaurant = Restaurant.get(idRestaurant)
+		validarEntrada(promocion, mesa, restaurant)
+		def pedido = Pedido.findByMesa(mesa)
+		if (!pedido)
+			throw new ServiceException("No existe ningún pedido asociado a la mesa")
+		try {
+			pedido.addPromocion(promocion)
+		} catch(BusinessException e) {
+			throw new ServiceException(e.message)
+		}
+		pedido.save(failOnError:true)
+	}
+	
+	private void validarEntrada(promocion, mesa, restaurant) {
+		if (!promocion || !mesa)
+			throw new ServiceException("No existe o la mesa o la promocion")
+		if (!promocion.esValida())
+			throw new ServiceException("La promoción no es válida")
+		if (!mesa.abierta)
+			throw new ServiceException("La mesa se encuentra cerrada")
+		if (!mesa.activo)
+			throw new ServiceException("La mesa se encuentra inactiva")
+		if (mesa.restaurant.id != promocion.restaurant.id)
+			throw new ServiceException("La mesa y la promocion pertenecen a distinto restaurant")
+	}
+	
 	def getPedidoByMesaId(long idMesa) {
 		Mesa mesa = Mesa.findById(idMesa)
 		if (mesa == null) {

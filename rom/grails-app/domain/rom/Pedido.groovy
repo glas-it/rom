@@ -1,5 +1,6 @@
 package rom
 
+import rom.Exceptions.BusinessException;
 import rom.PedidoStates.PedidoStateUserType
 import rom.PedidoStates.PedidoState
 import rom.PedidoStates.PedidoStateAbierto
@@ -22,7 +23,9 @@ class Pedido {
 	StateTimer timer
 	String motivoAnulacion
 	Date fechaPago
-	
+
+	Promocion promocion
+		
 	int tipoPago
 	
 	//static embedded = ['timer']
@@ -35,6 +38,7 @@ class Pedido {
 	}
 	
 	static	constraints = {
+		promocion blank: true, nullable: true
 		motivoAnulacion blank: true, nullable: true
 		fechaPago blank:true, nullable: true
 	}
@@ -104,6 +108,16 @@ class Pedido {
 	
 	def cerrado() {
 		return estado.cerrado()
+	}
+	
+	def addPromocion(Promocion promo) {
+		if (promocion) {
+			throw new BusinessException("El pedido ya posee una promoción asociada")
+		}
+		if (anulado() || pagado()) {
+			throw new BusinessException("El pedido ya no puede recibir descuentos")
+		}
+		promocion = promo
 	}
 	
 	def precios() {
