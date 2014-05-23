@@ -75,7 +75,6 @@ class PedidoService {
 	}
 
 	def filter(PedidoFilter filtro, Integer max, Integer offset) {
-		//println filtro.fecha
 //		Date fecha = (filtro.fecha ? new SimpleDateFormat("yyyy-MM-dd").parse(filtro.fecha): new Date())
 		Date fecha = new Date()
 		Date diaAntes = fecha.clearTime() - 1
@@ -110,15 +109,21 @@ class PedidoService {
 		}
 	}
 	
-	
-	def getPedidosByFechas(Date desde, Date hasta) {
+	private Date getUltimoDiaDelMes(Date fecha) {
 		Calendar cal = Calendar.getInstance()
-		cal.setTime(hasta)
+		cal.setTime(fecha)
 		cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE))
 		cal.set(Calendar.HOUR_OF_DAY,23);
 		cal.set(Calendar.MINUTE,59);
 		cal.set(Calendar.SECOND,59);
-		hasta = cal.getTime()
+		return cal.getTime()
+	}
+	
+	def getPedidosPagadosByFechas(Date desde, Date hasta) {
+		
+		hasta = getUltimoDiaDelMes(hasta)
+		
+		println "\n\nDESDE::: " + desde.toString() + " HASTA::: " + hasta.toString()
 		
 		def criteria = Pedido.createCriteria()
 		return criteria.list{

@@ -267,8 +267,12 @@ class PedidoController {
 	
 	@Secured(['permitAll'])
 	def getDatosReporte() {
-		/* los parametros vienen en params como k:v */
-		println "REQUEST::::" + params
+		Date desde = new Date(params.fechaInicio)
+		Date hasta = new Date(params.fechaFin)
+		
+		def resultados = pedidoService.getPedidosPagadosByFechas(desde, hasta)
+		println "RESULTADO::" + resultados
+		
 		
 		def res = [["a",1],["b",2],["c",3]]
 		render res as JSON

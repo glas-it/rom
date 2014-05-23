@@ -14,11 +14,16 @@
 var chart;
 
 function requestData() {
+	//yyyy/mm/01
+	var params = {};
+	params.fechaInicio = new Date($("#fechaInicio_year").val(), $("#fechaInicio_month").val() - 1)
+	params.fechaFin = new Date($("#fechaFin_year").val(), $("#fechaFin_month").val() - 1)
+	
     $.ajax({
         url: 'getDatosReporte',
-        data: {"saludo":"foo bar"},
+        data: params,
         success: function(datos) {
-            alert(datos);
+            //alert(datos);
             chart.series[0].setData(datos, true);
         },
         cache: false
@@ -105,8 +110,35 @@ $(function () {
  <section id="list-orden" class="first">
 	<div class="panel panel-default tab-content">
 	<div class="panel-body">
-		<input id="buscarButton" type="button" value="Buscar" />
+		
+		<div class="row">
+			<div class="col-md-2">
+				<label for="fechaInicio" class="control-label">Fecha Inicio</label>
+			</div>
+			<div class="col-md-4">
+				<g:datePicker class="form-control" name="fechaInicio" precision="month"   />
+			</div>
+			<div class="col-md-2">
+				<label for="fechaFin" class="control-label">Fecha Fin</label>
+			</div>
+			<div class="col-md-4">
+				<g:datePicker class="form-control" name="fechaFin" precision="month"  />
+			</div>
+		</div>
+		<br/>
+				
+		<div class="row">
+			<div class="col-md-4 text-center">
+				<input id="pdfButton" type="button" class="btn btn-primary" value="PDF" />
+			</div>
+			
+			<div class="col-md-4 text-center pull-right">
+				<input id="buscarButton" type="button" class="btn btn-primary" value="Buscar" />
+			</div>
+		</div>		
+				
 		<div id="container" style="min-width: 500px; height: 400px; margin: 0 auto"></div>
+		
 	</div>
  	</div>
  </section>

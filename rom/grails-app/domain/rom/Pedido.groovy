@@ -70,6 +70,7 @@ class Pedido {
 	public void marcarPagado() {
 		this.estado.marcarPagado(this);
 		timer.finalState()
+		fechaPago = new Date()
 		cerrarMesa()
 	}
 
