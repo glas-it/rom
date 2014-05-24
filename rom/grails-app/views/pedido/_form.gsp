@@ -22,12 +22,29 @@
 			<br/>
 			<table class="table table-striped table-bordered table-responsive">
 				<thead>
-					<th>Detalle</th>
-					<th>Importe</th>
+		            <tr>
+		                <th>Detalle</th>
+		                <th>Cant.</th>
+		                <th>Precio Unit.</th>
+		                <th>Importe</th>
+		            </tr>
 				</thead>
 				<tbody>
-					<g:each in="${pedidoInstance.precios()}" status="i" var="precioInstance">
-						<g:render template="/precio/show-instance" model="[precioInstance: precioInstance]"/>
+					<g:each var="item" in="${pedidoInstance.precios()}" status="i">
+						<tr>
+						    <td class="left">
+						        ${item[0]}
+						    </td>
+						    <td class="right">
+						        ${item[1]}
+						    </td>
+						    <td class="right">
+						        ${item[2]}
+						    </td>
+						    <td class="right">
+						        ${item[3]}
+						    </td>
+						</tr>
 					</g:each>
 				</tbody>
 			</table>
