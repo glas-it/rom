@@ -53,19 +53,19 @@
             </tr>
         </thead>
         <tbody>
-            <g:each in="${pedidoInstance.precios()}" status="i" var="item">
+            <g:each in="${ordenesList}" status="i" var="item">
                 <tr>
                     <td class="left">
-                        ${item[0]}
+                        ${item.descripcion()}
                     </td>
                     <td class="right">
-                        ${item[1]}
+                        ${item.cantidad}
                     </td>
                     <td class="right">
-                        ${item[2]}
+                        ${item.orden.precioFinal()}
                     </td>
                     <td class="right">
-                        ${item[3]}
+                        ${item.importe()}
                     </td>
                 </tr>
             </g:each>

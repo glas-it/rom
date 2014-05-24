@@ -49,6 +49,23 @@ class Orden {
 		motivoAnulacion nullable: true, blank: true
     }
 	
+	def resumen() {
+		def resumen = consumible.id.toString()
+		if (agregado) {
+			resumen += agregado.id.toString()
+		}
+		resumen += precio.id.toString()
+		return resumen
+	}
+	
+	def precioFinal() {
+		def precio = precio.valor
+		if (agregado) {
+			precio += agregado.precio.valor
+		}
+		return precio
+	}
+	
 	def anulado() {
 		return estado.anulado()
 	}

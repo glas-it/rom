@@ -121,22 +121,16 @@ class Pedido {
 		promocion = promo
 	}
 	
-	def precios() {
+	def ordenesFacturables() {
 		def lista = []
 		for (Orden orden in ordenes) {
 			if (!orden.anulado() && !orden.cancelado()) {
-				def nombre = orden.consumible.nombre
-				if (orden.agregado != null) {
-					nombre += " con " + orden.agregado.nombre
-				}
-				if (orden.precio.descripcion != "-") {
-					nombre += " (" + orden.precio.descripcion + ")"
-				}
-				lista.add([nombre, 1, orden.precio.getPrecioFormateado(), orden.precio.getPrecioFormateado()])
+				lista.add(orden)
 			}
 		}
 		return lista
 	}
+	
 	/*
 	 * Methods of the Domain Class
 	 */
