@@ -18,11 +18,11 @@ class Promocion {
 	
 	Restaurant restaurant
 	
-	@BindingFormat('yyyy-MM')
+	@BindingFormat('yyyy-MM-dd')
 	Date fechaInicio
-	@BindingFormat('yyyy-MM')
+	@BindingFormat('yyyy-MM-dd')
 	Date fechaFin
-	Integer cantidadCupones
+	//Integer cantidadCupones
 	
 	Integer porcentajeDescuento
 	
@@ -38,12 +38,12 @@ class Promocion {
 		descripcion nullable: false, blank: false, size: 1..250
 		
 		fechaInicio nullable: false, blank: false, validator: {val->
-			return val.format('yyyy-MM').compareTo(new Date().format('yyyy-MM')) <= 0 
+			return val.clearTime().compareTo(new Date().clearTime()) <= 0 
 		}
 		fechaFin nullable: false, blank: false, validator: {val, obj->
-			return val.format('yyyy-MM').compareTo(obj.fechaInicio.format('yyyy-MM')) <= 0
+			return val.clearTime().compareTo(obj.fechaInicio.clearTime()) <= 0
 		}
-		cantidadCupones nullable: false, blank: false, min: 1, max: 999999	
+		//cantidadCupones nullable: false, blank: false, min: 1, max: 999999	
 		
 		porcentajeDescuento nullable: false, blank: false, min: 0, max: 100
     }
@@ -57,7 +57,7 @@ class Promocion {
 	}
 	
 	def esValida() {
-		return enFecha() && cantidadCupones > 0
+		return enFecha() //&& cantidadCupones > 0
 	}
 	
 	private boolean enFecha() {

@@ -162,6 +162,30 @@ class PedidoController {
 		render SUCCESS
 	}
 
+	@Secured(['permitAll'])
+	def pdf() {
+		println "id: ${params.id}"
+		def pedido = Pedido.get(params.id)
+		println "pedido: ${pedido}"
+		if (!pedido) {
+			flash.message = "el pedido no existe"
+			redirect action:'list'
+			return
+		}
+		def args = [template:"pdf", model:[pedidoInstance:pedido]]
+		try {
+			renderPdf(args)
+		} catch (Exception e) {
+			flash.message = "Error al generar el pdf"
+			println "mensaje: ${e.message}"
+			if (e.cause) {
+				println "causa: ${e.cause}"
+			}
+			redirect action:'list'
+			return
+		}
+	}
+	
 	
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)

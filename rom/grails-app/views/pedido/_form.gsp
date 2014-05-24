@@ -1,21 +1,22 @@
+
 			<div class="row">
 				<div class="col-md-1">
 					<g:message code="ticket.mesa.label" default="Mesa"/>:
 				</div>
 				<div class="col-md-2">
-					${pedidoInstance.mesa.numero}
+					${pedidoInstance?.mesa.numero}
 				</div>
 				<div class="col-md-1">
 					<g:message code="ticket.comensales.label" default="Comensales"/>:
 				</div>
 				<div class="col-md-2">
-					${pedidoInstance.comensales}
+					${pedidoInstance?.comensales}
 				</div>
 				<div class="col-md-1">
 					<g:message code="ticket.mozo.label" default="Mozo"/>:
 				</div>
 				<div class="col-md-5">
-					${pedidoInstance.mozo.nombre}
+					${pedidoInstance?.mozo.nombre}
 				</div>
 			</div>
 			<br/>

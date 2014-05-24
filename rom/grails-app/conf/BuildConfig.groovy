@@ -42,7 +42,7 @@ grails.project.dependency.resolution = {
         mavenCentral()
         // uncomment these (or add new ones) to enable remote dependency resolution from public Maven repositories
         //mavenRepo "http://repository.codehaus.org"
-        //mavenRepo "http://download.java.net/maven/2/"
+        mavenRepo "http://download.java.net/maven/2/"
         //mavenRepo "http://repository.jboss.com/maven2/"
 		mavenRepo 'http://repo.spring.io/milestone'
     }
@@ -51,7 +51,7 @@ grails.project.dependency.resolution = {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
 		runtime 'mysql:mysql-connector-java:5.1.27'
         // runtime 'org.postgresql:postgresql:9.3-1100-jdbc41'
-//		runtime 'org.springframework:spring-test:3.1.0.RELEASE'
+		runtime 'org.springframework:spring-test:3.1.0.RELEASE'	
     }
 
     plugins {
@@ -71,7 +71,7 @@ grails.project.dependency.resolution = {
 		compile ":kickstart-with-bootstrap:1.1.0"
 		compile ':spring-security-core:2.0-RC2'
 		compile ":qrcode:0.3"
-//		compile ":rendering:1.0.0"
+		runtime ":rendering:1.0.0"
         // Uncomment these (or add new ones) to enable additional resources capabilities
         //runtime ":zipped-resources:1.0.1"
         //runtime ":cached-resources:1.1"

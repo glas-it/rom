@@ -36,24 +36,16 @@
 								<tr class="prop">
 									<td valign="top" class="name"><g:message code="promocion.fechaInicio.label" default="Fecha Inicio" /></td>
 									
-									<td valign="top" class="value"><g:formatDate date="${promocionInstance?.fechaInicio}" /></td>
+									<td valign="top" class="value"><g:formatDate format="yyyy-MM-dd" date="${promocionInstance?.fechaInicio}" /></td>
 									
 								</tr>
 							
 								<tr class="prop">
 									<td valign="top" class="name"><g:message code="promocion.fechaFin.label" default="Fecha Fin" /></td>
 									
-									<td valign="top" class="value"><g:formatDate date="${promocionInstance?.fechaFin}" /></td>
+									<td valign="top" class="value"><g:formatDate format="yyyy-MM-dd" date="${promocionInstance?.fechaFin.clearTime()}" /></td>
 									
 								</tr>
-							
-								<tr class="prop">
-									<td valign="top" class="name"><g:message code="promocion.cantidadCupones.label" default="Cantidad Cupones" /></td>
-									
-									<td valign="top" class="value">${fieldValue(bean: promocionInstance, field: "cantidadCupones")}</td>
-									
-								</tr>
-							
 								<tr class="prop">
 									<td valign="top" class="name"><g:message code="promocion.porcentajeDescuento.label" default="Porcentaje Descuento" /></td>
 									
@@ -70,7 +62,7 @@
 						QR
 					</div>
 					<div class="panel-body">
-						<qrcode:image text="promocionInstance?.id"/>
+						<qrcode:image text="${promocionInstance?.id}&${promocionInstance?.nombe}&${promocionInstance?.fechaDesde.time}&${promocionInstance?.fechaHasta.time}"/>
 					</div>
 				</div>
 			</div>
