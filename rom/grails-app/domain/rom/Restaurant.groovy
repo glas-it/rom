@@ -18,12 +18,18 @@ class Restaurant {
 //	static	mappedBy	= []	// specifies which property should be used in a mapping 
 
 	String nombre
+	String direccion
+	String telefono
+	float precioCubierto
 	
 	Duenio duenio
 	
 	
 	static	constraints = {
     	nombre blank: false, nullable: true, size: 1..70
+    	direccion blank: false, nullable: true, size: 1..70
+    	telefono blank: false, nullable: true, size: 1..70
+    	precioCubierto blank: false, nullable: false, default: 0
 		duenio visible: false
 	}
 	

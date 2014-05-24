@@ -18,11 +18,20 @@
 		
 			<tr class="prop">
 				<td valign="top" class="name"><g:message code="restaurant.nombre.label" default="Nombre" /></td>
-				
 				<td valign="top" class="value">${fieldValue(bean: restaurantInstance, field: "nombre")}</td>
-				
 			</tr>
-		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="restaurant.direccion.label" default="Dirección" /></td>
+				<td valign="top" class="value">${fieldValue(bean: restaurantInstance, field: "direccion")}</td>
+			</tr>
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="restaurant.telefono.label" default="Teléfono" /></td>
+				<td valign="top" class="value">${fieldValue(bean: restaurantInstance, field: "telefono")}</td>
+			</tr>
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="restaurant.telefono.label" default="Precio Cubierto" /></td>
+				<td valign="top" class="value">${fieldValue(bean: restaurantInstance, field: "precioCubierto")}</td>
+			</tr>
 		</tbody>
 	</table>
 </section>

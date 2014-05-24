@@ -3,7 +3,7 @@
     <div class="row">
         <span class="rowItem">
             <span class="col-md-1">
-                Paseo Colón 850
+                ${pedidoInstance.mozo.restaurant.direccion}
             </span>
             <span class="col-md-2">
                 
@@ -11,7 +11,7 @@
         </span>
         <span class="pull-right">
             <span class="col-md-5">
-                4444-5555
+                ${pedidoInstance.mozo.restaurant.telefono}
             </span>
         </span>
     </div>
