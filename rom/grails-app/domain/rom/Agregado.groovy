@@ -6,6 +6,10 @@ package rom
  */
 class Agregado extends Consumible {
 	
+	def getPrecio() {
+		return precios[0]
+	}
+	
     static	mapping = {
     }
     

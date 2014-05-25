@@ -172,7 +172,7 @@ class PedidoController {
 			redirect action:'list'
 			return
 		}
-		def args = [template:"pdf", model:[pedidoInstance:pedido]]
+		def args = [template:"pdf", model:[pedidoInstance:pedido, ordenesList: formatearOrdenes(pedido.ordenesFacturables())]]
 		try {
 			renderPdf(args)
 		} catch (Exception e) {
@@ -186,7 +186,26 @@ class PedidoController {
 		}
 	}
 	
-	
+
+	private List formatearOrdenes(List ordenes) {
+		println ordenes
+		def map = [:]
+		def lista = []
+		for (Orden orden in ordenes) {
+			if (map.containsKey(orden.resumen())) {
+				map[orden.resumen()].cantidad += 1
+			} else {
+				def command = new OrdenResumidaCommand()
+				command.cantidad = 1
+				command.orden = orden
+				map[orden.resumen()] = command
+				lista.add(command)
+			}
+		}
+		println lista
+		return lista
+	}
+		
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
 	def anular() {
@@ -219,7 +238,7 @@ class PedidoController {
 			redirect action:'list'
 			return
 		}
-		respond pedido
+		[pedidoInstance: pedido, ordenesList: formatearOrdenes(pedido.ordenesFacturables())]
 //		def args = [template:"ticket", model:[pedidoInstance:pedido]]
 //		pdfRenderingService.render(args+[controller:this],response)
 //		response.setContentType("application/pdf")
@@ -409,4 +428,21 @@ class PedidoController {
 class PedidoFilter {
 	String estadoNombre
 	String fecha
+}
+
+class OrdenResumidaCommand {
+	int cantidad
+	Orden orden
+	
+	def importe() {
+		return orden.precioFinal() * cantidad
+	}
+	
+	def descripcion() {
+		def descrip = orden.consumible.nombre
+		if (orden.agregado) {
+			descrip += " con ${orden.agregado.nombre}"
+		}
+		return descrip
+	}
 }
