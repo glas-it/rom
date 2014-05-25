@@ -28,9 +28,11 @@ class MesaController {
     }
 
 	def list(Integer max) {
+        // params.max = Math.min(max ?: 10, 100)
+		// def duenio = Duenio.get(springSecurityService.currentUser.id)
+		// def listaMesas = mesaService.getMesas(duenio.restaurant, params)
         params.max = Math.min(max ?: 10, 100)
-		def duenio = Duenio.get(springSecurityService.currentUser.id)
-		def listaMesas = mesaService.getMesas(duenio.restaurant, params)
+        def listaMesas = MesaUnitaria.list(params) 
 		[mesaInstanceList: listaMesas, mesaInstanceCount: listaMesas?.size()]
     }
 	

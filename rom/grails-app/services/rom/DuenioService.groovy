@@ -15,6 +15,10 @@ class DuenioService {
 		duenio.accountLocked = false 
 		duenio.passwordExpired = false 
 		duenio.restaurant = new Restaurant()
+		duenio.restaurant.nombre = "FIUBA"
+		duenio.restaurant.direccion = "Paséo Colón 850"
+		duenio.restaurant.telefono = "4444-5555"
+		duenio.restaurant.precioCubierto = 0
 		duenio.save()
 		Cocina cocina = new Cocina(
 			username: "cocina",
