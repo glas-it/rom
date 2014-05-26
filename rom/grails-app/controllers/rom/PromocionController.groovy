@@ -48,7 +48,8 @@ class PromocionController {
         }
 
         if (promocionInstance.hasErrors()) {
-            respond promocionInstance.errors, view:'create'
+			def restaurant = Duenio.get(springSecurityService.currentUser?.id).restaurant
+			render view: create, model: [promocionInstance: promocionInstance, restaurantInstance: restaurant]
             return
         }
 		def restaurant = Duenio.get(springSecurityService.currentUser.id)?.restaurant

@@ -25,6 +25,25 @@
 <section id="list-orden" class="first">
 	<div class="panel panel-default tab-content">
 	<div class="panel-body">
+	<div class="fromFilter">
+		<g:form method="GET" action="filter">
+			<div class="row">
+				<div class="col-md-2">
+					Fecha
+				</div>
+				<div class="col-md-4">
+					<g:datePicker class="form-control" name="fecha" precision="day"/>
+				</div>
+				<div class="col-md-2">
+					Estado
+				</div>
+				<div class="col-md-4">
+					<g:select class="form-control" id="estados" name="nombreEstado" from="${estadosList}" optionKey="nombre" optionValue="nombre" required="" noSelection="[null: ' - ']"/>
+				</div>
+			</div>
+			<g:submitButton name="buscar" value="buscar"/>
+		</g:form>
+	</div>
 	<table class="table table-bordered margin-top-medium">
 		<thead>
 			<tr>			

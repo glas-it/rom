@@ -74,37 +74,74 @@ class PedidoService {
 		return null
 	}
 
+	def getAllEstados() {
+		[new PedidoStateAbierto(),
+		 new PedidoStateAnulado(),
+		 new PedidoStateCerrado(),
+		 new PedidoStatePagado()]
+	}
+	
 	def filter(PedidoFilter filtro, Integer max, Integer offset) {
 //		Date fecha = (filtro.fecha ? new SimpleDateFormat("yyyy-MM-dd").parse(filtro.fecha): new Date())
-		Date fecha = new Date()
-		Date diaAntes = fecha.clearTime() - 1
-		Date diaDespues = fecha.clearTime() + 1
-
 		def criteria = Pedido.createCriteria()
-		def result = criteria.list{
-			if (filtro.estadoNombre && ! filtro.estadoNombre.isAllWhitespace()) {
-				eq("estado", filtro.estadoNombre)
-			}
-			//if (filtro.fecha) {
-				between("dateCreated", diaAntes, diaDespues)
-			//}
-
-			maxResults(max)
-			firstResult(offset)
+		def fechaDesde = null
+		def fechaHasta = null
+		if (filtro.fecha) {
+			def calendar = Calendar.instance
+			calendar.setTime(filtro.fecha.clearTime().clone())
+			calendar.add(Calendar.DATE, -1)
+			calendar.set(Calendar.HOUR, 23)
+			calendar.set(Calendar.MINUTE, 59)
+			calendar.set(Calendar.SECOND, 59)
+			fechaDesde = calendar.getTime()
+			println fechaDesde
+			calendar.setTime(filtro.fecha.clearTime().clone())
+			fechaHasta = calendar.add(Calendar.DATE, 1)
+			fechaHasta = calendar.getTime()
+			println fechaHasta
 		}
+		def result = criteria.list{
+			if (filtro.fecha) {
+				between("dateCreated", fechaDesde, fechaHasta)
+			}
+			if (max)
+				maxResults(max)
+			if (offset)
+				firstResult(offset)
+		}
+		println result
+		return filtro.estado ? result.findAll {it.estado.nombre.equals(filtro.estado.nombre) } : result
 	}
 
+	def getStateByName(String nombre) {
+		if (nombre == null)
+			return null
+		getAllEstados().find {it.nombre == nombre}
+	}
 
 	def filterCount(PedidoFilter filtro) {
 		def criteria = Pedido.createCriteria()
+		def fechaDesde = null
+		def fechaHasta = null
+		if (filtro.fecha) {
+			def calendar = Calendar.instance
+			calendar.setTime(filtro.fecha.clearTime())
+			calendar.add(Calendar.DATE, -1)
+			calendar.set(Calendar.HOUR, 23)
+			calendar.set(Calendar.MINUTE, 59)
+			calendar.set(Calendar.SECOND, 59)
+			fechaDesde = calendar.getTime()
+			calendar.setTime(filtro.fecha.clearTime())
+			fechaHasta = calendar.add(Calendar.DATE, 1)
+		}
 		return criteria.count{
-			if (filtro.estadoNombre && ! filtro.estadoNombre.isAllWhitespace()) {
+			if (filtro.estado) {
 				estado {
-					eq("nombre", filtro.estadoNombre)
+					eq("nombre", filtro.estado.nombre)
 				}
 			}
 			if (filtro.fecha) {
-				eq("dateCreated", filtro.fecha)
+				between("dateCreated", fechaDesde, fechaHasta)
 			}
 		}
 	}

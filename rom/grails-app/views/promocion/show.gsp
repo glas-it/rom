@@ -62,7 +62,7 @@
 						QR
 					</div>
 					<div class="panel-body">
-						<qrcode:image text="${promocionInstance?.id}&${promocionInstance?.nombe}&${promocionInstance?.fechaDesde.time}&${promocionInstance?.fechaHasta.time}"/>
+						<qrcode:image text="${promocionInstance?.id}&${promocionInstance?.nombre}&${promocionInstance?.fechaInicio.time}&${promocionInstance?.fechaFin.time}"/>
 					</div>
 				</div>
 			</div>
