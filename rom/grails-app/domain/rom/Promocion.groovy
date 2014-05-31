@@ -28,6 +28,9 @@ class Promocion {
 	
 	String nombre, descripcion
 	
+	static	hasMany		= [pedidos : Pedido]	// tells GORM to associate other domain objects for a 1-n or n-m mapping
+
+
     static	mapping = {
     }
     

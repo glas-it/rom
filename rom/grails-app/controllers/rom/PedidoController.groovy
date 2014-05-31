@@ -23,37 +23,40 @@ class PedidoController {
 	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", apertura: "POST", cierre: "POST"]
 
 	private String SUCCESS = "{'success': true}"
-	
+
 	private String FAIL = "{'success': false}"
-	
+
 	def pedidoService
 	def mesaService
 	def ordenService
 	def notificacionService
 	def pdfRenderingService
-	
+
 	@Secured(['permitAll'])
 	@Transactional
 	def apertura(long idRestaurant, String usernameMozo, String idMesas, int comensales) {
-		Restaurant restaurant = Restaurant.findById(idRestaurant)
+		Restaurant restaurant = Restaurant.findById(idzRestaurant)
 
 		JSONArray idMesasList = new JSONArray(idMesas)
 		Mesa mesa = getMesaParaApertura(idMesasList, restaurant)
-		String rta = (mesa as JSON).toString()
-		
+		JSONObject json = new JSONObject((mesa as JSON).toString())
+		json.put("comensales", comensales)
+		json.put("abierta", true)
+		String rta = json.toString()
+
 		Mozo mozo = Mozo.findByUsernameAndRestaurant(usernameMozo, restaurant);
 		if (mozo == null)
 			throw new Exception("Mozo " + usernameMozo + " inexistente")
-		
+
 		Pedido pedido = new Pedido(mesa, mozo, comensales)
 		pedido.marcarAbierto()
 		pedido.save(failOnError:true)
-		
+
 		/* Por el amor del dios en el que creas, no descomentes esta línea!!! */
 		//String rta = (mesa as JSON).toString()
 		render "{'success':true, 'mesa': " + rta + "}"
 	}
-	
+
 	private Mesa getMesaParaApertura(List idMesas, Restaurant restaurant) {
 		if (idMesas.size() <= 0)
 			throw new Exception("Parametro idMesas invalido")
@@ -61,7 +64,7 @@ class PedidoController {
 		mesa = mesaService.crearMesaComposite(idMesas, restaurant)
 		return mesa
 	}
-	
+
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
 	def mozo(String username) {
@@ -79,8 +82,8 @@ class PedidoController {
 		}
 		render result as JSON
 	}
-	
-	
+
+
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
 	def cambioMozo(long idRestaurant, String username, long idMesa) {
@@ -88,15 +91,15 @@ class PedidoController {
 		Mozo nuevoMozo = Mozo.findByUsername(username)
 		if ( ! nuevoMozo )
 			throw new Exception("Mozo inexistente");
-		
+
 		Pedido pedido = pedidoService.getPedidoByMesaId(mesa.id)
-		
+
 		pedido.setNuevoMozo(nuevoMozo)
-		
+
 		pedido.save()
 		render pedido as JSON
 	}
-	
+
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
 	def agregarComensales(long idRestaurant, int comensales, long idMesa) {
@@ -106,7 +109,7 @@ class PedidoController {
 		pedido.save()
 		render SUCCESS
 	}
-	
+
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
 	def cierre(long idRestaurant, long idMesa) {
@@ -120,8 +123,8 @@ class PedidoController {
 		}
 		render SUCCESS
 	}
-	
-	
+
+
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
 	def pago() {
@@ -146,7 +149,7 @@ class PedidoController {
 		redirect action:'list'
 	}
 
-	
+
 	/*
 	 * WS hecho para poder correr el script con datos para pruebas
 	 */
@@ -185,7 +188,7 @@ class PedidoController {
 			return
 		}
 	}
-	
+
 
 	private List formatearOrdenes(List ordenes) {
 		println ordenes
@@ -205,7 +208,7 @@ class PedidoController {
 		println lista
 		return lista
 	}
-		
+
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
 	def anular() {
@@ -220,7 +223,7 @@ class PedidoController {
 			pedido.marcarAnulado(params.motivo)
 			pedido.save()
 			long idDuenio = pedido.mozo.restaurant.duenio.id
-			notificacionService.crearNotificacion(idDuenio, pedido.mozo.id, "Mesa " + pedido.mesa.numero, 
+			notificacionService.crearNotificacion(idDuenio, pedido.mozo.id, "Mesa " + pedido.mesa.numero,
 				"Se anuló el pedido completo")
 			flash.message = "El pedido ha sido anulado exitosamente"
 			redirect action: 'list'
@@ -229,7 +232,7 @@ class PedidoController {
 			redirect action:'list'
 		}
 	}
-	
+
 	@Secured(['permitAll'])
 	def ticket() {
 		Pedido pedido = Pedido.get(params.id)
@@ -245,7 +248,7 @@ class PedidoController {
 //		response.setHeader("Content-Disposition", "attachment; filename=ticket-${pedido.id}.pdf")
 //		renderPdf(template:"ticket", model:[pedidoInstance:pedido, pdfRendering:true])
 	}
-	
+
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
 	def byMesa(long idRestaurant, long idMesa) {
@@ -254,15 +257,15 @@ class PedidoController {
 			render "{'success': false}"
 			return
 		}
-			
+
 		try {
 			render pedidoService.getPedidoByMesaId(mesa.id) as JSON
 		} catch (Exception e){
 			render "{'success': false, 'mesa':"+(mesa as JSON)+"}"
 		}
 	}
-	
-	
+
+
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
 	def agregarMesa(long idRestaurant, long idMesaCompuesta, long idMesa) {
@@ -271,40 +274,41 @@ class PedidoController {
 
 		render SUCCESS
 	}
-	
+
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
 	def quitarMesa(long idRestaurant, long idMesaCompuesta, long idMesa) {
 		Restaurant resto = Restaurant.findById(idRestaurant)
-		
+
 		mesaService.quitarMesa(idMesaCompuesta, idMesa, resto)
-		
+
 		render SUCCESS
 	}
-	
-	
+
+
 	@Secured(['permitAll'])
+	@Transactional(readOnly = false)
 	def agregarPromocion(Long idPromocion, Long idRestaurant, Long idMesa) {
 		try {
-			pedidoService.agregarPromocion(idPromocion, idRestaurant, idMesa)
+			Pedido pedido = pedidoService.agregarPromocion(idPromocion, idRestaurant, idMesa)
+			pedido.save(flush:true)
 			render SUCCESS
 		} catch(Exception) {
 			render FAIL
 		}
 	}
-	
+
 	def index(Integer max) {
 		redirect action:'list'
-	} 
-	
+	}
+
 	@Secured(['permitAll'])
 	def list(PedidoFilter filter) {
-		params.max = Math.min(params.max ?: 10, 100)
-		[pedidoInstanceList: pedidoService.filter(filter, params.max, params.offset),
+		params.max = Math.min(params.max ? params.max.toInteger() : 10, 100)
+		[pedidoInstanceList: pedidoService.filter(filter, params.max ? params.max.toInteger() : null, params.offset ? params.offset.toInteger() : null),
 		pedidoInstanceCount: pedidoService.filterCount(filter),
 		estadosList: pedidoService.getAllEstados()]
 	}
-	
 
 	@Secured(['permitAll'])
 	def filter() {
@@ -418,11 +422,11 @@ class PedidoFilter {
 class OrdenResumidaCommand {
 	int cantidad
 	Orden orden
-	
+
 	def importe() {
 		return orden.precioFinal() * cantidad
 	}
-	
+
 	def descripcion() {
 		def descrip = orden.consumible.nombre
 		if (orden.agregado) {
