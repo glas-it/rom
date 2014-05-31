@@ -95,13 +95,38 @@
 					</g:link>
 				</li>
 			</sec:ifAnyGranted>
+			<%--
 			<sec:ifAnyGranted roles='DUENIO'>
 				<li class="controlleractive">
-					<g:link controller="pedido" action="reporte">
-						<g:message code="pedido.label" default="Reportes"/>
+					<g:link controller="reporte" action="reporteFacturacion">
+						<g:message code="reporte.label" default="Reportes"/>
 					</g:link>
 				</li>
+			</sec:ifAnyGranted> --%>
+			
+			<sec:ifAnyGranted roles='DUENIO'>
+				<li class="controlleractive">
+				<a class="dropdown-toggle" role="button" data-toggle="dropdown" data-target="#" href="#">
+					Reportes<b class="caret"></b>
+				</a>
+				<ul class="dropdown-menu" role="menu">
+					<li>
+						<a href="${createLink(controller: 'reporte', action: 'reporteFacturacion' )}">
+						Facturacion
+						</a>
+					</li>
+					<li>
+						<a href="${createLink(controller: 'reporte', action: 'reporteProductos' )}">
+						Productos
+						</a>
+					</li>
+				</ul>
+				</li>
 			</sec:ifAnyGranted>
+			
+			
+			
+			
 			<%--<sec:ifAnyGranted roles='ADMIN'>
 				<g:render template="/_menu/admin"/>
 			</sec:ifAnyGranted>														

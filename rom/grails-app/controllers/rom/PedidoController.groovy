@@ -35,7 +35,7 @@ class PedidoController {
 	@Secured(['permitAll'])
 	@Transactional
 	def apertura(long idRestaurant, String usernameMozo, String idMesas, int comensales) {
-		Restaurant restaurant = Restaurant.findById(idRestaurant)
+		Restaurant restaurant = Restaurant.findById(idzRestaurant)
 
 		JSONArray idMesasList = new JSONArray(idMesas)
 		Mesa mesa = getMesaParaApertura(idMesasList, restaurant)
@@ -308,28 +308,6 @@ class PedidoController {
 		[pedidoInstanceList: pedidoService.filter(filter, params.max ? params.max.toInteger() : null, params.offset ? params.offset.toInteger() : null),
 		pedidoInstanceCount: pedidoService.filterCount(filter),
 		estadosList: pedidoService.getAllEstados()]
-	}
-
-	@Secured(['permitAll'])
-	def reporte() {
-		respond Pedido.list(params), model:[pedidoInstanceCount: Pedido.count()]
-	}
-
-	@Secured(['permitAll'])
-	def getDatosReporte() {
-		Date desde = new Date(params.fechaInicio)
-		Date hasta = new Date(params.fechaFin)
-
-		def pedidos = pedidoService.getPedidosPagadosByFechas(desde, hasta)
-		println "PEDIDOS::::::::" + pedidos
-		def respuesta = pedidoService.parsearRespuesta(pedidos, desde, hasta)
-		println "RESPUESTA::::::" + respuesta
-
-		//println "RESPUESTAJJJJJJOTASON::::::" + [respuesta] as JSON
-
-		def foo = [["Ene",1],["Feb",2],["Mar",3]]
-
-		render respuesta as JSON
 	}
 
 	@Secured(['permitAll'])
