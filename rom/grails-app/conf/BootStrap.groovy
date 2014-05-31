@@ -145,6 +145,7 @@ class BootStrap {
 		JSON.registerObjectMarshaller(Promocion) {
 			def res = [:]
 			res["class"] = "Promocion"
+			res["id"] = it.id
 			res["nombre"] = it.nombre
 			res["fechaInicio"] = it.fechaInicio.time
 			res["fechaFin"] = it.fechaFin.time

@@ -42,7 +42,7 @@ class MesaService {
 	}
 
 	public MesaUnitaria getMesaUnitaria(long idMesa, Restaurant restaurant) {
-		MesaUnitaria mesa = MesaUnitaria.findByIdAndRestaurant(idMesa, restaurant)
+		MesaUnitaria mesa = MesaUnitaria.findByIdAndRestaurant(idMesa, restaurant, [lock: true])
 		if (mesa == null || ! mesa.activo || mesa.abierta) {
 			throw new Exception ("No se puede procesar la mesa " + idMesa.toString())
 		}
@@ -50,7 +50,7 @@ class MesaService {
 	}
 	
 	public MesaComposite getMesaComposite(long idMesa, Restaurant restaurant) {
-		MesaComposite mesa = MesaComposite.findByIdAndRestaurant(idMesa, restaurant)
+		MesaComposite mesa = MesaComposite.findByIdAndRestaurant(idMesa, restaurant, [lock: true])
 		if (mesa == null || ! mesa.activo || ! mesa.abierta) {
 			throw new Exception ("No se puede procesar la mesa compuesta " + idMesa.toString())
 		}

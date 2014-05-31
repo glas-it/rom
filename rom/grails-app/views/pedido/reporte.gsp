@@ -3,40 +3,64 @@
 <html>
 
 <head>
-	<meta name="layout" content="kickstart" />
-	<title>Reporte</title>
-	<script src="${resource(dir:'js',file: 'highcharts.js')}"></script>
-	<script src="${resource(dir:'js',file: 'exporting.js')}"></script>
+    <meta name="layout" content="kickstart" />
+    <title>Reporte</title>
+    <script src="${resource(dir:'js',file: 'highcharts.js')}"></script>
+    <script src="${resource(dir:'js',file: 'exporting.js')}"></script>
+    <script src="${resource(dir:'js',file: 'highcharts-customization.js')}"></script>
+    <script src="${resource(dir:'js',file: 'moment-with-langs.min.js')}"></script>
 </head>
 
 <body>
 <script type="text/javascript">
 var chart;
 
+function monthDiff(d1, d2) {
+    var months;
+    months = (d2.getFullYear() - d1.getFullYear()) * 12;
+    months -= d1.getMonth() + 1;
+    months += d2.getMonth();
+    return months <= 0 ? 0 : months;
+}
+
 function requestData() {
-	//yyyy/mm/01
-	var params = {};
-	params.fechaInicio = new Date($("#fechaInicio_year").val(), $("#fechaInicio_month").val() - 1)
-	params.fechaFin = new Date($("#fechaFin_year").val(), $("#fechaFin_month").val() - 1)
-	
+    //yyyy/mm/01
+    var params = {};
+    $("#pdfButton").removeClass("hide");
+    $("#highcharts-report").removeClass("hide");
+    params.fechaInicio = new Date($("#fechaInicio_year").val(), $("#fechaInicio_month").val() - 1)
+    params.fechaFin = new Date($("#fechaFin_year").val(), $("#fechaFin_month").val() - 1)
+
     $.ajax({
         url: 'getDatosReporte',
         data: params,
         success: function(datos) {
-            chart.series[0].setData(datos, true);
+            chart = buildChart('Reporte de Facturación', datos, params);
         },
         cache: false
     });
-} 
+}
 
-$(function () {
-	chart = new Highcharts.Chart({
-    	chart: {
-            renderTo: 'container',
-            type: 'column'
+function buildChart(titulo, datos, params) {
+    var hoy = new Date();
+    report_height = 500 + 25 * monthDiff(params.fechaInicio, params.fechaFin);
+    return new Highcharts.Chart({
+        chart: {
+            renderTo: 'highcharts-report',
+            type: 'column',
+            events: {
+                load: Highcharts.drawTable
+            },
+            height: report_height,
+            spacingBottom: report_height - 400,
+            marginTop: 100
+        },
+        exporting: {
+            enabled: true,
+            filename: titulo + "-" + hoy.getDate() + "-" + hoy.getMonth() + "-" + hoy.getFullYear() + "-" + hoy.getHours() + "-" + hoy.getMinutes() + "-" + hoy.getSeconds()
         },
         title: {
-            text: 'Facturación'
+            text: titulo
         },
         xAxis: {
             type: 'category',
@@ -62,28 +86,7 @@ $(function () {
         },
         series: [{
             name: 'Facturacion',
-            data: [
-                ['Shanghai', 23.7],
-                ['Lagos', 16,1],
-                ['Instanbul', 14.2],
-                ['Karachi', 14.0],
-                ['Mumbai', 12.5],
-                ['Moscow', 12.1],
-                ['São Paulo', 11.8],
-                ['Beijing', 11.7],
-                ['Guangzhou', 11.1],
-                ['Delhi', 11.1],
-                ['Shenzhen', 10.5],
-                ['Seoul', 10.4],
-                ['Jakarta', 10.0],
-                ['Kinshasa', 9.3],
-                ['Tianjin', 9.3],
-                ['Tokyo', 9.0],
-                ['Cairo', 8.9],
-                ['Dhaka', 8.9],
-                ['Mexico City', 8.9],
-                ['Lima', 8.9]
-            ],
+            data: datos,
             dataLabels: {
                 enabled: true,
                 rotation: -90,
@@ -99,51 +102,50 @@ $(function () {
             }
         }]
     });
+};
 
-	$("#buscarButton").click( requestData );
-
-});
+window.onload = function() {
+    $("#buscarButton").click( requestData );
+    $('#fechaInicio_year').addClass('form-control');
+    $('#fechaInicio_month').addClass('form-control');
+    $('#fechaFin_year').addClass('form-control');
+    $('#fechaFin_month').addClass('form-control');
+}
 
 </script>
 
  <section id="list-orden" class="first">
-	<div class="panel panel-default tab-content">
-	<div class="panel-body">
-		
-		<div class="row">
-			<div class="col-md-2">
-				<label for="fechaInicio" class="control-label">Fecha Inicio</label>
-			</div>
-			<div class="col-md-4">
-				<g:datePicker class="form-control" name="fechaInicio" precision="month"   />
-			</div>
-			<div class="col-md-2">
-				<label for="fechaFin" class="control-label">Fecha Fin</label>
-			</div>
-			<div class="col-md-4">
-				<g:datePicker class="form-control" name="fechaFin" precision="month"  />
-			</div>
-		</div>
-		<br/>
-				
-		<div class="row">
-			<div class="col-md-4 text-center">
-				<input id="pdfButton" type="button" class="btn btn-primary" value="PDF" />
-			</div>
-			
-			<div class="col-md-4 text-center pull-right">
-				<input id="buscarButton" type="button" class="btn btn-primary" value="Buscar" />
-			</div>
-		</div>		
-				
-		<div id="container" style="min-width: 500px; height: 400px; margin: 0 auto"></div>
-		
-	</div>
- 	</div>
+    <div class="panel panel-default tab-content">
+        <div class="panel-body">
+            <div class="row form-inline">
+                <div class="form-group col-md-4 form-horizontal col-md-offset-2">
+                    <label for="fechaInicio" class="col-md-4 control-label" style="padding-left:0px; text-align: left;">Fecha Inicio</label>
+                    <div>
+                        <g:datePicker id="fechaInicio" name="fechaInicio" precision="month" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group col-md-4 form-horizontal">
+                    <label for="fechaInicio" class="col-md-4 control-label" style="padding-left:0px; text-align: left;">Fecha Fin</label>
+                    <div>
+                        <g:datePicker class="form-control" name="fechaFin" precision="month"  />
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="row" style="padding-bottom:10px">
+                <div class="col-md-2 text-center col-md-offset-2">
+                    <input id="buscarButton" type="button" class="btn btn-primary" value="Buscar" />
+                </div>
+
+                <div class="col-md-2 text-center col-md-offset-4">
+                    <input id="pdfButton" type="button" class="btn btn-primary hide" value="PDF" />
+                </div>
+            </div>
+            <div class="row">
+                <div id="highcharts-report" class="thumbnail col-md-7 center-block hide" style="float: none;"></div>
+            </div>
+        </div>
+    </div>
  </section>
-
-
-
 </body>
-
 </html>

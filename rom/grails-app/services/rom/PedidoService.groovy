@@ -8,6 +8,8 @@ import rom.PedidoStates.*
 import java.text.SimpleDateFormat
 import java.util.Calendar.*
 
+import grails.converters.JSON
+
 /**
  * PedidoService
  * A service class encapsulates the core business logic of a Grails application
@@ -28,9 +30,9 @@ class PedidoService {
 		} catch(BusinessException e) {
 			throw new ServiceException(e.message)
 		}
-		pedido.save(failOnError:true)
+		return pedido
 	}
-	
+
 	private void validarEntrada(promocion, mesa, restaurant) {
 		if (!promocion || !mesa)
 			throw new ServiceException("No existe o la mesa o la promocion")
@@ -67,6 +69,7 @@ class PedidoService {
 				mesa {
 					eq("id", unaMesa.id)
 				}
+				lock true
 			}
 		}
 		if (result.size() > 0)
@@ -172,21 +175,27 @@ class PedidoService {
 		}
 	}
 	
-	def parsearRespuesta(List pedidos) {
+	def parsearRespuesta(List pedidos, Date desde, Date hasta) {
 		Calendar cal = Calendar.getInstance()
 		def meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre" ,"Octubre","Noviembre","Diciembre"]
 		def respuesta = []
 		def mesAnterior = ""
+
+		def diffMeses = (desde..hasta).collect { [ it[ Calendar.YEAR ], it[ Calendar.MONTH ] ] }
+		                     .unique()
+		                     .size()
+        cal.setTime(desde)
+        mesAnterior = meses[cal.get(Calendar.MONTH)]
+		for(int i = 0; i < diffMeses; i++) {
+			respuesta.add( [meses[(cal.get(Calendar.MONTH) + i) % 12], 0] )
+		}
+		println respuesta
 		for (pedido in pedidos) {
 			cal.setTime(pedido.fechaPago)
-			String mesActual = meses[cal.get(Calendar.MONTH)]
-			
-			if (mesActual != mesAnterior) {
-				respuesta.add( [mesActual, pedido.total()] )
-				mesAnterior = mesActual
-			}
-			else
-				respuesta[-1][1] += pedido.total()
+			int mesIndex = (desde..pedido.fechaPago).collect { [ it[ Calendar.YEAR ], it[ Calendar.MONTH ] ] }
+			                     .unique()
+			                     .size()
+			respuesta[mesIndex - 1][1] += pedido.total()
 		}
 		return respuesta
 	}
