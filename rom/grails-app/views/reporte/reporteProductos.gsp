@@ -19,9 +19,13 @@ function requestData() {
 	params.fechaInicio = new Date($("#fechaInicio_year").val(), $("#fechaInicio_month").val() - 1)
 	params.fechaFin = new Date($("#fechaFin_year").val(), $("#fechaFin_month").val() - 1)
 
+	/*
+	Aca en params falta pasarle un listado de subrubros
+	*/
+	
 	if (validarFechas(params.fechaInicio, params.fechaFin)) {
 	    $.ajax({
-	        url: 'getDatosReporteFacturacion',
+	        url: 'getDatosReporteProductos',
 	        data: params,
 	        success: function(datos) {
 	            chart.series[0].setData(datos, true);
@@ -54,7 +58,7 @@ $(function () {
             type: 'column'
         },
         title: {
-            text: 'Facturación'
+            text: 'Ventas'
         },
         xAxis: {
             type: 'category',
@@ -69,17 +73,17 @@ $(function () {
         yAxis: {
             min: 0,
             title: {
-                text: 'Pesos ($)'
+                text: 'Cantidad vendido'
             }
         },
         legend: {
             enabled: false
         },
         tooltip: {
-            pointFormat: 'Facturado: <b>$ {point.y:.1f}</b>',
+            pointFormat: 'Cantidad: <b> {point.y}</b>',
         },
         series: [{
-            name: 'Facturacion',
+            name: 'Ventas',
             data: [
                 ['Shanghai', 23.7],
                 ['Lagos', 16,1],

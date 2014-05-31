@@ -1,5 +1,8 @@
 package rom
 
+import java.util.Date;
+import java.util.Calendar.*
+
 import rom.Exceptions.TransicionInvalidaOrdenException
 import rom.OrdenStates.*
 import rom.notificaciones.Notificacion
@@ -66,4 +69,29 @@ class OrdenService {
 		notificacionService.crearNotificacion(duenio.id, cocina.id,  "Mesa " + orden.pedido.mesa.numero, 
 				"Se anuló: " + orden.consumible.toString())
 	}
+	
+	private Date getUltimoDiaDelMes(Date fecha) {
+		Calendar cal = Calendar.getInstance()
+		cal.setTime(fecha)
+		cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE))
+		cal.set(Calendar.HOUR_OF_DAY,23);
+		cal.set(Calendar.MINUTE,59);
+		cal.set(Calendar.SECOND,59);
+		return cal.getTime()
+	}
+	
+	def getOrdenesFacturadasBy(Date desde, Date hasta, List subrubros) {
+		hasta = getUltimoDiaDelMes(hasta)
+		return Orden.executeQuery("select o from Orden o " +
+			"inner join o.consumible as c " +
+			"inner join o.pedido as p " +
+			"where p.fechaPago between :fDesde and :fHasta " +
+			"and c.subrubro in :lSubrubros", [fDesde: desde, fHasta: hasta, lSubrubros: subrubros])
+	}
+	
+	
+	/*
+	 * Luego falta recorrer las ordenes VALIDAS y contar las ventas de los productos.
+	 * Los ordeno por mas vendido y devuelvo
+	 */
 }
