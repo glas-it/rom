@@ -70,10 +70,9 @@ class OrdenService {
 				"Se anuló: " + orden.consumible.toString())
 	}
 	
-	private Date getUltimoDiaDelMes(Date fecha) {
+	private Date getUltimaHoraDelDia(Date fecha) {
 		Calendar cal = Calendar.getInstance()
 		cal.setTime(fecha)
-		cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE))
 		cal.set(Calendar.HOUR_OF_DAY,23);
 		cal.set(Calendar.MINUTE,59);
 		cal.set(Calendar.SECOND,59);
@@ -81,17 +80,12 @@ class OrdenService {
 	}
 	
 	def getOrdenesFacturadasBy(Date desde, Date hasta, List subrubros) {
-		hasta = getUltimoDiaDelMes(hasta)
+		hasta = getUltimaHoraDelDia(hasta)
 		return Orden.executeQuery("select o from Orden o " +
 			"inner join o.consumible as c " +
 			"inner join o.pedido as p " +
 			"where p.fechaPago between :fDesde and :fHasta " +
 			"and c.subrubro in :lSubrubros", [fDesde: desde, fHasta: hasta, lSubrubros: subrubros])
 	}
-	
-	
-	/*
-	 * Luego falta recorrer las ordenes VALIDAS y contar las ventas de los productos.
-	 * Los ordeno por mas vendido y devuelvo
-	 */
+
 }

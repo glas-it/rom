@@ -16,8 +16,8 @@ var chart;
 function requestData() {
 	//yyyy/mm/01
 	var params = {};
-	params.fechaInicio = new Date($("#fechaInicio_year").val(), $("#fechaInicio_month").val() - 1)
-	params.fechaFin = new Date($("#fechaFin_year").val(), $("#fechaFin_month").val() - 1)
+	params.fechaInicio = new Date($("#fechaInicio_year").val(), $("#fechaInicio_month").val() - 1, $("#fechaInicio_day").val());
+	params.fechaFin = new Date($("#fechaFin_year").val(), $("#fechaFin_month").val() - 1, $("#fechaFin_day").val());
 
 	/*
 	Aca en params falta pasarle un listado de subrubros
@@ -84,28 +84,7 @@ $(function () {
         },
         series: [{
             name: 'Ventas',
-            data: [
-                ['Shanghai', 23.7],
-                ['Lagos', 16,1],
-                ['Instanbul', 14.2],
-                ['Karachi', 14.0],
-                ['Mumbai', 12.5],
-                ['Moscow', 12.1],
-                ['São Paulo', 11.8],
-                ['Beijing', 11.7],
-                ['Guangzhou', 11.1],
-                ['Delhi', 11.1],
-                ['Shenzhen', 10.5],
-                ['Seoul', 10.4],
-                ['Jakarta', 10.0],
-                ['Kinshasa', 9.3],
-                ['Tianjin', 9.3],
-                ['Tokyo', 9.0],
-                ['Cairo', 8.9],
-                ['Dhaka', 8.9],
-                ['Mexico City', 8.9],
-                ['Lima', 8.9]
-            ],
+            data: [],
             dataLabels: {
                 enabled: true,
                 rotation: -90,
@@ -137,13 +116,13 @@ $(function () {
 				<label for="fechaInicio" class="control-label">Fecha Inicio</label>
 			</div>
 			<div class="col-md-4">
-				<g:datePicker class="form-control" name="fechaInicio" precision="month"   />
+				<g:datePicker class="form-control" name="fechaInicio" precision="day"   />
 			</div>
 			<div class="col-md-2">
 				<label for="fechaFin" class="control-label">Fecha Fin</label>
 			</div>
 			<div class="col-md-4">
-				<g:datePicker class="form-control" name="fechaFin" precision="month"  />
+				<g:datePicker class="form-control" name="fechaFin" precision="day"  />
 			</div>
 		</div>
 		<br/>

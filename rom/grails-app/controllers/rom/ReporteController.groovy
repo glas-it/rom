@@ -45,12 +45,12 @@ class ReporteController {
 	def getDatosReporteProductos() {
 		Date desde = new Date(params.fechaInicio)
 		Date hasta = new Date(params.fechaFin)
-		def listaSubrubros = [Subrubro.get(1),Subrubro.get(4)] // Subrubros de prueba de subrubros
+		
+		def listaSubrubros = [Subrubro.get(1),Subrubro.get(2),Subrubro.get(3),Subrubro.get(4)] // Subrubros de prueba de subrubros
 		
 		def ordenes = ordenService.getOrdenesFacturadasBy(desde, hasta, listaSubrubros)
-		println "ORDENES::::::::" + ordenes
+		
 		def respuesta = parsearRespuestaProductos(ordenes)
-		println "RESPUESTA::::::" + respuesta
 				
 		render respuesta as JSON
 	}
@@ -78,19 +78,4 @@ class ReporteController {
 		return res
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }
