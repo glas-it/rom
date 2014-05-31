@@ -305,27 +305,6 @@ class PedidoController {
 		estadosList: pedidoService.getAllEstados()]
 	}
 	
-	@Secured(['permitAll'])
-	def reporte() {
-		respond Pedido.list(params), model:[pedidoInstanceCount: Pedido.count()]
-	}
-	
-	@Secured(['permitAll'])
-	def getDatosReporte() {
-		Date desde = new Date(params.fechaInicio)
-		Date hasta = new Date(params.fechaFin)
-		
-		def pedidos = pedidoService.getPedidosPagadosByFechas(desde, hasta)
-		println "PEDIDOS::::::::" + pedidos
-		def respuesta = pedidoService.parsearRespuesta(pedidos)
-		println "RESPUESTA::::::" + respuesta 
-		
-		//println "RESPUESTAJJJJJJOTASON::::::" + [respuesta] as JSON
-		
-		def foo = [["Ene",1],["Feb",2],["Mar",3]]
-		
-		render respuesta as JSON
-	}
 
 	@Secured(['permitAll'])
 	def filter() {

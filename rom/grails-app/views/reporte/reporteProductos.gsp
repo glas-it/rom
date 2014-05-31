@@ -4,7 +4,7 @@
 
 <head>
 	<meta name="layout" content="kickstart" />
-	<title>Reporte</title>
+	<title>Reporte Productos</title>
 	<script src="${resource(dir:'js',file: 'highcharts.js')}"></script>
 	<script src="${resource(dir:'js',file: 'exporting.js')}"></script>
 </head>
@@ -18,16 +18,34 @@ function requestData() {
 	var params = {};
 	params.fechaInicio = new Date($("#fechaInicio_year").val(), $("#fechaInicio_month").val() - 1)
 	params.fechaFin = new Date($("#fechaFin_year").val(), $("#fechaFin_month").val() - 1)
-	
-    $.ajax({
-        url: 'getDatosReporte',
-        data: params,
-        success: function(datos) {
-            chart.series[0].setData(datos, true);
-        },
-        cache: false
-    });
+
+	if (validarFechas(params.fechaInicio, params.fechaFin)) {
+	    $.ajax({
+	        url: 'getDatosReporteFacturacion',
+	        data: params,
+	        success: function(datos) {
+	            chart.series[0].setData(datos, true);
+	        },
+	        cache: false
+	    });
+	}
 } 
+
+
+function validarFechas(fechaIni, fechaFin) {
+	if (fechaFin < fechaIni) {
+		alert("Fecha inválida: la fecha 'desde' es posterior a la fecha 'hasta'");
+		return false;
+	}
+
+	if (! (fechaFin.getFullYear() - fechaIni.getFullYear() == 0 ||
+			(fechaFin.getFullYear() - fechaIni.getFullYear() == 1 && 
+			fechaFin.getMonth() - fechaIni.getMonth() <= 2) ) ) {
+		alert("Periodo inválido: el periodo comprendido entre el desde/hasta debe ser menor o igual a los 14 meses");
+		return false;
+	}
+	return true;
+}
 
 $(function () {
 	chart = new Highcharts.Chart({
