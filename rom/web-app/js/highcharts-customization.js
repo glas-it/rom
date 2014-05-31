@@ -18,7 +18,7 @@ Highcharts.drawTable = function() {
         rowHeight = 20,
         cellPadding = 2.5,
         valueDecimals = 2,
-        valuePrefix = '$ ';
+        valuePrefix = Highcharts.tableValuePrefix;
 
     // internal variables
     var chart = this,
@@ -53,7 +53,7 @@ Highcharts.drawTable = function() {
     .add();
 
     renderer.text(
-        "Mes",
+        Highcharts.xTitle,
         cellLeft + colWidth / 2,
         tableTop + rowHeight
     )
@@ -71,7 +71,7 @@ Highcharts.drawTable = function() {
 
         // Apply the cell text
         renderer.text(
-                serie.name,
+                Highcharts.yTitle,
                 cellLeft + colWidth / 2,
                 tableTop + rowHeight
             )

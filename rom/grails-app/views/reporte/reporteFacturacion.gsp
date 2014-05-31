@@ -4,13 +4,12 @@
 
 <head>
     <meta name="layout" content="kickstart" />
-    <title>Reporte</title>
+    <title>Reporte Facturación</title>
     <g:set var="layout_nosecondarymenu" value="false" scope="request"/>
     <script src="${resource(dir:'js',file: 'highcharts.js')}"></script>
     <script src="${resource(dir:'js',file: 'exporting.js')}"></script>
     <script src="${resource(dir:'js',file: 'highcharts-customization.js')}"></script>
     <script src="${resource(dir:'js',file: 'moment-with-langs.min.js')}"></script>
-
     <script type="text/javascript">
     var chart;
 
@@ -26,7 +25,6 @@
         var params = {};
         params.fechaInicio = new Date($("#fechaInicio_year").val(), $("#fechaInicio_month").val() - 1)
         params.fechaFin = new Date($("#fechaFin_year").val(), $("#fechaFin_month").val() - 1)
-
         if (validarFechas(params.fechaInicio, params.fechaFin)) {
             $("#pdfButton").removeClass("hide");
             $("#highcharts-report").removeClass("hide");
@@ -44,6 +42,9 @@
     function buildChart(titulo, datos, params) {
         var hoy = new Date();
         report_height = 500 + 25 * monthDiff(params.fechaInicio, params.fechaFin);
+        Highcharts.tableValuePrefix = '$ ';
+        Highcharts.xTitle = "Mes";
+        Highcharts.yTitle = "Facturación";
         return new Highcharts.Chart({
             chart: {
                 renderTo: 'highcharts-report',
@@ -149,7 +150,7 @@
             </li>
         </ul>
     </div>
-    <br>
+    <br/>
     <section id="list-orden" class="first">
         <div class="panel panel-default tab-content">
             <div class="panel-body">
