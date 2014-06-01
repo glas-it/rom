@@ -45,13 +45,13 @@
 						</g:link>
 					</li>
 				</sec:ifAnyGranted>
-			<sec:ifAnyGranted roles='DUENIO'>
-				<li class="controlleractive">
-					<g:link controller="rubro" action="index">
-						<g:message code="rubro.label" default="Rubros"/>
-					</g:link>
-				</li>
-			</sec:ifAnyGranted>
+<%--			<sec:ifAnyGranted roles='DUENIO'>--%>
+<%--				<li class="controlleractive">--%>
+<%--					<g:link controller="rubro" action="index">--%>
+<%--						<g:message code="rubro.label" default="Rubros"/>--%>
+<%--					</g:link>--%>
+<%--				</li>--%>
+<%--			</sec:ifAnyGranted>--%>
 			<sec:ifAnyGranted roles='ADMIN'>
 				<li class="controlleractive">
 					<g:link controller="duenio" action="index">
@@ -59,25 +59,32 @@
 					</g:link>
 				</li>
 			</sec:ifAnyGranted>
+<%--			<sec:ifAnyGranted roles='DUENIO'>--%>
+<%--				<li class="controlleractive">--%>
+<%--					<g:link controller="subrubro" action="index">--%>
+<%--						<g:message code="subrubro.label" default="Subrubros"/>--%>
+<%--					</g:link>--%>
+<%--				</li>--%>
+<%--			</sec:ifAnyGranted>--%>
+<%--			--%>
+<%--			<sec:ifAnyGranted roles='DUENIO'>--%>
+<%--				<li class="controlleractive">--%>
+<%--					<g:link controller="consumicion" action="index">--%>
+<%--						<g:message code="consumicion.label" default="Consumiciones"/>--%>
+<%--					</g:link>--%>
+<%--				</li>--%>
+<%--			</sec:ifAnyGranted>--%>
+<%--			<sec:ifAnyGranted roles='DUENIO'>--%>
+<%--				<li class="controlleractive">--%>
+<%--					<g:link controller="agregado" action="index">--%>
+<%--						<g:message code="agregado.label" default="Agregados"/>--%>
+<%--					</g:link>--%>
+<%--				</li>--%>
+<%--			</sec:ifAnyGranted>--%>
 			<sec:ifAnyGranted roles='DUENIO'>
 				<li class="controlleractive">
-					<g:link controller="subrubro" action="index">
-						<g:message code="subrubro.label" default="Subrubros"/>
-					</g:link>
-				</li>
-			</sec:ifAnyGranted>
-			
-			<sec:ifAnyGranted roles='DUENIO'>
-				<li class="controlleractive">
-					<g:link controller="consumicion" action="index">
-						<g:message code="consumicion.label" default="Consumiciones"/>
-					</g:link>
-				</li>
-			</sec:ifAnyGranted>
-			<sec:ifAnyGranted roles='DUENIO'>
-				<li class="controlleractive">
-					<g:link controller="agregado" action="index">
-						<g:message code="agregado.label" default="Agregados"/>
+					<g:link controller="promocion" action="list">
+						<g:message code="promocion.label" default="Promociones"/>
 					</g:link>
 				</li>
 			</sec:ifAnyGranted>
@@ -103,6 +110,36 @@
 					</g:link>
 				</li>
 			</sec:ifAnyGranted> --%>
+			<sec:ifAnyGranted roles='DUENIO'>
+				<li class="controlleractive">
+					<a class="dropdown-toggle" role="button" data-toggle="dropdown" data-target="#" href="#">
+						Menú<b class="caret"></b>
+					</a>
+					<ul class="dropdown-menu" role="menu">
+						<li>
+							<a href="${createLink(controller: 'rubro', action: 'list' )}">
+							Rubros
+							</a>
+						</li>
+						<li>
+							<a href="${createLink(controller: 'subrubro', action: 'list' )}">
+							Subrubros
+							</a>
+						</li>
+						<li>
+							<a href="${createLink(controller: 'consumicion', action: 'list' )}">
+							Consumiciones
+							</a>
+						</li>
+						<li>
+							<a href="${createLink(controller: 'agregado', action: 'list' )}">
+							Agregados
+							</a>
+						</li>
+					</ul>
+				</li>
+			</sec:ifAnyGranted>
+
 			
 			<sec:ifAnyGranted roles='DUENIO'>
 				<li class="controlleractive">

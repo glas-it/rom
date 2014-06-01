@@ -11,6 +11,12 @@
 
 <body>
 
+<script type="text/javascript">
+	$(document).ready(function () {
+		$("#DeleteAction").hide()
+	});
+</script>
+
 <section id="show-promocion" class="first">
 		<div class="row">
 			<div class="col-md-8">
