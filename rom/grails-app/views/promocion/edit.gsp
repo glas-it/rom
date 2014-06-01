@@ -10,6 +10,13 @@
 
 <body>
 
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		$("#DeleteAction").hide()
+	});
+</script>
+
 	<section id="edit-promocion" class="first">
 		<div class="panel panel-default tab-content">
 			<div class="panel-body">
