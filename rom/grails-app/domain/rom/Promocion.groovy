@@ -63,6 +63,10 @@ class Promocion {
 		return enFecha() //&& cantidadCupones > 0
 	}
 	
+	def getDescuento() {
+		return (100 - porcentajeDescuento) / 100.0d
+	}
+	
 	def esEditable() {
 		return fechaInicio.compareTo(new Date().clearTime()) > 0
 	}

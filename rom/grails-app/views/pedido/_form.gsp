@@ -15,7 +15,7 @@
 				<div class="col-md-1">
 					<g:message code="ticket.mozo.label" default="Mozo"/>:
 				</div>
-				<div class="col-md-5">
+				<div class="col-md-2">
 					${pedidoInstance?.mozo.nombre}
 				</div>
 			</div>
@@ -39,21 +39,58 @@
 		                        ${item.cantidad}
 		                    </td>
 		                    <td class="right">
-		                        ${item.orden.precioFinal()}
+		                        ${item.precioUnitarioFormateado()}
 		                    </td>
 		                    <td class="right">
-		                        ${item.importe()}
+		                        ${item.importeFormateado()}
 		                    </td>
 						</tr>
 					</g:each>
 				</tbody>
 			</table>
-			<br/>
 			<div class="row">
-				<div class="col-md-1">
-					Total
-				</div>
-				<div class="col-md-1">
-					${pedidoInstance.totalFormateado()}
-				</div>
+			<div class="col-md-5 pull-right">
+			<div class="table-responsive">
+				<table class="table table-bordered">
+					<tbody>
+						<tr class="prop">
+							<td valign="top" class="name"><g:message code="pedido.subtotal.label" default="Subtotal" /></td>
+							<td valign="top" class="value">${pedidoInstance.subtotalFormateado()}</td>
+						</tr>
+						<tr class="prop">
+							<td valign="top" class="name"><g:message code="pedido.descuento.label" default="Descuento" /></td>
+							<td valign="top" class="value">${pedidoInstance.descuentoFormateado()}</td>
+						</tr>
+						<tr class="prop">
+							<td valign="top" class="name"><g:message code="pedido.total.label" default="Total" /></td>
+							<td valign="top" class="value">${pedidoInstance.totalFormateado()}</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
+			</div>
+			</div>
+<%--			<div class="row">--%>
+<%--				<div class="col-md-1">--%>
+<%--					Subtotal--%>
+<%--				</div>--%>
+<%--				<div class="col-md-2">--%>
+<%--					${pedidoInstance.subtotalFormateado()}--%>
+<%--				</div>--%>
+<%--			</div>--%>
+<%--			<div class="row">--%>
+<%--				<div class="col-md-1">--%>
+<%--					Descuento--%>
+<%--				</div>--%>
+<%--				<div class="col-md-2">--%>
+<%--					${pedidoInstance.descuentoFormateado()}--%>
+<%--				</div>--%>
+<%--			</div>--%>
+<%--			<div class="row">--%>
+<%--				<div class="col-md-1">--%>
+<%--					Total--%>
+<%--				</div>--%>
+<%--				<div class="col-md-2">--%>
+<%--					${pedidoInstance.totalFormateado()}--%>
+<%--				</div>--%>
+<%--			</div>--%>

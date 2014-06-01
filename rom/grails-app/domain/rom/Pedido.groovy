@@ -74,7 +74,7 @@ class Pedido {
 		cerrarMesa()
 	}
 
-	public float total() {
+	public float subtotal() {
 		float suma = 0.0
 		def ordenesAFacturar = ordenes.findAll{ it.entregado() }
 		for (orden in ordenesAFacturar) {
@@ -83,10 +83,23 @@ class Pedido {
 		return suma
 	}
 	
+	public float total() {
+		def suma = subtotal()
+		return promocion? suma * promocion.getDescuento() : suma
+	}
+	
+	public String subtotalFormateado() {
+		return java.text.NumberFormat.currencyInstance.format(subtotal())
+	}
+	
 	public String totalFormateado() {
 		return java.text.NumberFormat.currencyInstance.format(total())
 	}		
 
+	public String descuentoFormateado() {
+		return promocion? java.text.NumberFormat.currencyInstance.format((promocion.porcentajeDescuento/100.0d) * subtotal()): " - "
+	}
+	
 	public void marcarAnulado(String motivo) {
 		this.estado.marcarAnulado(this);
 		motivoAnulacion = motivo

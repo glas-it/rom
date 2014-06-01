@@ -35,7 +35,7 @@ class PedidoController {
 	@Secured(['permitAll'])
 	@Transactional
 	def apertura(long idRestaurant, String usernameMozo, String idMesas, int comensales) {
-		Restaurant restaurant = Restaurant.findById(idzRestaurant)
+		Restaurant restaurant = Restaurant.findById(idRestaurant)
 
 		JSONArray idMesasList = new JSONArray(idMesas)
 		Mesa mesa = getMesaParaApertura(idMesasList, restaurant)
@@ -427,6 +427,15 @@ class OrdenResumidaCommand {
 		return orden.precioFinal() * cantidad
 	}
 
+	def importeFormateado() {
+		return java.text.NumberFormat.currencyInstance.format(importe())
+	}
+	
+	def precioUnitarioFormateado() {
+		def precio = orden.precioFinal()
+		return java.text.NumberFormat.currencyInstance.format(precio)
+	}
+	
 	def descripcion() {
 		def descrip = orden.consumible.nombre
 		if (orden.agregado) {

@@ -58,6 +58,10 @@
             .rowCoupon {
                 padding-top: 10px;
             }
+            .rowTotal {
+                border-top: 1px solid black;
+                padding-top: 10px;
+            }
         </style>
     </head>
     <body>

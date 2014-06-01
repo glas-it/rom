@@ -62,10 +62,10 @@
                         ${item.cantidad}
                     </td>
                     <td class="right">
-                        ${item.orden.precioFinal()}
+                        ${item.precioUnitarioFormateado()}
                     </td>
                     <td class="right">
-                        ${item.importe()}
+                        ${item.importeFormateado()}
                     </td>
                 </tr>
             </g:each>
@@ -74,6 +74,22 @@
     <div class="rowSubtotal">
         <span class="pull-left">
             <b>Subtotal</b>
+        </span>
+        <span class="pull-right">
+            <b>${pedidoInstance.subtotalFormateado()}</b>           
+        </span>
+    </div>
+    <div class="rowCoupon">
+        <span class="pull-left">
+            <b>Descuento aplicado</b>
+        </span>
+        <span class="pull-right">
+            <b>${pedidoInstance.descuentoFormateado()}</b>           
+        </span>
+    </div>
+    <div class="rowTotal">
+        <span class="pull-left">
+            <b>Total</b>
         </span>
         <span class="pull-right">
             <b>${pedidoInstance.totalFormateado()}</b>           
