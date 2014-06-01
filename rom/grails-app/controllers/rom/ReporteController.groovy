@@ -19,6 +19,18 @@ class ReporteController {
 	}
 
 	@Secured(['permitAll'])
+	def reporteProductos() {
+		def rubrosYSubrubros = []
+		for(rubro in Rubro.list()) {
+			rubrosYSubrubros.add([nombre: rubro.nombre, id: rubro.orden + "-" + rubro.id])
+			for(subrubro in rubro.subrubros) {
+				rubrosYSubrubros.add([nombre: rubro.nombre + " - " + subrubro.nombre, id: rubro.orden + "-" + rubro.id + "-" + subrubro.id])
+			}
+		}
+		render view: "reporteProductos", model:[rubrosYSubrubros: rubrosYSubrubros]
+	}
+
+	@Secured(['permitAll'])
 	def getDatosReporteFacturacion() {
 		Date desde = new Date(params.fechaInicio)
 		Date hasta = new Date(params.fechaFin)
@@ -28,15 +40,26 @@ class ReporteController {
 	}
 
 	@Secured(['permitAll'])
-	def reporteProductos() {
+	def generarPdf() {
+		def data = params.svg
+		def fileStore = new File("reporte.svg")
+		fileStore.createNewFile()
+		FileUtils.writeStringToFile(fileStore, data)
+		def proc = ["inkscape", "-f reporte.svg", "-A Reporte.pdf"].execute()
+		proc.waitFor()
+		response.setHeader("Content-disposition", "attachment; filename=Reporte.pdf")
+		render(contentType: "application/pdf", text: "Reporte")
 	}
 
 	@Secured(['permitAll'])
 	def getDatosReporteProductos() {
 		Date desde = new Date(params.fechaInicio)
 		Date hasta = new Date(params.fechaFin)
-		def listaSubrubros = [Subrubro.get(1),Subrubro.get(2),Subrubro.get(3),Subrubro.get(4)] // Subrubros de prueba de subrubros
-		def ordenes = ordenService.getOrdenesFacturadasBy(desde, hasta, listaSubrubros)
+		List subrubros = []
+		for (subrubro in new JSONArray(params.subrubros)) {
+			subrubros.push(Subrubro.get(subrubro.toInteger()))
+		}
+		def ordenes = ordenService.getOrdenesFacturadasBy(desde, hasta, subrubros)
 		def respuesta = parsearRespuestaProductos(ordenes)
 		render respuesta as JSON
 	}

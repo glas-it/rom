@@ -5,6 +5,7 @@
 <head>
     <meta name="layout" content="kickstart" />
     <title>Reporte Facturación</title>
+    <script ></script>
     <g:set var="layout_nosecondarymenu" value="false" scope="request"/>
     <script src="${resource(dir:'js',file: 'highcharts.js')}"></script>
     <script src="${resource(dir:'js',file: 'exporting.js')}"></script>
@@ -38,6 +39,18 @@
             });
         }
     }
+
+    function downloadPDF() {
+        var params = {};
+        params.svg = $('.highcharts-container').html();
+        $.ajax({
+            url: 'generarPdf',
+            type: "POST",
+            data: params,
+            cache: false
+        });
+    }
+
 
     function buildChart(titulo, datos, params) {
         var hoy = new Date();
@@ -175,7 +188,7 @@
                     </div>
 
                     <div class="col-md-2 text-center col-md-offset-4">
-                        <input id="pdfButton" type="button" class="btn btn-primary hide" value="PDF" />
+                        <input id="pdfButton" type="button" class="btn btn-primary hide" value="PDF" onclick="javascript:downloadPDF()"/>
                     </div>
                 </div>
                 <div class="row">

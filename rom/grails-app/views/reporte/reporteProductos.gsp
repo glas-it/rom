@@ -6,10 +6,13 @@
     <meta name="layout" content="kickstart" />
     <title>Reporte Productos</title>
     <g:set var="layout_nosecondarymenu" value="false" scope="request"/>
+    <link rel="stylesheet" media="screen" type="text/css" href="${resource(dir: 'css', file: 'jquery.multiselect2side.css')}" />
     <script src="${resource(dir:'js',file: 'highcharts.js')}"></script>
     <script src="${resource(dir:'js',file: 'exporting.js')}"></script>
     <script src="${resource(dir:'js',file: 'highcharts-customization.js')}"></script>
     <script src="${resource(dir:'js',file: 'moment-with-langs.min.js')}"></script>
+    <script src="${resource(dir:'js',file: 'jquery.browser.min.js')}"></script>
+    <script src="${resource(dir:'js',file: 'jquery.multiselect2side.js')}"></script>
     <script type="text/javascript">
     var chart;
 
@@ -19,6 +22,26 @@
         params.fechaInicio = new Date($("#fechaInicio_year").val(), $("#fechaInicio_month").val() - 1)
         params.fechaFin = new Date($("#fechaFin_year").val(), $("#fechaFin_month").val() - 1)
         params.cant_platos = 20
+        params.subrubros = []
+        $("#rubrosYSubrubrosms2side__dx option").each(function(){
+            var val = $(this).val().split("-");
+            var ids = [];
+            if (val.length == 3) {
+                ids.push(val[2])
+            } else {
+                var rubroId = val[1]
+                $("#rubrosYSubrubros option").each(function(){
+                    var subrubroVal = $(this).val().split("-");
+                    if (subrubroVal.length == 3 && subrubroVal[1] == rubroId) {
+                        ids.push(subrubroVal[2])
+                    }
+                });
+            }
+            for (var i = 0; i < ids.length; i++){
+                params.subrubros.push(ids[i])
+            }
+        });
+        params.subrubros = JSON.stringify(params.subrubros)
         /*
         Aca en params falta pasarle un listado de subrubros
         */
@@ -27,6 +50,7 @@
             $("#highcharts-report").removeClass("hide");
             $.ajax({
                 url: 'getDatosReporteProductos',
+                type: "POST",
                 data: params,
                 success: function(datos) {
                     chart = buildChart('Ranking de Productos', datos, params);
@@ -36,9 +60,19 @@
         }
     }
 
+    function downloadPDF() {
+        var params = {};
+        params.svg = $('.highcharts-container').html();
+        $.ajax({
+            url: 'generarPdf',
+            data: params,
+            cache: false
+        });
+    }
+
     function buildChart(titulo, datos, params) {
         var hoy = new Date();
-        report_height = 500 + 25 * params.cant_platos;
+        report_height = 500 + 25 * datos.length;
         Highcharts.tableValuePrefix = '';
         Highcharts.xTitle = "Plato";
         Highcharts.yTitle = "Cantidad";
@@ -123,6 +157,14 @@
         $('#errorAlert').hide();
     }
 
+    function itemCompare(a, b) {
+        var compA = $(a).val().split("-");
+        var compB = $(b).val().split("-");
+        var textA = $(a).text().toUpperCase();
+        var textB = $(b).text().toUpperCase();
+        return (compA[0] < compB[0]) ? -1 : (compA > compB) ? 1 : (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    }
+
     window.onload = function() {
         $("#buscarButton").click( requestData );
         $('#fechaInicio_year').addClass('form-control');
@@ -131,8 +173,16 @@
         $('#fechaFin_year').addClass('form-control');
         $('#fechaFin_month').addClass('form-control');
         $('#fechaFin_day').addClass('form-control');
+        $('#rubrosYSubrubros').multiselect2side({
+            selectedPosition: 'right',
+            moveOptions: false,
+            labelsx: '',
+            labeldx: '',
+            autoSort: true,
+            autoSortAvailable: true,
+            sortFunction: itemCompare
+        });
     }
-
     </script>
 </head>
 
@@ -154,27 +204,30 @@
         <div class="panel panel-default tab-content">
             <div class="panel-body">
                 <div class="row form-inline">
-                    <div class="form-group col-md-4 form-horizontal col-md-offset-2">
-                        <label for="fechaInicio" class="col-md-4 control-label" style="padding-left:0px; text-align: left;">Fecha Inicio</label>
+                    <div class="form-group col-md-5 form-horizontal col-md-offset-1">
+                        <label for="fechaInicio" class="col-md-3 control-label" style="padding-left:0px; text-align: left;">Fecha Inicio</label>
                         <div>
                             <g:datePicker id="fechaInicio" name="fechaInicio" precision="day" class="form-control"/>
                         </div>
                     </div>
-                    <div class="form-group col-md-4 form-horizontal">
-                        <label for="fechaInicio" class="col-md-4 control-label" style="padding-left:0px; text-align: left;">Fecha Fin</label>
+                    <div class="form-group col-md-5 form-horizontal">
+                        <label for="fechaInicio" class="col-md-3 control-label" style="padding-left:0px; text-align: left;">Fecha Fin</label>
                         <div>
                             <g:datePicker class="form-control" name="fechaFin" precision="day"  />
                         </div>
                     </div>
                 </div>
                 <br/>
+                <div class="row col-md-7 center-block" style="float: none;">
+                    <g:select optionKey="id" optionValue="nombre" name="rubrosYSubrubros" from="${rubrosYSubrubros}" />
+                </div>
+                <br/>
                 <div class="row" style="padding-bottom:10px">
                     <div class="col-md-2 text-center col-md-offset-2">
                         <input id="buscarButton" type="button" class="btn btn-primary" value="Generar" />
                     </div>
-
                     <div class="col-md-2 text-center col-md-offset-4">
-                        <input id="pdfButton" type="button" class="btn btn-primary hide" value="PDF" />
+                        <input id="pdfButton" type="button" class="btn btn-primary hide" value="PDF" onclick="javascript:downloadPdf()"/>
                     </div>
                 </div>
                 <div class="row">
