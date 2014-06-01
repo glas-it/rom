@@ -36,15 +36,15 @@ class Promocion {
     
 	static	constraints = {
 		
-		nombre nullable: false, blank: false, size: 1..50
+		nombre nullable: false, blank: false, size: 1..50, unique:"restaurant"
 		
 		descripcion nullable: false, blank: false, size: 1..250
 		
 		fechaInicio nullable: false, blank: false, validator: {val->
-			return val.clearTime().compareTo(new Date().clearTime()) <= 0 
+			return val.clearTime().compareTo(new Date().clearTime()) >= 0 ?: "promocion.fechaInicio.invalida"
 		}
 		fechaFin nullable: false, blank: false, validator: {val, obj->
-			return val.clearTime().compareTo(obj.fechaInicio.clearTime()) <= 0
+			return val.clearTime().compareTo(obj.fechaInicio.clearTime()) >= 0 ?: "promocion.fechaFin.invalida" 
 		}
 		//cantidadCupones nullable: false, blank: false, min: 1, max: 999999	
 		
@@ -63,8 +63,12 @@ class Promocion {
 		return enFecha() //&& cantidadCupones > 0
 	}
 	
+	def esEditable() {
+		return fechaInicio.compareTo(new Date().clearTime()) > 0
+	}
+	
 	private boolean enFecha() {
-		def hoy = Date.parse('yyyy-MM', new Date().format('yyyy-MM'))
+		def hoy = new Date().clearTime()
 		return (fechaInicio.compareTo(hoy) <= 0) && (fechaFin.compareTo(hoy) >= 0)
 	}
 }

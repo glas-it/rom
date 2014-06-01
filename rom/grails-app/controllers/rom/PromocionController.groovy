@@ -49,7 +49,7 @@ class PromocionController {
 
         if (promocionInstance.hasErrors()) {
 			def restaurant = Duenio.get(springSecurityService.currentUser?.id).restaurant
-			render view: create, model: [promocionInstance: promocionInstance, restaurantInstance: restaurant]
+			render view: 'create', model: [promocionInstance: promocionInstance, restaurantInstance: restaurant]
             return
         }
 		def restaurant = Duenio.get(springSecurityService.currentUser.id)?.restaurant
@@ -86,6 +86,11 @@ class PromocionController {
 	
     @Transactional
     def update(Promocion promocionInstance) {
+		if (!promocionInstance.esEditable()) {
+			flash.message = "La promoción no puede ser editada"
+			redirect action:'list'
+		}
+		
         if (promocionInstance == null) {
             notFound()
             return
@@ -104,25 +109,6 @@ class PromocionController {
                 redirect promocionInstance
             }
             '*'{ respond promocionInstance, [status: OK] }
-        }
-    }
-
-    @Transactional
-    def delete(Promocion promocionInstance) {
-
-        if (promocionInstance == null) {
-            notFound()
-            return
-        }
-
-        promocionInstance.delete flush:true
-
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Promocion.label', default: 'Promocion'), promocionInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
         }
     }
 
