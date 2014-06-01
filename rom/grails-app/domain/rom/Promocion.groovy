@@ -36,7 +36,7 @@ class Promocion {
     
 	static	constraints = {
 		
-		nombre nullable: false, blank: false, size: 1..50, unique:"restaurant"
+		nombre nullable: false, blank: false, size: 1..50, unique:["restaurant", "fechaInicio", "fechaFin"]
 		
 		descripcion nullable: false, blank: false, size: 1..250
 		

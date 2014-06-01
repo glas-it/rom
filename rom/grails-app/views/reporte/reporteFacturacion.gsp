@@ -153,7 +153,6 @@
 <body>
     <div id="errorAlert" class="alert alert-danger alert-dismissable" style="display: none;">
         <button type="button" class="close" onclick="javascript:hideError()">&times;</button>
-        <strong>Cuidado!</strong>
         <span id="errorMessage"></span>
     </div>
     <div class="">

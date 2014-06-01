@@ -85,17 +85,17 @@ class PromocionController {
 	}
 	
     @Transactional
-    def update(Promocion promocionInstance) {
-		if (!promocionInstance.esEditable()) {
-			flash.message = "La promoción no puede ser editada"
-			redirect action:'list'
-		}
-		
+    def update(Promocion promocionInstance) {	
         if (promocionInstance == null) {
             notFound()
             return
         }
-
+		if (!promocionInstance.esEditable()) {
+			flash.message = "La promoción no puede ser editada"
+			redirect action:'list'
+			return
+		}
+		
         if (promocionInstance.hasErrors()) {
             respond promocionInstance.errors, view:'edit'
             return
