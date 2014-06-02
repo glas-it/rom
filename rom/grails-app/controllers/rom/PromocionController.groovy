@@ -11,7 +11,7 @@ import grails.transaction.Transactional
  * PromocionController
  * A controller class handles incoming web requests and performs actions such as redirects, rendering views and so on.
  */
-@Transactional(readOnly = true)
+@Transactional
 @Secured("hasRole('DUENIO')")
 class PromocionController {
 
@@ -28,7 +28,9 @@ class PromocionController {
 
 	def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Promocion.list(params), model:[promocionInstanceCount: Promocion.count()]
+		params.activo = true
+		def lista = Promocion.findAllWhere(activo: true)
+        respond lista, model:[promocionInstanceCount: lista ? lista.size() : 0]
     }
 
     def show(Promocion promocionInstance) {
@@ -70,6 +72,25 @@ class PromocionController {
         }
     }
 
+	@Transactional
+	@Secured("hasRole('DUENIO')")
+	def delete(Promocion promocionInstance) {
+		if (!promocionInstance) {
+			flash.message = "no existe tal promocion"
+			redirect action: 'list'
+			return
+		}
+		if (!promocionInstance.esEditable()) {
+			flash.message = "la promoción no puede ser borrada"
+			redirect action: 'list'
+			return
+		}
+		promocionInstance.activo = false
+		promocionInstance.save()
+		flash.message = "la promoción fue borrada con éxito"
+		redirect action: 'list'
+	}
+	
     def edit(Promocion promocionInstance) {
 		if (!promocionInstance.esEditable()) {
 			flash.message = "La promoción no puede ser editada"

@@ -32,9 +32,18 @@
 						<td><g:formatDate format="yyyy-MM-dd" date="${promocionInstance.fechaInicio}"/></td>
 						<td><g:formatDate format="yyyy-MM-dd" date="${promocionInstance.fechaFin}" /></td>
 						<td>
-							<g:link action="show" id="${promocionInstance.id}">
-								<i class="glyphicon glyphicon-search"></i>
-							</g:link>
+							<div class="row">
+								<div class="col-md-2">
+									<g:link action="show" id="${promocionInstance.id}">
+										<i class="glyphicon glyphicon-search"></i>
+									</g:link>
+								</div>
+								<div class="col-md-2">
+									<g:form method="DELETE" action="delete" id="${promocionInstance.id}">
+										<g:submitButton name="delete" value="borrar" class="btn btn-danger btn-xs"/>
+									</g:form>
+								</div>
+							</div>
 						</td>
 					</tr>
 				</g:each>

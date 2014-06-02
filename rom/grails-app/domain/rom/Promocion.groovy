@@ -10,6 +10,7 @@ import com.sun.org.apache.bcel.internal.generic.RETURN;
  * Promocion
  * A domain class describes the data object and it's mapping to the database
  */
+
 class Promocion {	
 //	static	belongsTo	= []	// tells GORM to cascade commands: e.g., delete this object if the "parent" is deleted.
 //	static	hasOne		= []	// tells GORM to associate another domain object as an owner in a 1-1 mapping
@@ -24,6 +25,8 @@ class Promocion {
 	Date fechaFin
 	//Integer cantidadCupones
 	
+	boolean activo = true
+	
 	Integer porcentajeDescuento
 	
 	String nombre, descripcion
@@ -35,6 +38,8 @@ class Promocion {
     }
     
 	static	constraints = {
+		
+		activo blank: true, nullable: false
 		
 		nombre nullable: false, blank: false, size: 1..50, unique:["restaurant", "fechaInicio", "fechaFin"]
 		
@@ -68,7 +73,7 @@ class Promocion {
 	}
 	
 	def esEditable() {
-		return fechaInicio.compareTo(new Date().clearTime()) > 0
+		return fechaInicio.compareTo(new Date().clearTime()) > 0 && activo
 	}
 	
 	private boolean enFecha() {
