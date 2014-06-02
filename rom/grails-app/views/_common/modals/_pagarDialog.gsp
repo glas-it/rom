@@ -44,9 +44,9 @@ This is the standard dialog that initiates the delete action.
     <div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="PagarModalLabel${item.id}"><g:message code="pagar.label" default="Pagar"/></h3>
+				<h3 id="PagarModalLabel"><g:message code="pagar.label" default="Pagar"/></h3>
 			</div>
-			<g:form id="FormPago${item.id}">
+			<g:form id="${item.id}">
 			<div class="modal-body" class="form-group">
 				<p><g:message code="default.pagar.message" args="[entityName]" default="Ingrese el medio de pago"/></p>
 <%--				<g:radioGroup name="medioPago"--%>
@@ -64,16 +64,18 @@ This is the standard dialog that initiates the delete action.
 				</div>
 				<div id="vueltoYMonto" style="display:none">
 					Importe
-					<g:field id="montoPagado${item.id}" type="number" class="form-control" name="montoPagado"/>
+					<g:field id="montoPagado" type="number" class="form-control" name="montoPagado"/>
 					Vuelto
 					<input type="number" class="form-control" id="vuelto" disabled="true"/>
 				</div>
-				<g:hiddenField name="totalAPagar" id="totalAPagar${item.id}" value="${item.total()}"/>
+				<g:hiddenField name="totalAPagar" id="totalAPagar" value="${item.total()}"/>
 			</div>
 			<div class="modal-footer">
-					<button class="btn" data-dismiss="modal" aria-hidden="true"><g:message code="pagar.cancel.label" default="Cancelar"/></button>
-					<g:hiddenField name="id${item.id}" value="${item ? item.id : params.id}" />
-					<span class="button"><g:actionSubmit class="btn btn-default" action="pago" value="${message(code: 'default.button.pagar.label', default: 'pagar')}"/></span>
+					<button class="btn" data-dismiss="modal" aria-hidden="true">
+					<g:message code="pagar.cancel.label" default="Cancelar"/></button>
+					<span class="button">
+						<g:actionSubmit class="btn btn-default" action="pago" value="${message(code: 'default.button.pagar.label', default: 'pagar')}"/>
+					</span>
 			</div>
 			</g:form>
 		</div>
