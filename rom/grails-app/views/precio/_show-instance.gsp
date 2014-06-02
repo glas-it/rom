@@ -1,16 +1,10 @@
 
 <tr>
     <td class="left">
-        ${item[0]}
+        ${precioInstance?.descripcion}
     </td>
     <td class="right">
-        ${item[1]}
-    </td>
-    <td class="right">
-        ${item[2]}
-    </td>
-    <td class="right">
-        ${item[3]}
+        ${precioInstance?.getPrecioFormateado()}
     </td>
 </tr>
 

@@ -23,7 +23,7 @@ class MesaService {
 			if (!mesa.validate()) {
 				throw new MesaConErroresException("No se puede crear la mesa")
 			}
-			mesa.save()
+			mesa.save(failOnError: true)
 		}
     }
 	

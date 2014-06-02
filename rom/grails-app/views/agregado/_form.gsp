@@ -13,7 +13,7 @@
 			<label for="detalle" class="control-label"><g:message code="agregado.precio.label" default="Detalle" /></label>
 		</div>
 		<div class="col-md-4 ${hasErrors(bean: agregadoInstance, field: 'detalle', 'has-error')}">
-			<g:field class="form-control" name="agregadoInstance.detalle" type="text" value="${fieldValue(bean: agregadoInstance, field: 'detalle')}"/>
+			<g:field class="form-control" name="detalle" type="text" value="${fieldValue(bean: agregadoInstance, field: 'detalle')}"/>
 			<span class="help-inline">${hasErrors(bean: agregadoInstance, field: 'detalle', 'has-error')}</span>
 		</div>
 </div>

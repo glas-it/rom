@@ -71,7 +71,12 @@ class PromocionController {
     }
 
     def edit(Promocion promocionInstance) {
-        respond promocionInstance
+		if (!promocionInstance.esEditable()) {
+			flash.message = "La promoción no puede ser editada"
+			redirect action:'list'
+			return
+		}
+		respond promocionInstance
     }
 	
 	@Secured(['permitAll'])
@@ -90,12 +95,7 @@ class PromocionController {
             notFound()
             return
         }
-		if (!promocionInstance.esEditable()) {
-			flash.message = "La promoción no puede ser editada"
-			redirect action:'list'
-			return
-		}
-		
+				
         if (promocionInstance.hasErrors()) {
             respond promocionInstance.errors, view:'edit'
             return

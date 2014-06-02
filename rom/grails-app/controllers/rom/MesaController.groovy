@@ -76,14 +76,19 @@ class MesaController {
 		request.withFormat {
             form {
                 flash.message = "Las mesas ${command.mesaDesde} a ${command.mesaHasta} han sido creadas satisfactoriamente"//message(code: 'default.created.message', args: [message(code: 'mesaInstance.label', default: 'Mesa'), mesaInstance.id])
-				respond view: "create", command
+				respond command, view: "create"
             }
             '*' { respond command, [status: CREATED] }
         }
     }
 
     def edit(Mesa mesaInstance) {
-        respond mesaInstance
+		if (!mesaInstance) {
+			flash.message("La mesa no existe")
+			redirect action:'list'
+			return
+		}
+        [mesaInstance: mesaInstance]
     }
 
     @Transactional
@@ -94,16 +99,16 @@ class MesaController {
         }
 
         if (mesaInstance.hasErrors()) {
-            respond mesaInstance.errors, view:'edit'
+            render view:'edit', model:[mesaInstance: mesaInstance]
             return
         }
 
-        mesaInstance.save flush:true
+        mesaInstance.save flush:true, failOnError: true
 
         request.withFormat {
             form {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'Mesa.label', default: 'Mesa'), mesaInstance.id])
-                redirect mesaInstance
+                redirect action:'show', params:[id: mesaInstance.id]
             }
             '*'{ respond mesaInstance, [status: OK] }
         }
