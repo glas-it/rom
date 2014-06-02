@@ -134,18 +134,38 @@ class PedidoController {
 			redirect action:'list'
 			return
 		}
+		if (params.medioPago == 3) {
+			if (!params.montoPagado) {
+				flash.message = "el monto debe ser obligatorio para el pago en efectivo"
+				redirect action: 'list'
+				return
+			}
+			if (!params.montoPagado.isNumber()) {
+				flash.message = "el monto ingresado debe ser numérico"
+				redirect action: 'list'
+				return
+			}
+			if (Float.parseFloat(params.montoPagado) < pedido.total()) {
+				flash.message = "el monto ingresado debe ser superior o igual al total"
+				redirect action: 'list'
+				return
+			}
+		}
 		//Mesa mesa = Mesa.findByIdAndRestaurant(idMesa, Restaurant.findById(idRestaurant))
 		//Pedido pedido = pedidoService.getPedidoByMesaId(mesa.id)
 		try {
 			pedido.tipoPago = params.medioPago
+			pedido.montoPagado = params.montoPagado ? Float.parseFloat(params.montoPagado) : null
 			pedido.marcarPagado()
-		} catch(Exception) {
+		} catch(Exception e) {
 			flash.message = "El pedido no puede ser pagado"
+			println e.message
 			redirect action:'list'
 			return
 		}
-		pedido.save()
-		pedido.mesa.save()
+		flash.message = "El pedido ${pedido.id} ha sido pagado"
+		pedido.save(failOnError:true)
+		pedido.mesa.save(failOnError:true)
 		redirect action:'list'
 	}
 

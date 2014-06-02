@@ -27,7 +27,9 @@ class Pedido {
 	Promocion promocion
 		
 	int tipoPago
-	
+
+	Float montoPagado
+		
 	//static embedded = ['timer']
 	static	hasMany		= [ordenes : Orden]	// tells GORM to associate other domain objects for a 1-n or n-m mapping
 	
@@ -41,6 +43,7 @@ class Pedido {
 		promocion blank: true, nullable: true
 		motivoAnulacion blank: true, nullable: true
 		fechaPago blank:true, nullable: true
+		montoPagado blank:true, nullable: true
 	}
 	
 	public Pedido(Mesa unaMesa, Mozo unMozo, int cantComensales) {

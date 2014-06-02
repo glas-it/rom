@@ -41,9 +41,10 @@
 					<g:select class="form-control" id="estados" name="nombreEstado" from="${estadosList}" optionKey="nombre" optionValue="nombre" required="" noSelection="[null: ' - ']"/>
 				</div>
 			</div>
-			<g:submitButton name="buscar" value="buscar"/>
+			<g:submitButton class="btn btn-primary" name="buscar" value="buscar"/>
 		</g:form>
 	</div>
+	<br/>
 	<table class="table table-bordered margin-top-medium">
 		<thead>
 			<tr>			
