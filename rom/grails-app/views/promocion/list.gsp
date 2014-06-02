@@ -17,10 +17,10 @@
 			<table class="table table-bordered margin-top-medium">
 				<thead>
 					<tr>
-						<th>${message(code: 'promocion.nombre.label', default: 'Nombre')}</th>
-						<th>${message(code: 'promocion.porcentajeDescuento.label', default: 'Porcentaje Descuento')}(%)</th>
-						<th>${message(code: 'promocion.fechaInicio.label', default: 'Fecha Inicio')}</th>
-						<th>${message(code: 'promocion.fechaFin.label', default: 'Fecha Fin')}</th>					
+						<g:sortableColumn property="nombre" title="${message(code: 'promocion.nombre.label', default: 'Nombre')}"/>
+						<g:sortableColumn property="porcentajeDescuento" title="${message(code: 'promocion.porcentajeDescuento.label', default: 'Descuento (%)')}"/>
+						<g:sortableColumn property="fechaInicio" title="${message(code: 'promocion.fechaInicio.label', default: 'Fecha de inicio')}"/>
+						<g:sortableColumn property="fechaFin" title="${message(code: 'promocion.fechaFin.label', default: 'Fecha de finalización')}"/>
 						<th>${message(code: 'default.acciones.label', default:'Acciones')}</th>
 					</tr>
 				</thead>
