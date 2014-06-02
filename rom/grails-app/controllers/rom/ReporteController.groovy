@@ -55,12 +55,15 @@ class ReporteController {
 	def getDatosReporteProductos() {
 		Date desde = new Date(params.fechaInicio)
 		Date hasta = new Date(params.fechaFin)
+		int cantidadPlatos = params.cant_platos.toInteger()
 		List subrubros = []
 		for (subrubro in new JSONArray(params.subrubros)) {
 			subrubros.push(Subrubro.get(subrubro.toInteger()))
 		}
 		def ordenes = ordenService.getOrdenesFacturadasBy(desde, hasta, subrubros)
 		def respuesta = parsearRespuestaProductos(ordenes)
+		if (respuesta.size() > 20)
+			respuesta = respuesta[0..19]
 		render respuesta as JSON
 	}
 

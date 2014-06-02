@@ -19,8 +19,8 @@
     function requestData() {
         //yyyy/mm/01
         var params = {};
-        params.fechaInicio = new Date($("#fechaInicio_year").val(), $("#fechaInicio_month").val() - 1)
-        params.fechaFin = new Date($("#fechaFin_year").val(), $("#fechaFin_month").val() - 1)
+        params.fechaInicio = new Date($("#fechaInicio_year").val(), $("#fechaInicio_month").val() - 1, $("#fechaInicio_day").val())
+        params.fechaFin = new Date($("#fechaFin_year").val(), $("#fechaFin_month").val() - 1, $("#fechaFin_day").val())
         params.cant_platos = 20
         params.subrubros = []
         $("#rubrosYSubrubrosms2side__dx option").each(function(){
