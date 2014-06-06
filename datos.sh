@@ -1,6 +1,8 @@
 #!/bin/bash
-
-for ((i=6; i<200; i++)); do 
+desde=6
+hasta=10
+b=0
+for ((i=$desde; i<$hasta; i++)); do 
 	
 	nroMesa=$i
 	
@@ -11,24 +13,29 @@ for ((i=6; i<200; i++)); do
 	fi
 
 	# abro mesa 1
-	curl --data "idRestaurant=1&usernameMozo=asd&idMesas=[1]&comensales=3" http://localhost:8080/rom/pedido/apertura
+	curl --data "idRestaurant=1&usernameMozo=asd&idMesas=[1]&comensales=3" http://localhost:8080/rom/pedido/apertura > a 2>&1
 
 	# alta de orden
-	curl --data "idRestaurant=1&idMesa=$nroMesa&platos=[{'idConsumicion':$nroConsu,'observaciones':'alta de consumicion','idAgregado':0,'precio':{'descripcion':'-'},'id':'$i'}]" http://localhost:8080/rom/orden/alta
+	curl --data "idRestaurant=1&idMesa=$nroMesa&platos=[{'idConsumicion':$nroConsu,'observaciones':'alta de consumicion','idAgregado':0,'precio':{'descripcion':'-'},'id':'$i'}]" http://localhost:8080/rom/orden/alta > a 2>&1
 
 	# orden a preparacion
-	curl --data "uuidOrden=$i" http://localhost:8080/rom/orden/preparando
+	curl --data "uuidOrden=$i" http://localhost:8080/rom/orden/preparando > a 2>&1
 
 	# orden terminada
-	curl --data "username=asd&uuidOrden=$i" http://localhost:8080/rom/orden/terminado
+	curl --data "username=asd&uuidOrden=$i" http://localhost:8080/rom/orden/terminado > a 2>&1
 
 	# orden entregada a la mesa
-	curl --data "uuidOrden=$i" http://localhost:8080/rom/orden/entregado
+	curl --data "uuidOrden=$i" http://localhost:8080/rom/orden/entregado > a 2>&1
 
 	# cierro la mesa 
-	curl --data "idRestaurant=1&idMesa=$nroMesa" http://localhost:8080/rom/pedido/cierre
-	
-	# Pago la mesa
-	curl --data "idRestaurant=1&idMesa=$nroMesa&tipoPago=2" http://localhost:8080/rom/pedido/pagoWS
+	curl --data "idRestaurant=1&idMesa=$nroMesa" http://localhost:8080/rom/pedido/cierre > a 2>&1
 
+	# Pago la mesa
+	curl --data "idRestaurant=1&idMesa=$nroMesa&tipoPago=2" http://localhost:8080/rom/pedido/pagoWS > a 2>&1
+
+	b=$i
 done
+
+ok=$(($i - $desde))
+total=$(($hasta - $desde))
+echo "$ok OK de $total"

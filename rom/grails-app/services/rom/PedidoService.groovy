@@ -85,35 +85,30 @@ class PedidoService {
 	}
 	
 	def filter(PedidoFilter filtro, Integer max, Integer offset) {
-//		Date fecha = (filtro.fecha ? new SimpleDateFormat("yyyy-MM-dd").parse(filtro.fecha): new Date())
 		def criteria = Pedido.createCriteria()
-		def fechaDesde = null
+		PedidoState estado = filtro.estado
+		def fechaDesde = filtro.fecha
 		def fechaHasta = null
-		if (filtro.fecha) {
-			def calendar = Calendar.instance
-			calendar.setTime(filtro.fecha.clearTime().clone())
-			calendar.add(Calendar.DATE, -1)
-			calendar.set(Calendar.HOUR, 23)
-			calendar.set(Calendar.MINUTE, 59)
-			calendar.set(Calendar.SECOND, 59)
-			fechaDesde = calendar.getTime()
-			println fechaDesde
-			calendar.setTime(filtro.fecha.clearTime().clone())
-			fechaHasta = calendar.add(Calendar.DATE, 1)
-			fechaHasta = calendar.getTime()
-			println fechaHasta
+		if (fechaDesde) {
+			fechaHasta = getUltimaHoraDelDia(fechaDesde)
 		}
 		def result = criteria.list{
-			if (filtro.fecha) {
+			if (fechaDesde && estado) {
+				and {
+					between("dateCreated", fechaDesde, fechaHasta)
+					eq("estado", estado)
+				}
+			} else if (fechaDesde) {
 				between("dateCreated", fechaDesde, fechaHasta)
+			} else if (estado){
+				eq("estado", estado)
 			}
 			if (max)
 				maxResults(max)
 			if (offset)
 				firstResult(offset)
 		}
-		println result
-		return filtro.estado ? result.findAll {it.estado.nombre.equals(filtro.estado.nombre) } : result
+		return result
 	}
 
 	def getStateByName(String nombre) {
@@ -122,31 +117,37 @@ class PedidoService {
 		getAllEstados().find {it.nombre == nombre}
 	}
 
+	
 	def filterCount(PedidoFilter filtro) {
 		def criteria = Pedido.createCriteria()
-		def fechaDesde = null
+		PedidoState estado = filtro.estado
+		def fechaDesde = filtro.fecha
 		def fechaHasta = null
-		if (filtro.fecha) {
-			def calendar = Calendar.instance
-			calendar.setTime(filtro.fecha.clearTime())
-			calendar.add(Calendar.DATE, -1)
-			calendar.set(Calendar.HOUR, 23)
-			calendar.set(Calendar.MINUTE, 59)
-			calendar.set(Calendar.SECOND, 59)
-			fechaDesde = calendar.getTime()
-			calendar.setTime(filtro.fecha.clearTime())
-			fechaHasta = calendar.add(Calendar.DATE, 1)
+		if (fechaDesde) {
+			fechaHasta = getUltimaHoraDelDia(fechaDesde)
 		}
-		return criteria.count{
-			if (filtro.estado) {
-				estado {
-					eq("nombre", filtro.estado.nombre)
+		return criteria.count {
+			if (fechaDesde && estado) {
+				and {
+					between("dateCreated", fechaDesde, fechaHasta)
+					eq("estado", estado)
 				}
-			}
-			if (filtro.fecha) {
-				between("dateCreated", fechaDesde, fechaHasta)
+			} else if (fechaDesde) {
+				between("fechaPago", fechaDesde, fechaHasta)
+			} else if (estado){
+				eq("estado", estado)
 			}
 		}
+	}
+	
+	
+	private Date getUltimaHoraDelDia(Date fecha) {
+		Calendar cal = Calendar.getInstance()
+		cal.setTime(fecha)
+		cal.set(Calendar.HOUR_OF_DAY,23);
+		cal.set(Calendar.MINUTE,59);
+		cal.set(Calendar.SECOND,59);
+		return cal.getTime()
 	}
 	
 	private Date getUltimoDiaDelMes(Date fecha) {

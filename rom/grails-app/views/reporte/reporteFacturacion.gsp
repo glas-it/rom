@@ -58,6 +58,8 @@
         Highcharts.tableValuePrefix = '$ ';
         Highcharts.xTitle = "Mes";
         Highcharts.yTitle = "Facturación";
+        Highcharts.dateFormat = "MMMM [de] YYYY";
+        Highcharts.decimal = true;
         return new Highcharts.Chart({
             chart: {
                 renderTo: 'highcharts-report',

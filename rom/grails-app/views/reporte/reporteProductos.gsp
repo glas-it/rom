@@ -16,6 +16,14 @@
     <script type="text/javascript">
     var chart;
 
+    function monthDiff(d1, d2) {
+        var months;
+        months = (d2.getFullYear() - d1.getFullYear()) * 12;
+        months -= d1.getMonth() + 1;
+        months += d2.getMonth();
+        return months <= 0 ? 0 : months;
+    }
+
     function requestData() {
         //yyyy/mm/01
         var params = {};
@@ -76,6 +84,8 @@
         Highcharts.tableValuePrefix = '';
         Highcharts.xTitle = "Plato";
         Highcharts.yTitle = "Cantidad";
+        Highcharts.dateFormat = "DD MMMM [de] YYYY";
+        Highcharts.decimal = false;
         return new Highcharts.Chart({
             chart: {
                 renderTo: 'highcharts-report',
@@ -143,11 +153,9 @@
             return false;
         }
 
-        if (! (fechaFin.getFullYear() - fechaIni.getFullYear() == 0 ||
-                (fechaFin.getFullYear() - fechaIni.getFullYear() == 1 &&
-                fechaFin.getMonth() - fechaIni.getMonth() <= 2) ) ) {
+        if (monthDiff(fechaIni, fechaFin) > 12) {
             $('#errorAlert').show();
-            $('#errorMessage').text("Periodo inválido: el periodo comprendido entre Fecha Inicio - Fecha Fin debe ser menor o igual a los 14 meses");
+            $('#errorMessage').text("Periodo inválido: el periodo comprendido entre Fecha Inicio - Fecha Fin debe ser menor o igual a los 12 meses");
             return false;
         }
         return true;
