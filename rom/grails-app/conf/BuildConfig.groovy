@@ -51,7 +51,7 @@ grails.project.dependency.resolution = {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
 		runtime 'mysql:mysql-connector-java:5.1.27'
         // runtime 'org.postgresql:postgresql:9.3-1100-jdbc41'
-		runtime 'org.springframework:spring-test:3.1.0.RELEASE'	
+		runtime 'org.springframework:spring-test:3.1.0.RELEASE'
     }
 
     plugins {
@@ -62,7 +62,7 @@ grails.project.dependency.resolution = {
         compile ":scaffolding:2.0.2"
         compile ':cache:1.1.1'
 		compile ":logical-delete:0.1"
-		
+
         // plugins needed at runtime but not for compilation
         runtime ":hibernate:3.6.10.9" // or ":hibernate4:4.3.4"
         runtime ":database-migration:1.3.8"
@@ -72,6 +72,7 @@ grails.project.dependency.resolution = {
 		compile ':spring-security-core:2.0-RC2'
 		compile ":qrcode:0.3"
 		runtime ":rendering:1.0.0"
+        compile ":session-temp-files:1.0"
         // Uncomment these (or add new ones) to enable additional resources capabilities
         //runtime ":zipped-resources:1.0.1"
         //runtime ":cached-resources:1.1"

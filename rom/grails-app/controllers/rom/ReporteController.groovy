@@ -6,6 +6,7 @@ import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 
 import org.codehaus.groovy.grails.web.json.*
+import org.apache.commons.io.FileUtils
 
 @Transactional(readOnly = true)
 @Secured(["permitAll"])
@@ -41,14 +42,18 @@ class ReporteController {
 
 	@Secured(['permitAll'])
 	def generarPdf() {
+		String tmpDir = session.getTempDir().getAbsolutePath() + "/";
+		String svgExt = ".svg"
+		String pdfExt = ".pdf"
+		String fileName = "reporte"
 		def data = params.svg
-		def fileStore = new File("reporte.svg")
+		def fileStore = new File(tmpDir + fileName + svgExt)
 		fileStore.createNewFile()
-		FileUtils.writeStringToFile(fileStore, data)
-		def proc = ["inkscape", "-f reporte.svg", "-A Reporte.pdf"].execute()
+		String stringSVG = data;
+		FileUtils.writeStringToFile(fileStore, (String) stringSVG)
+		def proc = ["inkscape", "-f", tmpDir + fileName + svgExt, "-A", tmpDir + fileName + pdfExt].execute()
 		proc.waitFor()
-		response.setHeader("Content-disposition", "attachment; filename=Reporte.pdf")
-		render(contentType: "application/pdf", text: "Reporte")
+		render(contentType: "application/pdf", file: new File(tmpDir + fileName + pdfExt), fileName: fileName + pdfExt)
 	}
 
 	@Secured(['permitAll'])

@@ -8,7 +8,6 @@
     <script ></script>
     <g:set var="layout_nosecondarymenu" value="false" scope="request"/>
     <script src="${resource(dir:'js',file: 'highcharts.js')}"></script>
-    <script src="${resource(dir:'js',file: 'exporting.js')}"></script>
     <script src="${resource(dir:'js',file: 'highcharts-customization.js')}"></script>
     <script src="${resource(dir:'js',file: 'moment-with-langs.min.js')}"></script>
     <script type="text/javascript">
@@ -41,16 +40,9 @@
     }
 
     function downloadPDF() {
-        var params = {};
-        params.svg = $('.highcharts-container').html();
-        $.ajax({
-            url: 'generarPdf',
-            type: "POST",
-            data: params,
-            cache: false
-        });
+        $('#svg').val($('.highcharts-container').html());
+        $("#formReporte").submit();
     }
-
 
     function buildChart(titulo, datos, params) {
         var hoy = new Date();
@@ -158,7 +150,7 @@
     <div class="">
         <ul id="Menu" class="nav nav-tabs">
             <li class="active">
-                <a href="#"></i>Reporte de Facturación</a>
+                <a href="/rom/promocion/list"><i class="glyphicon glyphicon-th-list"></i> Reporte de Facturación</a>
             </li>
         </ul>
     </div>
@@ -187,7 +179,10 @@
                     </div>
 
                     <div class="col-md-2 text-center col-md-offset-4">
-                        <input id="pdfButton" type="button" class="btn btn-primary hide" value="PDF" onclick="javascript:downloadPDF()"/>
+                        <g:form action="generarPdf" class="form-horizontal" name="formReporte">
+                            <input id="svg" name="svg" type="hidden" value=""/>
+                            <g:submitButton id="pdfButton" name="pdfButton" type="button" class="btn btn-primary hide" value="PDF" onclick="downloadPDF()"/>
+                        </g:form>
                     </div>
                 </div>
                 <div class="row">
