@@ -31,6 +31,9 @@ environments {
             username = "rom-test"
             password = "rom"
         }
+		hibernate {
+			show_sql = true
+		}
     }
     production {
         dataSource {

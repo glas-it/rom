@@ -27,7 +27,7 @@ Highcharts.drawTable = function() {
         cellLeft = tableLeft;
 
     renderer.text(
-        "Desde: " + capitaliseFirstLetter(fechaInicio.format("MMMM [de] YYYY")),
+        "Desde: " + capitaliseFirstLetter(fechaInicio.format(Highcharts.dateFormat)),
         tableLeft - 50,
         filtersTop + rowHeight
     )
@@ -40,7 +40,7 @@ Highcharts.drawTable = function() {
     .add();
 
     renderer.text(
-        "Hasta: " + capitaliseFirstLetter(fechaFin.format("MMMM [de] YYYY")),
+        "Hasta: " + capitaliseFirstLetter(fechaFin.format(Highcharts.dateFormat)),
         tableLeft + 350,
         filtersTop + rowHeight
     )
@@ -99,7 +99,7 @@ Highcharts.drawTable = function() {
 
             // Apply the cell text
             renderer.text(
-                    valuePrefix + Highcharts.numberFormat(point.y, valueDecimals),
+                    valuePrefix + (Highcharts.decimal) ? Highcharts.numberFormat(point.y, valueDecimals) : point.y,
                     cellLeft + colWidth - cellPadding,
                     tableTop + (row + 2) * rowHeight - cellPadding
                 )
