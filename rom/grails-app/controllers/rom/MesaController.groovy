@@ -15,12 +15,12 @@ import grails.transaction.Transactional
 @Secured("hasRole('DUENIO')")
 class MesaController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT", delete: "GET"]
 
 	def mesaService
-	
+
 	def springSecurityService
-	
+
 	def index(Integer max) {
         //params.max = Math.min(max ?: 10, 100)
         //respond Mesa.list(params), model:[mesaInstanceCount: Mesa.count()]
@@ -32,10 +32,10 @@ class MesaController {
 		// def duenio = Duenio.get(springSecurityService.currentUser.id)
 		// def listaMesas = mesaService.getMesas(duenio.restaurant, params)
         params.max = Math.min(max ?: 10, 100)
-        def listaMesas = MesaUnitaria.list(params) 
+        def listaMesas = MesaUnitaria.list(params)
 		[mesaInstanceList: listaMesas, mesaInstanceCount: listaMesas?.size()]
     }
-	
+
 	@Secured("hasRole('DUENIO')")
     def show(Mesa mesaInstance) {
         [mesaInstance: mesaInstance]
@@ -84,7 +84,7 @@ class MesaController {
 
     def edit(Mesa mesaInstance) {
 		if (!mesaInstance) {
-			flash.message("La mesa no existe")
+			flash.errorMessage("La mesa no existe")
 			redirect action:'list'
 			return
 		}
@@ -118,25 +118,24 @@ class MesaController {
     def delete(Mesa mesaInstance) {
 
         if (mesaInstance == null) {
-            notFound()
+            flash.errorMessage = "La mesa no existe"
+            redirect action: 'list'
             return
         }
 
+        if (mesaInstance.abierta) {
+            flash.errorMessage = "La mesa se encuentra abierta por lo que no puede eliminarse"
+            redirect action: 'list'
+        }
         mesaInstance.delete flush:true
 
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Mesa.label', default: 'Mesa'), mesaInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
+        redirect action: 'list'
     }
 
     protected void notFound() {
         request.withFormat {
             form {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'mesaInstance.label', default: 'Mesa'), params.id])
+                flash.errorMessage = message(code: 'default.not.found.message', args: [message(code: 'mesaInstance.label', default: 'Mesa'), params.id])
                 redirect action: "index", method: "GET"
             }
             '*'{ render status: NOT_FOUND }
@@ -149,13 +148,13 @@ class MesaCreacionCommand {
 	int mesaHasta
 	int capacidad
 	boolean activo
-	
+
 	static constraints = {
 		mesaHasta range: 0..999
 		mesaDesde min: 0, validator: {val, obj ->
 			MesaCreacionCommand cmd = obj as MesaCreacionCommand
 			return val <= cmd.mesaHasta
 		}
-		capacidad range: 1..99 
+		capacidad range: 1..99
 	}
 }

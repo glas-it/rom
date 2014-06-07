@@ -23,9 +23,9 @@ import groovy.time.*;
 class OrdenController {
 
 	private String SUCCESS = "{'success': true}"
-		
-	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", alta: "POST"]
-	
+
+	static allowedMethods = [save: "POST", update: "PUT", delete: "GET", alta: "POST"]
+
 	def pedidoService
 	def ordenService
 	def notificacionService
@@ -41,22 +41,22 @@ class OrdenController {
 			Consumible agregados = Agregado.findById(plato.idAgregado)
 			Precio precio = Precio.findByConsumibleAndDescripcion(consumible, plato.precio.descripcion)
 			if (consumible == null || precio == null) throw new Exception("Consumible inexistente")
-			
+
 			Orden orden = new Orden(plato.id, consumible, agregados, precio)
 			orden.addObservaciones(plato.observaciones)
 			pedido.addToOrdenes(orden)
 		}
-		
+
 		pedido.save(flush:true)
-		
+
 		/* TODO
 		 * Notificar cocina
 		 */
-		
+
 		render SUCCESS
 	}
-	
-	
+
+
 	// Para que la cocina pueda pedir el listado de las ordenes
 	@Secured(['permitAll'])
 	def all(String username) {
@@ -71,10 +71,10 @@ class OrdenController {
 					eq("aCocina", username == "cocina")
 				}
 			}
-		} 
+		}
 		render results as JSON
 	}
-	
+
 	@Secured(['permitAll'])
 	def byEstado(String username, String estado) {
 		def orden
@@ -95,10 +95,10 @@ class OrdenController {
 					eq("aCocina", username == "cocina")
 				}
 			}
-		} 
+		}
 		render results as JSON
 	}
-	
+
 	@Secured(['permitAll'])
 	def getOrden(String uuidOrden) {
 		Orden orden = Orden.findByUuid(uuidOrden)
@@ -106,7 +106,7 @@ class OrdenController {
 			throw new Exception("Orden inexistente")
 		return orden
 	}
-	
+
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
 	def preparando(String uuidOrden) {
@@ -115,7 +115,7 @@ class OrdenController {
 		orden.save(flush:true)
 		render SUCCESS
 	}
-	
+
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
 	def cancelado(String uuidOrden) {
@@ -130,17 +130,17 @@ class OrdenController {
 	def terminado(String username, String uuidOrden) {
 		Orden orden = getOrden(uuidOrden)
 		ordenService.marcarOrden(orden, OrdenStateTerminado.TERMINADO)
-		
+
 		Usuario usuario = Usuario.findByUsername(username)
 		long idMozo = orden.pedido.mozo.id
-		notificacionService.crearNotificacion(usuario.id, idMozo, "Mesa " + orden.pedido.mesa.numero, 
+		notificacionService.crearNotificacion(usuario.id, idMozo, "Mesa " + orden.pedido.mesa.numero,
 			"Retirar: " + orden.consumible.toString())
 
 		orden.save(flush:true)
 		render SUCCESS
 	}
-	
-	
+
+
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
 	def rechazado(String uuidOrden, boolean reordenar, String observaciones) {
@@ -163,7 +163,7 @@ class OrdenController {
 		orden.save(flush:true)
 		render SUCCESS
 	}
-	
+
 
 	@Secured(['permitAll'])
 	@Transactional(readOnly = false)
@@ -185,9 +185,9 @@ class OrdenController {
 		}
 
 	}
-	
-	
-	
+
+
+
 	def list(Integer max) {
 		params.max = Math.min(max ?: 10, 100)
 		respond Orden.list(params), model:[ordenInstanceCount: Orden.count()]
@@ -201,11 +201,11 @@ class OrdenController {
     def create() {
         respond new Orden(params)
     }
-    
+
     def edit(Orden ordenInstance) {
         respond ordenInstance
     }
-    
+
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Orden.list(params), model:[ordenInstanceCount: Orden.count()]

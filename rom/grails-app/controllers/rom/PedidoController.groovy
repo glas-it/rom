@@ -20,7 +20,7 @@ import rom.notificaciones.Notificacion
 @Secured(["permitAll"])
 class PedidoController {
 
-	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", apertura: "POST", cierre: "POST"]
+	static allowedMethods = [save: "POST", update: "PUT", delete: "GET", apertura: "POST", cierre: "POST"]
 
 	private String SUCCESS = "{'success': true}"
 
@@ -450,12 +450,12 @@ class OrdenResumidaCommand {
 	def importeFormateado() {
 		return java.text.NumberFormat.currencyInstance.format(importe())
 	}
-	
+
 	def precioUnitarioFormateado() {
 		def precio = orden.precioFinal()
 		return java.text.NumberFormat.currencyInstance.format(precio)
 	}
-	
+
 	def descripcion() {
 		def descrip = orden.consumible.nombre
 		if (orden.agregado) {

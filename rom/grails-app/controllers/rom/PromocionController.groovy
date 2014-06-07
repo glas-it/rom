@@ -17,10 +17,10 @@ class PromocionController {
 
 	private static String SUCCESS_TRUE = "{'success':true}"
 	private static String SUCCESS_FALSE = "{'success':false}"
-	
+
 	def springSecurityService
-	
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+
+    static allowedMethods = [save: "POST", update: "PUT", delete: "GET"]
 
 	def index(Integer max) {
         redirect action:'list'
@@ -56,7 +56,7 @@ class PromocionController {
         }
 		def restaurant = Duenio.get(springSecurityService.currentUser.id)?.restaurant
         if (!restaurant) {
-			flash.message = "Debe encontrarse logueado para realizar esta accion"
+			flash.errorMessage = "Debe encontrarse logueado para realizar esta accion"
 			notFound()
 			return
 		}
@@ -72,34 +72,34 @@ class PromocionController {
         }
     }
 
-	@Transactional
-	@Secured("hasRole('DUENIO')")
+    @Secured("hasRole('DUENIO')")
+	@Transactional(readOnly = false)
 	def delete(Promocion promocionInstance) {
 		if (!promocionInstance) {
-			flash.message = "no existe tal promocion"
+			flash.errorMessage = "La promocion no existe"
 			redirect action: 'list'
 			return
 		}
 		if (!promocionInstance.esEditable()) {
-			flash.message = "la promoción no puede ser borrada"
+			flash.errorMessage = "La promoción se encuentra vigente por lo que no puede ser eliminada"
 			redirect action: 'list'
 			return
 		}
 		promocionInstance.activo = false
 		promocionInstance.save()
-		flash.message = "la promoción fue borrada con éxito"
+		flash.message = "La promoción fue borrada con éxito"
 		redirect action: 'list'
 	}
-	
+
     def edit(Promocion promocionInstance) {
 		if (!promocionInstance.esEditable()) {
-			flash.message = "La promoción no puede ser editada"
+			flash.errorMessage = "La promoción no puede ser editada"
 			redirect action:'list'
 			return
 		}
 		respond promocionInstance
     }
-	
+
 	@Secured(['permitAll'])
 	def validar(Long idPromocion, Long idRestaurant) {
 		def promocion = Promocion.get(idPromocion)
@@ -109,14 +109,14 @@ class PromocionController {
 		}
 		render promocion.esValida() ? SUCCESS_TRUE : SUCCESS_FALSE
 	}
-	
+
     @Transactional
-    def update(Promocion promocionInstance) {	
+    def update(Promocion promocionInstance) {
         if (promocionInstance == null) {
             notFound()
             return
         }
-				
+
         if (promocionInstance.hasErrors()) {
             respond promocionInstance.errors, view:'edit'
             return

@@ -2,7 +2,7 @@
 
 <div class = "row">
 	<div class="col-md-2">
-		<label for="nombre" class="control-label"><g:message code="subrubro.nombre.label" default="Nombre" /><span class="required-indicator">*</span></label>	
+		<label for="nombre" class="control-label"><g:message code="subrubro.nombre.label" default="Nombre" /><span class="required-indicator">*</span></label>
 	</div>
 	<div class="col-md-4 ${hasErrors(bean: subrubroInstance, field: 'nombre', 'error')} required">
 		<g:textField class="form-control nombre" name="nombre" maxlength="100" required="" value="${subrubroInstance?.nombre}"/>
@@ -22,7 +22,7 @@
 			<div class="${hasErrors(bean: subrubroInstance, field: 'consumiciones', 'error')} ">
 				<label for="consumiciones" class="control-label"><g:message code="subrubro.consumiciones.label" default="Consumiciones" /></label>
 				<div>
-					
+
 <ul class="one-to-many">
 <g:each in="${subrubroInstance?.consumiciones?}" var="c">
     <li><g:link controller="consumicion" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link></li>
@@ -39,7 +39,7 @@
 			<div class="${hasErrors(bean: subrubroInstance, field: 'agregados', 'error')} ">
 				<label for="agregados" class="control-label"><g:message code="subrubro.agregados.label" default="Agregados" /></label>
 				<div>
-					
+
 <ul class="one-to-many">
 <g:each in="${subrubroInstance?.agregados?}" var="a">
     <li><g:link controller="agregado" action="show" id="${a.id}">${a?.encodeAsHTML()}</g:link></li>
@@ -56,10 +56,10 @@
 </br>
 <div class = "row">
 	<div class = "col-md-2">
-		<label for="rubro" class="control-label"><g:message code="subrubro.rubro.label" default="Rubro" /><span class="required-indicator">*</span></label>	
+		<label for="rubro" class="control-label"><g:message code="subrubro.rubro.label" default="Rubro" /><span class="required-indicator">*</span></label>
 	</div>
 	<div class="col-md-4 ${hasErrors(bean: subrubroInstance, field: 'rubro', 'error')} required">
-		<g:select class="form-control" id="rubro" name="rubro.id" from="${rom.Rubro.list()}" optionKey="id" required="" value="${subrubroInstance?.rubro?.id}" class="many-to-one"/>
+		<g:select id="rubro" name="rubro.id" from="${rom.Rubro.list()}" optionKey="id" required="" value="${subrubroInstance?.rubro?.id}" class="form-control many-to-one"/>
 		<span class="help-inline">${hasErrors(bean: subrubroInstance, field: 'rubro', 'error')}</span>
 	</div>
 	<div class="col-md-2">

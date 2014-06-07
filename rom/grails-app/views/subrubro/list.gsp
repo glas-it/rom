@@ -12,7 +12,8 @@
 <body>
 
 <section id="list-subrubro" class="first">
-
+	<div class="panel panel-default tab-content">
+		<div class="panel-body">
 <script type="text/javascript">
 	$(document).ready(function() {
 		if ($('.prev.disabled') !== undefined)
@@ -25,49 +26,60 @@
 	<table class="table table-striped table-bordered margin-top-medium">
 		<thead>
 			<tr>
-			
+
 				<th>${message(code: 'subrubro.nombre.label', default:'Nombre')}</th>
-			
+
 				<th> <g:message code="subrubro.orden.label"  default="Orden"/> </th>
-			
+
 				<th><g:message code="subrubro.rubro.label" default="Rubro" /></th>
-				
+
 				<th style="width:150px"># Consumiciones</th>
-				
+
 				<th style="width:150px"># Agregados</th>
-			
-				<!--  <th> Acciones </th>  -->
+
+				<th width="100">${message(code: 'default.acciones.label', default:'Acciones')}</th>
 			</tr>
 		</thead>
 		<tbody>
 		<g:each in="${subrubroInstanceList}" status="i" var="subrubroInstance">
 			<tr>
-			
+
 				<td><g:link action="show" id="${subrubroInstance.id}">${fieldValue(bean: subrubroInstance, field: "nombre")}</g:link></td>
-			
+
 				<td>${fieldValue(bean: subrubroInstance, field: "orden")}</td>
-			
+
 				<td>${fieldValue(bean: subrubroInstance, field: "rubro")}</td>
-				
+
 				<td>${subrubroInstance.consumiciones.size()}</td>
-				
+
 				<td>${subrubroInstance.agregados.size()}</td>
-				
-				<!-- 
+
 				<td>
-					<g:if test="${i != 0}">
-						<g:link action="subirOrden" id="${subrubroInstance.id}">subir</g:link>
-					</g:if>
-					<g:if test="${i < subrubroInstanceList.size() - 1}">
-						<g:link action="bajarOrden" id="${subrubroInstance.id}">bajar</g:link>
-					</g:if>
+					<div class="row">
+						<div class="col-md-2">
+							<g:link action="show" id="${subrubroInstance.id}">
+								<i class="glyphicon glyphicon-search"></i>
+							</g:link>
+						</div>
+						<div class="col-md-2">
+							<g:link action="edit" id="${subrubroInstance.id}">
+								<i class="glyphicon glyphicon-pencil"></i>
+							</g:link>
+						</div>
+						<div class="col-md-2">
+							<g:link action="delete" id="${subrubroInstance.id}">
+								<i class="glyphicon glyphicon-remove"></i>
+							</g:link>
+						</div>
+					</div>
 				</td>
-				 -->
-				 
+
 			</tr>
 		</g:each>
 		</tbody>
 	</table>
+	</div>
+	</div>
 	<div>
 		<bs:paginate total="${subrubroInstanceCount}" />
 	</div>

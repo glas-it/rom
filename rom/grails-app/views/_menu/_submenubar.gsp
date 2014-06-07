@@ -1,4 +1,4 @@
-<!-- 
+<!--
 This menu is used to show function that can be triggered on the content (an object or list of objects).
 -->
 
@@ -8,15 +8,16 @@ This menu is used to show function that can be triggered on the content (an obje
 			&&	params.controller != 'home'
 }">
 <div class="">
-        
 	<ul id="Menu" class="nav nav-tabs">
-		<g:set var="entityName" value="${message(code: params.controller+'.label', default: params.controller.substring(0,1).toUpperCase() + params.controller.substring(1).toLowerCase())}" /><%--
-		<g:ifActionExists target="list">		
+		<g:set var="entityName" value="${message(code: params.controller+'.label', default: params.controller.substring(0,1).toUpperCase() + params.controller.substring(1).toLowerCase())}" />
+		<g:set var="entitiesName" value="${message(code: params.controller+'.label', default: params.controller.substring(0,1).toUpperCase() + params.controller.substring(1).toLowerCase())}" />
+		<%--
+		<g:ifActionExists target="list">
 			--%><li class="${ params.action == "list" ? 'active' : '' }">
 				<g:link action="list"><i class="glyphicon glyphicon-th-list"></i> <g:message code="default.list.label" args="[entityName]"/></g:link>
 			</li><%--
 		</g:ifActionExists>
-		--%><%--<g:ifActionExists target="create">		
+		--%><%--<g:ifActionExists target="create">
 			--%><li class="${ params.action == "create" ? 'active' : '' }">
 				<g:link action="create"><i class="glyphicon glyphicon-plus"></i> <g:message code="default.new.label"  args="[entityName]"/></g:link>
 			</li><%--
@@ -34,7 +35,7 @@ This menu is used to show function that can be triggered on the content (an obje
 				</li>
 			<%--</g:ifActionExists>
 		--%></g:if>
-		
+
 	</ul>
 	</div>
 	</br>

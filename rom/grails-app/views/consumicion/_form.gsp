@@ -19,12 +19,12 @@
 	</div>
 </div>
 </br>
-<div class="row">	
+<div class="row">
 	<div class="col-md-2">
 		<label for="subrubro" class="control-label"><g:message code="consumicion.subrubro.label" default="Subrubro" /><span class="required-indicator">*</span></label>
 	</div>
 	<div class="col-md-4 ${hasErrors(bean: consumicionInstance, field: 'subrubro', 'error')} required">
-		<g:select class="form-control" id="subrubro" name="subrubro.id" from="${rom.Subrubro.list()}" optionKey="id" required="" value="${consumicionInstance?.subrubro?.id}"/>
+		<g:select id="subrubro" name="subrubro.id" from="${rom.Subrubro.list()}" optionKey="id" required="" value="${consumicionInstance?.subrubro?.id}" class="form-control"/>
 		<span class="help-inline">${hasErrors(bean: consumicionInstance, field: 'subrubro', 'error')}</span>
 	</div>
 	<div class="col-md-1">
@@ -41,7 +41,7 @@
 		<g:checkBox name="aCocina" value="${consumicionInstance?.aCocina}" checked="${consumicionInstance?.aCocina}"/>
 	</div>
 </div>
-</br>  
+</br>
 <g:render template="/precio/table"/>
 
 

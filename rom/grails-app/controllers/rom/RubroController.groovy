@@ -14,10 +14,10 @@ import grails.transaction.Transactional
 @Secured("hasRole('DUENIO')")
 class RubroController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-	
+    static allowedMethods = [save: "POST", update: "PUT", delete: "GET"]
+
 	//def springSecurityService
-	
+
 	def index(Integer max) {
         //params.max = Math.min(max ?: 10, 100)
         //respond Rubro.list(params), model:[rubroInstanceCount: Rubro.count()]
@@ -42,14 +42,14 @@ class RubroController {
 		}
 		redirect action: "list"
 	}
-		
+
 	@Transactional
 	def bajarOrden() {
 		Rubro rubroInstance = Rubro.get(params.id)
 		if (rubroInstance) {
 			Rubro rubro = Rubro.findByOrden(rubroInstance.orden + 1)
 			if (rubro) {
-				
+
 				rubroInstance.cambiarOrden(rubro)
 				rubro.save()
 				rubroInstance.save()
@@ -57,7 +57,7 @@ class RubroController {
 		}
 		redirect action: "list"
 	}
-	
+
     def show(Rubro rubroInstance) {
         respond rubroInstance
     }
@@ -72,7 +72,7 @@ class RubroController {
             notFound()
             return
         }
-		
+
         if (rubroInstance.hasErrors()) {
             respond rubroInstance.errors, view:'create'
             return
@@ -126,13 +126,7 @@ class RubroController {
 
         rubroInstance.delete flush:true
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Rubro.label', default: 'Rubro'), rubroInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
+        redirect action: "index", method: "GET"
     }
 
     protected void notFound() {

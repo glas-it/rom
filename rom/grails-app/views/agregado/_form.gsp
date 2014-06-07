@@ -23,10 +23,10 @@
 		<label for="subrubro" class="control-label"><g:message code="agregado.subrubro.label" default="Subrubro" /><span class="required-indicator">*</span></label>
 	</div>
 	<div class="col-md-4 ${hasErrors(bean: agregadoInstance, field: 'subrubro', 'error')} required">
-		<g:select class="form-control" id="subrubro" name="subrubro.id" from="${rom.Subrubro.list()}" optionKey="id" required="" value="${agregadoInstance?.subrubro?.id}" class="many-to-one"/>
+		<g:select id="subrubro" name="subrubro.id" from="${rom.Subrubro.list()}" optionKey="id" required="" value="${agregadoInstance?.subrubro?.id}" class="form-control many-to-one"/>
 		<span class="help-inline">${hasErrors(bean: agregadoInstance, field: 'subrubro', 'error')}</span>
 	</div>
-	
+
 	<div class="col-md-1">
 		<label for="activo" class="control-label"><g:message code="agregado.activo.label" default="Activo" /></label>
 	</div>

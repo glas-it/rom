@@ -15,12 +15,12 @@ import grails.transaction.Transactional
 @Secured("hasRole('DUENIO')")
 class MozoController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT", delete: "GET"]
 
 	def mozoService
-	
+
 	def springSecurityService
-	
+
 	def index(Integer max) {
         redirect action:'list'
     }
@@ -47,7 +47,7 @@ class MozoController {
             notFound()
             return
         }
-		Duenio duenio = Duenio.findByUsername(springSecurityService.currentUser.username) 
+		Duenio duenio = Duenio.findByUsername(springSecurityService.currentUser.username)
 		try {
 			mozoService.crearMozo(mozoInstance, duenio)
 		} catch (MozoConErroresException) {
@@ -83,7 +83,7 @@ class MozoController {
 
         request.withFormat {
             form {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Mozo.label', default: 'Mozo'), mozoInstance.id])
+                flash.errorMessage = message(code: 'default.updated.message', args: [message(code: 'Mozo.label', default: 'Mozo'), mozoInstance.id])
                 redirect mozoInstance
             }
             '*'{ respond mozoInstance, [status: OK] }
@@ -92,27 +92,20 @@ class MozoController {
 
     @Transactional
     def delete(Mozo mozoInstance) {
-
-        if (mozoInstance == null) {
-            notFound()
+        if (!mozoInstance) {
+            flash.errorMessage = "El mozo no existe"
+            redirect action: 'list'
             return
         }
-
-        mozoInstance.delete flush:true
-
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Mozo.label', default: 'Mozo'), mozoInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
+        mozoInstance.activo = false
+        mozoInstance.save flush:true
+        redirect action: 'list'
     }
 
     protected void notFound() {
         request.withFormat {
             form {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'mozoInstance.label', default: 'Mozo'), params.id])
+                flash.errorMessage = message(code: 'default.not.found.message', args: [message(code: 'mozoInstance.label', default: 'Mozo'), params.id])
                 redirect action: "index", method: "GET"
             }
             '*'{ render status: NOT_FOUND }

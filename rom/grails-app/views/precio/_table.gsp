@@ -12,7 +12,7 @@
 		<tr>
 			<th><g:message code="precio.descripcion.label" default="Descripcion" /></th>
 			<th><g:message code="precio.valor.label" default="Valor" /></th>
-			<th>Acciones</th>
+			<th width="100">Acciones</th>
 		</tr>
 	</thead>
 	<tbody id="bodyTablePrecios">
@@ -22,7 +22,7 @@
 	</tbody>
 </table>
 <!-- Funcion a ejecutar cuando se completa la carga -->
-<script type="text/javascript"> 
+<script type="text/javascript">
 	$(document).ready(function(){
 		$("#btnAddPrecio").on("click", function(e) {
   			e.preventDefault();

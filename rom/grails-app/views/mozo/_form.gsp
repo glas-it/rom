@@ -1,5 +1,4 @@
 <%@ page import="rom.Mozo" %>
-</br>
 <div class ="row">
 	<div class="col-md-2">
 		<label for="nombre" class="control-label"><g:message code="usuario.nombre.label" default="Nombre" /><span class="required-indicator">*</span></label>
@@ -19,12 +18,11 @@
 			<span class="help-inline alert-danger">${hasErrors(bean: mozoInstance, field: 'apellido', 'error')}</span>
 		</div>
 	</div>
-	
 </div>
 </br>
 <div class="row">
 	<div class="col-md-2">
-		<label for="numeroLegajo" class="control-label"><g:message code="usuario.numeroLegajo.label" default="Numero legajo" /><span class="required-indicator">*</span></label>	
+		<label for="numeroLegajo" class="control-label"><g:message code="usuario.numeroLegajo.label" default="Numero legajo" /><span class="required-indicator">*</span></label>
 	</div>
 	<div class="col-md-4 ${hasErrors(bean: mozoInstance, field: 'numeroLegajo', 'error')} required">
 		<div>
@@ -42,7 +40,7 @@
 		</div>
 	</div>
 </div>
-</br>
+<br/>
 <div class="row">
 	<div class="col-md-2">
 		<label for="username" class="control-label"><g:message code="usuario.username.label" default="Username" /><span class="required-indicator">*</span></label>
@@ -53,9 +51,8 @@
 			<span class="help-inline alert-danger">${hasErrors(bean: mozoInstance, field: 'username', 'El campo debe contener un nombre de usuario único')}</span>
 		</div>
 	</div>
-	<div class="col-md-2"></div>
-	<div class="col-md-4"></div>
 </div>
-		
+<br/>
+
 
 

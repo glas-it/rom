@@ -17,10 +17,10 @@ import grails.plugin.springsecurity.annotation.Secured;
 @Secured("hasRole('DUENIO')")
 class ConsumicionController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", filter:"GET"]
-	
+    static allowedMethods = [save: "POST", update: "PUT", delete: "GET", filter:"GET"]
+
 	def consumicionService
-	
+
 	def index(Integer max) {
         //params.max = Math.min(max ?: 10, 100)
         //respond Consumicion.list(params), model:[consumicionInstanceCount: Consumicion.count()]
@@ -29,7 +29,7 @@ class ConsumicionController {
 
 	def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-		
+
         respond Consumicion.list(params), model:[consumicionInstanceCount: Consumicion.count()]
     }
 
@@ -42,7 +42,7 @@ class ConsumicionController {
 		consumicion.aCocina = true
         respond consumicion
     }
-	
+
 	@Secured(['permitAll'])
 	def getJSONList() {
 		List<Consumicion> lista = Consumicion.list()
@@ -58,7 +58,7 @@ class ConsumicionController {
 		def consumiciones = consumicionService.filter(filter, params.max, offset)
 		respond consumiciones, model:[consumicionInstanceCount: consumicionService.filterCount(filter)], view:'list'
 	}
-	
+
     @Transactional
     def save(Consumicion consumicionInstance) {
         if (consumicionInstance == null) {
@@ -71,9 +71,9 @@ class ConsumicionController {
             respond consumicionInstance, view:'create'
             return
         }
-		
+
         consumicionInstance.save flush:true
-		
+
         request.withFormat {
             form {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'consumicionInstance.label', default: 'Consumicion'), consumicionInstance.id])
@@ -119,13 +119,7 @@ class ConsumicionController {
 
         consumicionInstance.delete flush:true
 
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Consumicion.label', default: 'Consumicion'), consumicionInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
+        redirect action:"index", method:"GET"
     }
 
     protected void notFound() {

@@ -15,10 +15,10 @@ import grails.transaction.Transactional
 @Secured("hasRole('ADMIN')")
 class DuenioController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT", delete: "GET"]
 
 	def duenioService
-	
+
 	def index(Integer max) {
         redirect action:'list'
     }
@@ -42,7 +42,7 @@ class DuenioController {
             notFound()
             return
         }
-		
+
 		if (duenioInstance.hasErrors()) {
             respond duenioInstance.errors, view:'create'
             return

@@ -10,7 +10,6 @@
 </head>
 
 <body>
-
 <section id="list-promocion" class="first">
 	<div class="panel panel-default tab-content">
 		<div class="panel-body">
@@ -31,7 +30,7 @@
 						<td>${fieldValue(bean: promocionInstance, field: "porcentajeDescuento")}%</td>
 						<td><g:formatDate format="yyyy-MM-dd" date="${promocionInstance.fechaInicio}"/></td>
 						<td><g:formatDate format="yyyy-MM-dd" date="${promocionInstance.fechaFin}" /></td>
-						<td>
+						<td width="100">
 							<div class="row">
 								<div class="col-md-2">
 									<g:link action="show" id="${promocionInstance.id}">
@@ -39,9 +38,14 @@
 									</g:link>
 								</div>
 								<div class="col-md-2">
-									<g:form method="DELETE" action="delete" id="${promocionInstance.id}">
-										<g:submitButton name="delete" value="borrar" class="btn btn-danger btn-xs"/>
-									</g:form>
+									<g:link action="edit" id="${promocionInstance.id}">
+										<i class="glyphicon glyphicon-pencil"></i>
+									</g:link>
+								</div>
+								<div class="col-md-2">
+									<g:link action="delete" id="${promocionInstance.id}">
+										<i class="glyphicon glyphicon-remove"></i>
+									</g:link>
 								</div>
 							</div>
 						</td>

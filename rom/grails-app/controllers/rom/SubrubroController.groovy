@@ -14,7 +14,7 @@ import grails.plugin.springsecurity.annotation.Secured
 @Secured("hasRole('DUENIO')")
 class SubrubroController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT", delete: "GET"]
 
 	def index(Integer max) {
         //params.max = Math.min(max ?: 10, 100)
@@ -44,7 +44,7 @@ class SubrubroController {
 		}
 		redirect action: "list"
 	}
-		
+
 	@Transactional
 	def bajarOrden() {
 		Subrubro subrubroInstance = Subrubro.get(params.id)
@@ -58,7 +58,7 @@ class SubrubroController {
 		}
 		redirect action: "list"
 	}
-	
+
     def create() {
         respond new Subrubro(params)
     }
@@ -123,13 +123,7 @@ class SubrubroController {
 
         subrubroInstance.delete flush:true
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Subrubro.label', default: 'Subrubro'), subrubroInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
+        redirect action: "index", method: "GET"
     }
 
     protected void notFound() {

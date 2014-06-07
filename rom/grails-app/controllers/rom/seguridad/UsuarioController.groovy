@@ -15,11 +15,11 @@ import grails.transaction.Transactional
 @Secured("hasRole('ADMIN')")
 class UsuarioController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT", delete: "GET"]
 
 
 	def usuarioService
-	
+
 	def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Usuario.list(params), model:[usuarioInstanceCount: Usuario.count()]
@@ -49,9 +49,9 @@ class UsuarioController {
             respond usuarioInstance.errors, view:'create'
             return
         }
-        
+
         usuarioService.crearUsuarioAdminitrador(usuarioInstance)
-		
+
 		request.withFormat {
             form {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'usuarioInstance.label', default: 'Usuario'), usuarioInstance.id])

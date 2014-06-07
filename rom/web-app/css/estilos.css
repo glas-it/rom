@@ -34,7 +34,7 @@ a:hover, a:focus {
 a {
     text-decoration: none;
     color: #666;
-}	
+}
 
 .page-header {
 	visibility:hidden;
@@ -60,4 +60,44 @@ a {
 .tab-content {
 	position: relative;
 	top:-24px;
+}
+
+.clickable {
+    cursor:pointer;
+}
+
+th.sortable,
+th.sortable a {
+    color: whitesmoke !important;
+}
+
+th,
+th a {
+    color: #AAA !important;
+}
+
+th.sortable.sorted,
+th.sortable.sorted a {
+    color: yellowgreen !important;
+}
+
+th.sortable::after {
+    content:"\e150";
+    font-family: 'Glyphicons Halflings';
+    line-height: 1;
+    float: right;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+th.sortable.desc::after {
+    content:"\e114";
+}
+
+th.sortable.asc::after {
+    content:"\e113";
+}
+
+.right {
+    float: right;
 }

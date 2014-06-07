@@ -1,6 +1,4 @@
 <%@ page import="rom.Mesa" %>
-
-
 		<div class="row">
 			<div class="col-md-2">
 				<label for="numero" class="control-label"><g:message code="mesa.numero.label" default="Numero" /><span class="required-indicator">*</span></label>
@@ -22,12 +20,10 @@
 			<div class="col-md-2">
 				<label for="activo" class="control-label"><g:message code="mesa.activo.label" default="Activo" /></label>
 			</div>
-			<div class="col-md-4 ${hasErrors(bean: mesaInstance, field: 'activo', 'error')} ">
-				<g:checkBox name="activo" value="${mesaInstance?.activo}" />
-				<span class="help-inline">${hasErrors(bean: mesaInstance, field: 'activo', 'error')}</span>
-			</div>
-			<div class="col-md-2">
-			</div>
 			<div class="col-md-4">
+				<div>
+			<g:checkBox class="form-control" name="activo" value="${mesaInstance?.activo}" />
+					<span class="help-inline alert-danger">${hasErrors(bean: mesaInstance, field: 'activo', 'error')}</span>
+				</div>
 			</div>
 		</div>

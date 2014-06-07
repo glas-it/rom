@@ -1,5 +1,14 @@
 <%@ page import="rom.Promocion" %>
-
+<script type="text/javascript">
+    window.onload = function() {
+        $('#fechaInicio_year').addClass('form-control');
+        $('#fechaInicio_month').addClass('form-control');
+        $('#fechaInicio_day').addClass('form-control');
+        $('#fechaFin_year').addClass('form-control');
+        $('#fechaFin_month').addClass('form-control');
+        $('#fechaFin_day').addClass('form-control');
+    }
+</script>
 <div class="row">
 			<div class="${hasErrors(bean: promocionInstance, field: 'nombre', 'has-error')} required">
 				<div class="col-md-2">
@@ -25,7 +34,7 @@
 			</div>
 		</div>
 		<br/>
-		<div class="row">
+		<div class="row form-inline">
 			<div class="${hasErrors(bean: promocionInstance, field: 'fechaInicio', 'has-error')} required">
 				<div class="col-md-2">
 					<label for="fechaInicio" class="control-label">
@@ -33,12 +42,12 @@
 						<span class="required-indicator">*</span>
 					</label>
 				</div>
-			<div class="${hasErrors(bean: promocionInstance, field: 'fechaFin', 'has-error')} required">
 				<div class="col-md-4">
 						<g:datePicker class="form-control" name="fechaInicio" precision="day"  value="${promocionInstance?.fechaInicio}"  />
-					</div>
 				</div>
-			
+			</div>
+			<div class="${hasErrors(bean: promocionInstance, field: 'fechaFin', 'has-error')} required">
+
 				<div class="col-md-2">
 					<label for="fechaFin" class="control-label">
 						<g:message code="promocion.fechaFin.label" default="Fecha Fin" />
@@ -62,6 +71,6 @@
 				<div class="col-md-4">
 					<g:field type="number" class="form-control" name="porcentajeDescuento" value="${fieldValue(bean: promocionInstance, field: 'porcentajeDescuento')}" required=""/>
 				</div>
-			</div>	
+			</div>
 		</div>
 		<br/>

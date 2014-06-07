@@ -14,7 +14,7 @@ import grails.transaction.Transactional
 @Secured(['permitAll'])
 class ConsumibleController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT", delete: "GET"]
 
 	def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -59,7 +59,7 @@ class ConsumibleController {
 	def addPrecio(Long cantFilas) {
 		render(template: '/precio/create', model: [precioInstance: new Precio(), i: cantFilas])
 	}
-	
+
     def edit(Consumible consumibleInstance) {
         respond consumibleInstance
     }
