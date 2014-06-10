@@ -95,11 +95,11 @@ class PedidoService {
 		def result = criteria.list{
 			if (fechaDesde && estado) {
 				and {
-					between("dateCreated", fechaDesde, fechaHasta)
+					between("fechaPago", fechaDesde, fechaHasta)
 					eq("estado", estado)
 				}
 			} else if (fechaDesde) {
-				between("dateCreated", fechaDesde, fechaHasta)
+				between("fechaPago", fechaDesde, fechaHasta)
 			} else if (estado){
 				eq("estado", estado)
 			}

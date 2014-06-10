@@ -1,6 +1,6 @@
 #!/bin/bash
 desde=6
-hasta=10
+hasta=210
 b=0
 
 for ((i=$desde; i<$hasta; i++)); do

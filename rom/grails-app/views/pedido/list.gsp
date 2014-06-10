@@ -62,6 +62,8 @@
 				<th><g:message code="pedido.comensales.label" default="Comensales" /></th>
 
 				<th><g:message code="pedido.ordenes.label" default="Cantidad de órdenes" /></th>
+				
+				<th>Fecha de pago</th>
 
 				<th width="100">Acciones</th>
 			</tr>
@@ -79,6 +81,8 @@
 				<td>${fieldValue(bean: pedidoInstance, field: "comensales")}</td>
 
 				<td>${pedidoInstance.ordenes.size()}</td>
+				
+				<td>${pedidoInstance.fechaPago.format("dd/MM/yyyy")}</td>
 
 				<td><div class="row">
 					<g:if test="${!pedidoInstance.anulado()}">
