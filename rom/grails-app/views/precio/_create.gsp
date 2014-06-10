@@ -24,7 +24,7 @@
 </tr>
 
 <script type="text/javascript">
-	$(document).ready(function(){
-
-	});
+		if (!$("#precio_${i}").val()) {
+			$("#precio_${i}").val("-");
+		}
 </script>

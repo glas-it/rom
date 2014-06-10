@@ -31,14 +31,14 @@
 		<label for="activo" class="control-label"><g:message code="consumicion.activo.label" default="Activo" /></label>
 	</div>
 	<div class="col-md-2 ${hasErrors(bean: consumicionInstance, field: 'activo', 'error')} ">
-		<g:checkBox name="activo" value="${consumicionInstance?.activo}" checked="${consumicionInstance?.activo}" />
+		<g:checkBox class="form-control" name="activo" value="${consumicionInstance?.activo}" checked="${consumicionInstance?.activo}" />
 		<span class="help-inline">${hasErrors(bean: consumicionInstance, field: 'activo', 'error')}</span>
 	</div>
 	<div class="col-md-1">
 		<label for="aCocina" class="control-label"><g:message code="consumicion.aCocina.label" default="A cocina"/></label>
 	</div>
 	<div class="col-md-2">
-		<g:checkBox name="aCocina" value="${consumicionInstance?.aCocina}" checked="${consumicionInstance?.aCocina}"/>
+		<g:checkBox name="aCocina" class="form-control" value="${consumicionInstance?.aCocina}" checked="${consumicionInstance?.aCocina}"/>
 	</div>
 </div>
 </br>

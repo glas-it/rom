@@ -10,43 +10,50 @@
 </head>
 
 <body>
-
 <section id="show-rubro" class="first">
-
-	<table class="table table-striped table-bordered table-responsive">
-		<tbody>
-		
-			<tr class="prop">
-				<td valign="top" class="name"><g:message code="rubro.nombre.label" default="Nombre" /></td>
-				
-				<td valign="top" class="value">${fieldValue(bean: rubroInstance, field: "nombre")}</td>
-				
-			</tr>
-		
-			<tr class="prop">
-				<td valign="top" class="name"><g:message code="rubro.orden.label" default="Orden" /></td>
-				
-				<td valign="top" class="value">${fieldValue(bean: rubroInstance, field: "orden")}</td>
-				
-			</tr>
-
-				<tr class="prop">
-					<td valign="top" class="name"><g:message code="rubro.subrubros.label" default="Subrubros" /></td>
-					
-					<td valign="top" style="text-align: left;" class="value">
-						<ul>
-							<g:each in="${rubroInstance.subrubros}" var="s">
-								<li><g:link controller="subrubro" action="show" id="${s.id}">${s?.encodeAsHTML()}</g:link></li>
-							</g:each>
-						</ul>
-					</td>
-					
-				</tr>
-		
-		</tbody>
-	</table>
+	<div class="panel panel-default tab-content">
+		<div class="panel-body">
+			<div class="table-responsive">
+				<table class="table table-striped table-bordered">
+					<tbody>
+						<tr class="prop">
+							<td valign="top" class="name"><g:message code="rubro.nombre.label" default="Nombre" /></td>
+							<td valign="top" class="value">${fieldValue(bean: rubroInstance, field: "nombre")}</td>
+						</tr>
+						<tr class="prop">
+							<td valign="top" class="name"><g:message code="rubro.orden.label" default="Orden" /></td>
+							<td valign="top" class="value">${fieldValue(bean: rubroInstance, field: "orden")}</td>
+						</tr>
+							<tr class="prop">
+								<td valign="top" class="name"><g:message code="rubro.subrubros.label" default="Subrubros" /></td>
+								<td valign="top" style="text-align: left;" class="value">
+									<table class="table table-striped table-bordered">
+										<tbody>
+										<g:each in="${rubroInstance.subrubros.sort{ it.orden }}" status="i" var="s">
+											<tr>
+												<td style="overflow: hidden;"><g:link controller="subrubro" action="show" id="${s.id}">${s?.encodeAsHTML()}</g:link>
+													<g:if test="${i != 0}">
+														<g:link controller="subrubro" action="subirOrden" id="${s.id}">
+															<i class="glyphicon glyphicon-arrow-up right"></i>
+														</g:link>
+													</g:if>
+													<g:if test="${i < rubroInstance.subrubros.size() - 1}">
+														<g:link controller="subrubro" action="bajarOrden" id="${s.id}">
+															<i class="glyphicon glyphicon-arrow-down right"></i>
+														</g:link>
+													</g:if>
+												</td>
+											</tr>
+										</g:each>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 </section>
-
 </body>
-
 </html>

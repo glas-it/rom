@@ -13,36 +13,36 @@
 
 <section id="index-consumible" class="first">
 
-	<table class="table table-bordered margin-top-medium">
+	<table class="table table-striped table-bordered margin-top-medium">
 		<thead>
 			<tr>
-			
+
 				<g:sortableColumn property="nombre" title="${message(code: 'consumible.nombre.label', default: 'Nombre')}" />
-			
+
 				<g:sortableColumn property="descripcion" title="${message(code: 'consumible.descripcion.label', default: 'Descripcion')}" />
-			
+
 				<g:sortableColumn property="precio" title="${message(code: 'consumible.precio.label', default: 'Precio')}" />
-			
+
 				<g:sortableColumn property="activo" title="${message(code: 'consumible.activo.label', default: 'Activo')}" />
-			
+
 				<th><g:message code="consumible.subrubro.label" default="Subrubro" /></th>
-			
+
 			</tr>
 		</thead>
 		<tbody>
 		<g:each in="${consumibleInstanceList}" status="i" var="consumibleInstance">
 			<tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-			
+
 				<td><g:link action="show" id="${consumibleInstance.id}">${fieldValue(bean: consumibleInstance, field: "nombre")}</g:link></td>
-			
+
 				<td>${fieldValue(bean: consumibleInstance, field: "descripcion")}</td>
-			
+
 				<td>${fieldValue(bean: consumibleInstance, field: "precio")}</td>
-			
+
 				<td><g:formatBoolean boolean="${consumibleInstance.activo}" /></td>
-			
+
 				<td>${fieldValue(bean: consumibleInstance, field: "subrubro")}</td>
-			
+
 			</tr>
 		</g:each>
 		</tbody>

@@ -45,12 +45,12 @@
 				<br/>
 				<div class="row" style="padding-bottom:10px">
                     <div class="col-md-2 text-center col-md-offset-2">
-                        <g:submitButton class="btn btn-primary" name="buscar" value="buscar"/>
+                        <g:submitButton class="btn btn-primary" name="buscar" value="Buscar"/>
                     </div>
                 </div>
 			</g:form>
 	<br/>
-	<table class="table table-bordered margin-top-medium">
+	<table class="table table-bordered table-striped margin-top-medium">
 		<thead>
 			<tr>
 				<th>Mozo</th>
@@ -62,7 +62,7 @@
 				<th><g:message code="pedido.comensales.label" default="Comensales" /></th>
 
 				<th><g:message code="pedido.ordenes.label" default="Cantidad de órdenes" /></th>
-				
+
 				<th>Fecha de pago</th>
 
 				<th width="100">Acciones</th>
@@ -81,7 +81,7 @@
 				<td>${fieldValue(bean: pedidoInstance, field: "comensales")}</td>
 
 				<td>${pedidoInstance.ordenes.size()}</td>
-				
+
 				<td>${pedidoInstance.fechaPago.format("dd/MM/yyyy")}</td>
 
 				<td><div class="row">

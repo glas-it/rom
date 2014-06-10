@@ -2,7 +2,6 @@
 	<thead>
 		<tr>
 			<th>${message(code: 'precio.descripcion.label', default: 'Descripción')}</th>
-		
 			<th>${message(code: 'precio.valor.label', default: 'Valor')}</th>
 		</tr>
 	</thead>

@@ -52,7 +52,7 @@
         /*
         Aca en params falta pasarle un listado de subrubros
         */
-        if (validarFechas(params.fechaInicio, params.fechaFin)) {
+        if (validarFechas(params.fechaInicio, params.fechaFin) && params.subrubros != "[]") {
             $("#pdfButton").removeClass("hide");
             $("#highcharts-report").removeClass("hide");
             $.ajax({

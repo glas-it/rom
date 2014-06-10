@@ -23,7 +23,7 @@
 <section id="list-agregado" class="first">
 	<div class="panel panel-default tab-content">
 	<div class="panel-body">
-	<table class="table table-bordered margin-top-medium">
+	<table class="table table-bordered margin-top-medium table-striped">
 		<thead>
 			<tr>
 

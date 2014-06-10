@@ -47,7 +47,7 @@
         </div>
 	</g:form>
 	<br/>
-	<table class="table table-bordered margin-top-medium">
+	<table class="table table-bordered table-striped margin-top-medium">
 		<thead>
 			<tr>
 				<g:sortableColumn property="nombre" title="${message(code: 'consumicion.nombre.label', default: 'Nombre')}" />
@@ -69,7 +69,7 @@
 		<g:each in="${consumicionInstanceList}" status="i" var="consumicionInstance">
 			<tr class= "${consumicionInstance.activo == true ? 'even' : 'odd'}">
 
-				<td>${fieldValue(bean: consumicionInstance, field: "nombre")}</td>
+				<td style="overflow: hidden;"><g:link action="show" id="${consumicionInstance.id}">${fieldValue(bean: consumicionInstance, field: "nombre")}</g:link></td>
 
 				<td>${fieldValue(bean: consumicionInstance, field: "detalle")}</td>
 

@@ -23,7 +23,7 @@
 	})
 	</script>
 
-	<table class="table table-bordered margin-top-medium">
+	<table class="table table-bordered table-striped margin-top-medium">
 		<thead>
 			<tr>
 
@@ -55,7 +55,6 @@
 						</g:link>
 					</g:if>
 				</td>
-
 				<td>${rubroInstance.subrubros.size()}</td>
 				<td>
 					<div class="row">

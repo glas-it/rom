@@ -3,7 +3,7 @@
     <td class="left">
         ${precioInstance?.descripcion}
     </td>
-    <td class="right">
+    <td class="">
         ${precioInstance?.getPrecioFormateado()}
     </td>
 </tr>

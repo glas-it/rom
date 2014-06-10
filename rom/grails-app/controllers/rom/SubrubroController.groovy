@@ -34,30 +34,30 @@ class SubrubroController {
 	@Transactional
 	def subirOrden() {
 		Subrubro subrubroInstance = Subrubro.get(params.id)
-		if (subrubroInstance) {
-			Subrubro subrubro = Subrubro.findByOrden(subrubroInstance.orden - 1)
-			if (subrubro) {
-				subrubroInstance.cambiarOrden(subrubro)
-				subrubro.save()
-				subrubroInstance.save()
-			}
-		}
-		redirect action: "list"
+        def lista = subrubroInstance.rubro.subrubros.sort { it.orden }
+        def siguiente = false;
+        for (subrubro in lista) {
+            if (subrubro.orden == subrubroInstance.orden - 1) {
+                subrubroInstance.cambiarOrden(subrubro);
+                break
+            }
+        }
+		redirect (controller:"rubro", action: "show", id: subrubroInstance.rubro.id)
 	}
 
 	@Transactional
 	def bajarOrden() {
 		Subrubro subrubroInstance = Subrubro.get(params.id)
-		if (subrubroInstance) {
-			Subrubro subrubro = Subrubro.findByOrden(subrubroInstance.orden + 1)
-			if (subrubro) {
-				subrubroInstance.cambiarOrden(subrubro)
-				subrubro.save()
-				subrubroInstance.save()
-			}
-		}
-		redirect action: "list"
-	}
+        def lista = subrubroInstance.rubro.subrubros.sort { it.orden }
+        def siguiente = false;
+        for (subrubro in lista) {
+            if (subrubro.orden == subrubroInstance.orden + 1) {
+                subrubroInstance.cambiarOrden(subrubro);
+                break
+            }
+        }
+		redirect (controller:"rubro", action: "show", id: subrubroInstance.rubro.id)
+    }
 
     def create() {
         respond new Subrubro(params)

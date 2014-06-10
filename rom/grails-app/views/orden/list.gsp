@@ -22,7 +22,7 @@
 <section id="list-orden" class="first">
 	<div class="panel panel-default tab-content">
 	<div class="panel-body">
-	<table class="table table-bordered margin-top-medium">
+	<table class="table table-bordered table-striped margin-top-medium">
 		<thead>
 			<tr>
 				<th>Mozo</th>

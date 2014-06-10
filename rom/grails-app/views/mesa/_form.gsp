@@ -22,7 +22,7 @@
 			</div>
 			<div class="col-md-4">
 				<div>
-			<g:checkBox class="form-control" name="activo" value="${mesaInstance?.activo}" />
+					<g:checkBox name="activo" value="${mesaInstance?.activo}" class="form-control"/>
 					<span class="help-inline alert-danger">${hasErrors(bean: mesaInstance, field: 'activo', 'error')}</span>
 				</div>
 			</div>

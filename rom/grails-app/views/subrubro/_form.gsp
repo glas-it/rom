@@ -63,9 +63,9 @@
 		<span class="help-inline">${hasErrors(bean: subrubroInstance, field: 'rubro', 'error')}</span>
 	</div>
 	<div class="col-md-2">
-		<label for="aCocina" class="control-label"><g:message code="consumicion.aCocina.label" default="a cocina"/></label>
+		<label for="aCocina"  class="control-label"><g:message code="consumicion.aCocina.label" default="A cocina"/></label>
 	</div>
 	<div class="col-md-4">
-		<g:checkBox name="aCocina" value="${subrubroInstance?.aCocina}" checked="${subrubroInstance?.aCocina}"/>
+		<g:checkBox name="aCocina" value="${subrubroInstance?.aCocina}" checked="${subrubroInstance?.aCocina}" class="form-control"/>
 	</div>
 </div>

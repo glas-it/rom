@@ -29,7 +29,7 @@
 				<label for="activo" class="control-label"><g:message code="mesa.activo.label" default="Activo" /></label>
 			</div>
 			<div class="col-md-4 ${hasErrors(bean: mesaCreacionCommandInstance, field: 'activo', 'error')} ">
-				<g:checkBox name="activo" value="${mesaCreacionCommandInstance?.activo}" />
+				<g:checkBox name="activo" value="${mesaCreacionCommandInstance?.activo}" class="form-control"/>
 				<span class="alert-danger help-inline">${hasErrors(bean: mesaCreacionCommandInstance, field: 'activo', 'error')}</span>
 			</div>
 		</div>

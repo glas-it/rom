@@ -26,13 +26,12 @@
 		<g:select id="subrubro" name="subrubro.id" from="${rom.Subrubro.list()}" optionKey="id" required="" value="${agregadoInstance?.subrubro?.id}" class="form-control many-to-one"/>
 		<span class="help-inline">${hasErrors(bean: agregadoInstance, field: 'subrubro', 'error')}</span>
 	</div>
-
-	<div class="col-md-1">
+	<div class="col-md-2">
 		<label for="activo" class="control-label"><g:message code="agregado.activo.label" default="Activo" /></label>
 	</div>
-	<div class="col-md-2 ${hasErrors(bean: agregadoInstance, field: 'activo', 'error')} ">
+	<div class="col-md-4 ${hasErrors(bean: agregadoInstance, field: 'activo', 'error')} ">
 		<div>
-			<g:checkBox name="activo" value="${agregadoInstance?.activo}" checked="${agregadoInstance?.activo}" />
+			<g:checkBox class="form-control" name="activo" value="${agregadoInstance?.activo}" checked="${agregadoInstance?.activo}" />
 			<span class="help-inline">${hasErrors(bean: agregadoInstance, field: 'activo', 'error')}</span>
 		</div>
 	</div>

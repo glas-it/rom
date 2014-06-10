@@ -10,70 +10,57 @@
 </head>
 
 <body>
-
 <section id="show-subrubro" class="first">
-
-	<table class="table table-striped table-bordered table-responsive">
-		<tbody>
-		
-			<tr class="prop">
-				<td valign="top" class="name"><g:message code="subrubro.nombre.label" default="Nombre" /></td>
-				
-				<td valign="top" class="value">${fieldValue(bean: subrubroInstance, field: "nombre")}</td>
-				
-			</tr>
-		
-			<tr class="prop">
-				<td valign="top" class="name"><g:message code="subrubro.orden.label" default="Orden" /></td>
-				
-				<td valign="top" class="value">${fieldValue(bean: subrubroInstance, field: "orden")}</td>
-				
-			</tr>
-		
-			<tr class="prop">
-				<td valign="top" class="name"><g:message code="subrubro.consumiciones.label" default="Consumiciones" /></td>
-				
-				<td valign="top" style="text-align: left;" class="value">
-					<ul>
-					<g:each in="${subrubroInstance.consumiciones}" var="c">
-						<li><g:link controller="consumicion" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link></li>
-					</g:each>
-					</ul>
-				</td>
-				
-			</tr>
-		
-			<tr class="prop">
-				<td valign="top" class="name"><g:message code="subrubro.agregados.label" default="Agregados" /></td>
-				
-				<td valign="top" style="text-align: left;" class="value">
-					<ul>
-					<g:each in="${subrubroInstance.agregados}" var="a">
-						<li><g:link controller="agregado" action="show" id="${a.id}">${a?.encodeAsHTML()}</g:link></li>
-					</g:each>
-					</ul>
-				</td>
-				
-			</tr>
-		
-			<tr class="prop">
-				<td valign="top" class="name"><g:message code="subrubro.rubro.label" default="Rubro" /></td>
-				
-				<td valign="top" class="value"><g:link controller="rubro" action="show" id="${subrubroInstance?.rubro?.id}">${subrubroInstance?.rubro?.encodeAsHTML()}</g:link></td>
-				
-			</tr>
-			
-			<tr class="prop">
-				<td valign="top" class="name">Acciones de orden</td>
-				
-				<td valign="top" class="value"><g:link action="subirOrden" id="${subrubroInstance.id}">Subir</g:link> - <g:link action="bajarOrden" id="${subrubroInstance.id}">Bajar</g:link></td>
-				
-			</tr>
-		
-		</tbody>
-	</table>
+	<div class="panel panel-default tab-content">
+		<div class="panel-body">
+			<div class="table-responsive">
+				<table class="table table-striped table-bordered">
+					<tbody>
+						<tr class="prop">
+							<td valign="top" class="name"><g:message code="subrubro.nombre.label" default="Nombre" /></td>
+							<td valign="top" class="value">${fieldValue(bean: subrubroInstance, field: "nombre")}</td>
+						</tr>
+						<tr class="prop">
+							<td valign="top" class="name"><g:message code="subrubro.orden.label" default="Orden" /></td>
+							<td valign="top" class="value">${fieldValue(bean: subrubroInstance, field: "orden")}</td>
+						</tr>
+						<tr class="prop">
+							<td valign="top" class="name"><g:message code="subrubro.consumiciones.label" default="Consumiciones" /></td>
+							<td valign="top" style="text-align: left;" class="value">
+								<table class="table table-striped table-bordered">
+									<tbody>
+									<g:each in="${subrubroInstance.consumiciones}" var="c">
+										<tr>
+											<td style="overflow: hidden;"><g:link controller="consumicion" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link></td>
+										</tr>
+									</g:each>
+									</tbody>
+								</table>
+							</td>
+						</tr>
+						<tr class="prop">
+							<td valign="top" class="name"><g:message code="subrubro.agregados.label" default="Agregados" /></td>
+							<td valign="top" style="text-align: left;" class="value">
+								<table class="table table-striped table-bordered">
+									<tbody>
+									<g:each in="${subrubroInstance.agregados}" var="a">
+										<tr>
+											<td style="overflow: hidden;"><g:link controller="agregado" action="show" id="${a.id}">${a?.encodeAsHTML()}</g:link></td>
+										</tr>
+									</g:each>
+									</tbody>
+								</table>
+							</td>
+						</tr>
+						<tr class="prop">
+							<td valign="top" class="name"><g:message code="subrubro.rubro.label" default="Rubro" /></td>
+							<td valign="top" class="value"><g:link controller="rubro" action="show" id="${subrubroInstance?.rubro?.id}">${subrubroInstance?.rubro?.encodeAsHTML()}</g:link></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 </section>
-
 </body>
-
 </html>
