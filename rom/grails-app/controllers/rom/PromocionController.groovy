@@ -28,7 +28,7 @@ class PromocionController {
 
 	def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        params.offset = params.offset ? params.offset : 0
+        params.offset = params.offset ? params.offset : "0"
         params.sort = params.sort ? params.sort : "id"
         params.order = params.order ? params.order : "asc"
 		params.activo = true
@@ -37,13 +37,16 @@ class PromocionController {
             eq("activo", true)
             order(params.sort, params.order)
             maxResults(params.max)
-            firstResult(params.offset)
+            firstResult(params.offset.toInteger())
         }
         def criteria2 = Promocion.createCriteria()
         def count = criteria2.count {
             eq("activo", true)
         }
-        respond lista, model:[promocionInstanceCount: count]
+        respond lista, model:[
+            promocionInstanceCount: count,
+            promocionInstanceParams: [sort : params.sort, order: params.order]
+        ]
     }
 
     def show(Promocion promocionInstance) {

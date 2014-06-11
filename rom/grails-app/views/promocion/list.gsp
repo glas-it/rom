@@ -56,7 +56,7 @@
 		</div>
 	</div>
 	<div>
-		<bs:paginate total="${promocionInstanceCount}" />
+		<bs:paginate params="${promocionInstanceParams}" total="${promocionInstanceCount}" />
 	</div>
 </section>
 
