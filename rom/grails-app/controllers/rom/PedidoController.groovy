@@ -326,9 +326,12 @@ class PedidoController {
 	def list(PedidoFilter filter) {
 		params.max = Math.min(params.max ? params.max.toInteger() : 10, 100)
 		def pedidos = pedidoService.filter(filter, params.max ? params.max.toInteger() : null, params.offset ? params.offset.toInteger() : null)
-		[pedidoInstanceList: pedidos,
-		pedidoInstanceCount: pedidoService.filterCount(filter),
-		estadosList: pedidoService.getAllEstados()]
+		[
+			pedidoInstanceList: pedidos,
+			pedidoInstanceCount: pedidoService.filterCount(filter),
+			pedidoInstanceAction: "list",
+			estadosList: pedidoService.getAllEstados()
+		]
 	}
 
 	@Secured(['permitAll'])
@@ -336,19 +339,16 @@ class PedidoController {
 		PedidoFilter filter = new PedidoFilter()
 		filter.estado = pedidoService.getStateByName(params.nombreEstado)
 		filter.fecha = params.fecha ? params.fecha : null
-		
-		println "ESTADO " + filter.estado
-		println "FECHA " + filter.fecha
-		
 		Integer offset = params.offset ? params.int("offset") : 0
 		params.max = Math.min(params.max ?: 10, 100)
-		
 		def pedidos = pedidoService.filter(filter, params.max, offset)
-		println "PEDIDOS:::::" + pedidos
-		
-		render view:'list', model: [pedidoInstanceList: pedidos,
-			 pedidoInstanceCount: pedidoService.filterCount(filter),
-			 estadosList: pedidoService.getAllEstados()]
+		render view:'list', model: [
+			pedidoInstanceList: pedidos,
+			pedidoInstanceCount: pedidoService.filterCount(filter),
+			pedidoInstanceAction: "filter",
+			pedidoInstanceParams: [nombreEstado : params.nombreEstado, fecha : param.fecha],
+			estadosList: pedidoService.getAllEstados()
+		]
 	}
 
 	def show(Pedido pedidoInstance) {

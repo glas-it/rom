@@ -123,7 +123,7 @@
                 (fechaFin.getFullYear() - fechaIni.getFullYear() == 1 &&
                 fechaFin.getMonth() - fechaIni.getMonth() <= 2) ) ) {
             $('#errorAlert').show();
-            $('#errorMessage').text("Periodo inválido: el periodo comprendido entre Fecha Inicio - Fecha Fin debe ser menor o igual a los 14 meses");
+            $('#errorMessage').text("Periodo inválido: El periodo comprendido entre Fecha Inicio - Fecha Fin debe ser menor o igual a los 14 meses");
             return false;
         }
         return true;
@@ -146,7 +146,6 @@
 </head>
 <body>
     <div id="errorAlert" class="alert alert-danger alert-dismissable" style="display: none;">
-        <button type="button" class="close" onclick="javascript:hideError()">&times;</button>
         <span id="errorMessage"></span>
     </div>
     <div class="">

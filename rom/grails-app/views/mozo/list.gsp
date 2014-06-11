@@ -10,7 +10,6 @@
 </head>
 
 <body>
-
 <section id="list-mozo" class="first">
 	<div class="panel panel-default tab-content">
 		<div class="panel-body">

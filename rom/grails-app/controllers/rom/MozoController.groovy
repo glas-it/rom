@@ -30,7 +30,7 @@ class MozoController {
 		Duenio duenio = Duenio.findByUsername(springSecurityService.currentUser.username)
         List mozoSet = mozoService.findAllByRestaurant(duenio.restaurant)
         //[mozoInstanceList: mozoSet, mozoInstanceCount: mozoSet != null ? mozoSet.size() : 0]
-		respond Mozo.list(), model:[mozoInstanceCount: Mozo.count()]
+		respond Mozo.list(params), model:[mozoInstanceCount: Mozo.count()]
     }
 
     def show(Mozo mozoInstance) {

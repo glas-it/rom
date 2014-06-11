@@ -23,11 +23,19 @@
         return months <= 0 ? 0 : months;
     }
 
+    function getFecha(anio, mes, dia) {
+        console.log(moment([parseInt(anio), parseInt(mes), parseInt(dia)]).format());
+        if ( moment([parseInt(anio), parseInt(mes), parseInt(dia)]).isValid()) {
+            return new Date(anio, mes, dia);
+        }
+        return null
+    }
+
     function requestData() {
         //yyyy/mm/01
         var params = {};
-        params.fechaInicio = new Date($("#fechaInicio_year").val(), $("#fechaInicio_month").val() - 1, $("#fechaInicio_day").val())
-        params.fechaFin = new Date($("#fechaFin_year").val(), $("#fechaFin_month").val() - 1, $("#fechaFin_day").val())
+        params.fechaInicio = getFecha($("#fechaInicio_year").val(), $("#fechaInicio_month").val() - 1, $("#fechaInicio_day").val())
+        params.fechaFin = getFecha($("#fechaFin_year").val(), $("#fechaFin_month").val() - 1, $("#fechaFin_day").val())
         params.cant_platos = 20
         params.subrubros = []
         $("#rubrosYSubrubrosms2side__dx option").each(function(){
@@ -141,15 +149,24 @@
     };
 
     function validarFechas(fechaIni, fechaFin) {
+        if (!fechaIni) {
+            $('#errorAlert').show();
+            $('#errorMessage').text("Fecha inválida: Fecha Inicio no corresponde a una fecha válida");
+            return false;
+        }
+        if (!fechaFin) {
+            $('#errorAlert').show();
+            $('#errorMessage').text("Fecha inválida: Fecha Fin no corresponde a una fecha válida");
+            return false;
+        }
         if (fechaFin < fechaIni) {
             $('#errorAlert').show();
             $('#errorMessage').text("Fecha inválida: Fecha Fin debe ser posterior a Fecha Inicio");
             return false;
         }
-
         if (monthDiff(fechaIni, fechaFin) > 12) {
             $('#errorAlert').show();
-            $('#errorMessage').text("Periodo inválido: el periodo comprendido entre Fecha Inicio - Fecha Fin debe ser menor o igual a los 12 meses");
+            $('#errorMessage').text("Periodo inválido: El periodo comprendido entre Fecha Inicio - Fecha Fin debe ser menor o igual a los 12 meses");
             return false;
         }
         return true;
@@ -190,7 +207,6 @@
 
 <body>
     <div id="errorAlert" class="alert alert-danger alert-dismissable" style="display: none;">
-        <button type="button" class="close" onclick="javascript:hideError()">&times;</button>
        	<span id="errorMessage"></span>
     </div>
     <div class="">

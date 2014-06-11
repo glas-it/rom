@@ -11,7 +11,7 @@
 	</g:if>
 
 	<g:if test="${flash.errorMessage && !layout_noflashmessage}">
-		<div class="alert alert-danger">${flash.message}</div>
+		<div class="alert alert-danger">${flash.errorMessage}</div>
 	</g:if>
 
 	<!-- Secondary menu in one row (e.g., actions for current controller) -->

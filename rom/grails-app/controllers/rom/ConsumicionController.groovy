@@ -29,8 +29,7 @@ class ConsumicionController {
 
 	def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-
-        respond Consumicion.list(params), model:[consumicionInstanceCount: Consumicion.count()]
+        respond Consumicion.list(params), model:[consumicionInstanceCount: Consumicion.count(), consumicionInstanceAction: "list"]
     }
 
     def show(Consumicion consumicionInstance) {
@@ -56,7 +55,11 @@ class ConsumicionController {
 		Integer offset = params.offset? params.int("offset"): 0
 		params.max = Math.min(max ?: 10, 100)
 		def consumiciones = consumicionService.filter(filter, params.max, offset)
-		respond consumiciones, model:[consumicionInstanceCount: consumicionService.filterCount(filter)], view:'list'
+		respond consumiciones, model:[
+            consumicionInstanceCount: consumicionService.filterCount(filter),
+            consumicionInstanceAction: "filter",
+            consumicionInstanceParams: [nombre: params.nombre , "rubro.id": params.rubro.id, "subrubro.id": params.subrubro.id]
+        ], view:'list'
 	}
 
     @Transactional

@@ -7,8 +7,28 @@
 	<meta name="layout" content="kickstart" />
 	<g:set var="entityName" value="${message(code: 'pedido.label', default: 'Pedido')}" />
 	<title><g:message code="default.list.label" args="[entityName]" /></title>
-		<g:set var="layout_nosecondarymenu" value="false" scope="request"/>
+	<script src="${resource(dir:'js',file: 'moment-with-langs.min.js')}"></script>
+	<g:set var="layout_nosecondarymenu" value="false" scope="request"/>
 	<script type="text/javascript">
+
+	    function getFecha(anio, mes, dia) {
+	        if ( moment([parseInt(anio), parseInt(mes) - 1, parseInt(dia)]).isValid()) {
+	            return new Date(anio, mes, dia);
+	        }
+	        return null
+	    }
+
+	    function validarFiltro() {
+	    	fecha = getFecha($('#fecha_year').val(), $('#fecha_month').val(), $('#fecha_day').val());
+	    	if (fecha) {
+	    		$('#filterForm').submit();
+	    	} else {
+	            $('#errorAlert').removeClass("hide");
+	            $('#errorAlert').text("Fecha inválida: Fecha no corresponde a una fecha válida");
+	            return false;
+	    	}
+	    }
+
 	    window.onload = function() {
 	        $('#fecha_year').addClass('form-control');
 	        $('#fecha_month').addClass('form-control');
@@ -16,6 +36,7 @@
     	}
 	</script>
 </head>
+<div id="errorAlert" class="alert alert-danger hide"></div>
 <div class="">
     <ul id="Menu" class="nav nav-tabs">
         <li class="active">
@@ -27,7 +48,7 @@
 <section id="list-orden" class="first">
 	<div class="panel panel-default tab-content">
 		<div class="panel-body fromFilter">
-			<g:form method="GET" action="filter">
+			<g:form name="filterForm" method="GET" action="filter">
 				<div class="row form-inline">
 					<div class="form-group col-md-5 form-horizontal col-md-offset-2">
 						<label for="fechaInicio" class="col-md-3 control-label" style="padding-left:0px; text-align: left;">Fecha</label>
@@ -42,13 +63,13 @@
 						</div>
 					</div>
 				</div>
+			</g:form>
 				<br/>
 				<div class="row" style="padding-bottom:10px">
                     <div class="col-md-2 text-center col-md-offset-2">
-                        <g:submitButton class="btn btn-primary" name="buscar" value="Buscar"/>
+                        <g:submitButton class="btn btn-primary" name="buscar" value="Buscar" onclick="validarFiltro();return false;"/>
                     </div>
                 </div>
-			</g:form>
 	<br/>
 	<table class="table table-bordered table-striped margin-top-medium">
 		<thead>
@@ -110,7 +131,7 @@
 	</div>
 	</div>
 	<div>
-		<bs:paginate total="${pedidoInstanceCount}" />
+		<bs:paginate action="${pedidoInstanceAction}" params="${pedidoInstanceParams}" total="${pedidoInstanceCount}" />
 	</div>
 </section>
 

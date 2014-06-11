@@ -105,7 +105,7 @@
 	</div>
 	</div>
 	<div>
-		<bs:paginate total="${consumicionInstanceCount}"/>
+		<bs:paginate action="${consumicionInstanceAction}" params="${consumicionInstanceParams}" total="${consumicionInstanceCount}"/>
 	</div>
 </section>
 

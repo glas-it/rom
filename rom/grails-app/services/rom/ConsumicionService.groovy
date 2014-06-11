@@ -16,7 +16,7 @@ class ConsumicionService {
 		def criteria = Consumicion.createCriteria()
 		return criteria.list {
 			if (filter.nombre && !filter.nombre.isAllWhitespace()) {
-				ilike("nombre", filter.nombre)
+				ilike("nombre", "%" + filter.nombre + "%")
 			}
 			if (filter.rubro) {
 				subrubro {
@@ -34,12 +34,12 @@ class ConsumicionService {
 			firstResult(offset)
 		}
     }
-	
+
 	def filterCount(ConsumicionFilter filter) {
 		def criteria = Consumicion.createCriteria()
 		return criteria.count {
 			if (filter.nombre && !filter.nombre.isAllWhitespace()) {
-				ilike("nombre", filter.nombre)
+				ilike("nombre", "%" + filter.nombre + "%")
 			}
 			if (filter.rubro) {
 				subrubro {
