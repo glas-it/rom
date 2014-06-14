@@ -54,11 +54,12 @@ class ConsumicionController {
 	def filter(ConsumicionFilter filter, Integer max) {
 		Integer offset = params.offset? params.int("offset"): 0
 		params.max = Math.min(max ?: 10, 100)
-		def consumiciones = consumicionService.filter(filter, params.max, offset)
+		def consumiciones = consumicionService.filter(filter, params)
 		respond consumiciones, model:[
             consumicionInstanceCount: consumicionService.filterCount(filter),
             consumicionInstanceAction: "filter",
-            consumicionInstanceParams: [nombre: params.nombre , "rubro.id": params.rubro.id, "subrubro.id": params.subrubro.id]
+            consumicionInstanceParams: [nombre: params.nombre , "rubro.id": params.rubro.id, "subrubro.id": params.subrubro.id],
+			consumicionFilter : filter
         ], view:'list'
 	}
 

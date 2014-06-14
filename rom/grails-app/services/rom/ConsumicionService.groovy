@@ -12,7 +12,7 @@ import grails.transaction.Transactional;
 @Transactional
 class ConsumicionService {
 
-    def filter(ConsumicionFilter filter, Integer max, Integer offset) {
+    def filter(ConsumicionFilter filter, params) {
 		def criteria = Consumicion.createCriteria()
 		return criteria.list {
 			if (filter.nombre && !filter.nombre.isAllWhitespace()) {
@@ -30,8 +30,12 @@ class ConsumicionService {
 					eq("id", filter.subrubro.id)
 				}
 			}
-			maxResults(max)
-			firstResult(offset)
+			if(params.max)
+				maxResults(params.max)
+			if (params.offset)
+				firstResult(Integer.parseInt(params.offset))
+			if (params.sort && params.order)
+				order(params.sort, params.order)
 		}
     }
 

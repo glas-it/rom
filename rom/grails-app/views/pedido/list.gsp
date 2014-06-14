@@ -18,7 +18,7 @@
 	        return null
 	    }
 
-	    function validarFiltro() {
+	   /* function validarFiltro() {
 	    	fecha = getFecha($('#fecha_year').val(), $('#fecha_month').val(), $('#fecha_day').val());
 	    	if (fecha) {
 	    		$('#filterForm').submit();
@@ -27,7 +27,7 @@
 	            $('#errorAlert').text("Fecha inválida: Fecha no corresponde a una fecha válida");
 	            return false;
 	    	}
-	    }
+	    }*/
 
 	    window.onload = function() {
 	        $('#fecha_year').addClass('form-control');
@@ -53,23 +53,25 @@
 					<div class="form-group col-md-5 form-horizontal col-md-offset-2">
 						<label for="fechaInicio" class="col-md-3 control-label" style="padding-left:0px; text-align: left;">Fecha</label>
 						<div>
-							<g:datePicker class="form-control" name="fecha" precision="day"/>
+							<input type="date" class="form-control" name="fecha" precision="day" value="${pedidoFilter?.fecha?.format('yyyy-MM-dd')}"/>
 						</div>
 					</div>
 					<div class="form-group col-md-5 form-horizontal">
 						<label for="fechaInicio" class="col-md-3 control-label" style="padding-left:0px; text-align: left;">Estado</label>
 						<div class="col-md-8">
-							<g:select class="form-control" id="estados" name="nombreEstado" from="${estadosList}" optionKey="nombre" optionValue="nombre" required="" noSelection="[null: ' - ']"/>
+							<g:select class="form-control" id="estados" name="nombreEstado" from="${estadosList}" value="${pedidoFilter?.estado?.nombre}" optionKey="nombre" optionValue="nombre" required="" noSelection="[null: ' - ']"/>
 						</div>
 					</div>
 				</div>
-			</g:form>
+				
 				<br/>
-				<div class="row" style="padding-bottom:10px">
+			<div class="row" style="padding-bottom:10px">
                     <div class="col-md-2 text-center col-md-offset-2">
-                        <g:submitButton class="btn btn-primary" name="buscar" value="Buscar" onclick="validarFiltro();return false;"/>
+                        <g:submitButton class="btn btn-primary" name="buscar" value="Buscar"/>
                     </div>
                 </div>
+			</g:form>
+				
 	<br/>
 	<table class="table table-bordered table-striped margin-top-medium">
 		<thead>
@@ -131,7 +133,7 @@
 	</div>
 	</div>
 	<div>
-		<bs:paginate action="${pedidoInstanceAction}" params="${pedidoInstanceParams}" total="${pedidoInstanceCount}" />
+		<bs:paginate action="${pedidoInstanceAction}" params="[fecha: pedidoFilter?.fecha?.format('yyyy-MM-dd'), nombreEstado: pedidoFilter?.estado?.nombre]" total="${pedidoInstanceCount}" />
 	</div>
 </section>
 

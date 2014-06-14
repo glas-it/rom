@@ -18,7 +18,7 @@ This is the standard dialog that initiates the delete action.
 				<g:form>
 					<button class="btn" data-dismiss="modal" aria-hidden="true"><g:message code="anular.cancel.label" default="Cancelar"/></button>
 					<g:hiddenField name="id" value="${item ? item.id : params.id}" />
-					<span class="button"><g:actionSubmit class="btn btn-default" action="anular" value="${message(code: 'default.button.delete.label', default: 'anular')}"/></span>
+					<span class="button"><g:actionSubmit class="btn btn-default" action="anular" value="${message(code: 'default.button.anular.label', default: 'Anular')}"/></span>
 				</g:form>
 			</div>
 		</div>

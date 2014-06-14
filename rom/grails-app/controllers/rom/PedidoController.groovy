@@ -2,6 +2,9 @@ package rom
 
 
 import static org.springframework.http.HttpStatus.*
+
+import java.text.SimpleDateFormat;
+
 import grails.transaction.Transactional
 import grails.converters.JSON
 import grails.converters.XML;
@@ -330,24 +333,28 @@ class PedidoController {
 			pedidoInstanceList: pedidos,
 			pedidoInstanceCount: pedidoService.filterCount(filter),
 			pedidoInstanceAction: "list",
-			estadosList: pedidoService.getAllEstados()
+			estadosList: pedidoService.getAllEstados(),
+			pedidoFilter: new PedidoFilter()
 		]
 	}
 
 	@Secured(['permitAll'])
-	def filter() {
-		PedidoFilter filter = new PedidoFilter()
-		filter.estado = pedidoService.getStateByName(params.nombreEstado)
-		filter.fecha = params.fecha ? params.fecha : null
+	def filter(PedidoFilter pedidoFilter) {
+		pedidoFilter.fecha = params.fecha ? params.fecha instanceof String? Date.parse("yyyy-MM-dd", params.fecha): params.fecha : null
+		pedidoFilter.estado = params.nombreEstado ? pedidoService.getAllEstados().find {it.nombre == params.nombreEstado }: null
 		Integer offset = params.offset ? params.int("offset") : 0
-		params.max = Math.min(params.max ?: 10, 100)
-		def pedidos = pedidoService.filter(filter, params.max, offset)
+		params.max = Math.min(params.int("max") ?: 10, 100)
+		def pedidos = pedidoService.filter(pedidoFilter, params.max, offset)
+		print pedidoFilter.fecha
+		print pedidoFilter.estado
+		print params.fecha
+		print params.estado
 		render view:'list', model: [
 			pedidoInstanceList: pedidos,
-			pedidoInstanceCount: pedidoService.filterCount(filter),
+			pedidoInstanceCount: pedidoService.filterCount(pedidoFilter),
 			pedidoInstanceAction: "filter",
-			pedidoInstanceParams: [nombreEstado : params.nombreEstado, fecha : param.fecha],
-			estadosList: pedidoService.getAllEstados()
+			estadosList: pedidoService.getAllEstados(),
+			pedidoFilter: pedidoFilter
 		]
 	}
 

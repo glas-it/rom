@@ -2,7 +2,12 @@ package rom
 
 
 import static org.springframework.http.HttpStatus.*
+
+import org.grails.databinding.BindUsing;
+import org.grails.databinding.BindingFormat;
+
 import grails.converters.JSON;
+import grails.converters.XML;
 import grails.plugin.springsecurity.SpringSecurityService;
 import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
@@ -26,26 +31,103 @@ class PromocionController {
         redirect action:'list'
     }
 
-	def list(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        params.offset = params.offset ? params.offset : "0"
+	def list(PromocionFilter promocionFilter) {
+//		render promocionFilter as XML
+//		return
+		promocionFilter.fechaDesde = params.fechaDesde ? params.fechaDesde instanceof String ? Date.parse("yyyy-MM-dd", params.fechaDesde): params.fechaDesde : null
+		promocionFilter.fechaHasta = params.fechaHasta ? params.fechaHasta instanceof String ? Date.parse("yyyy-MM-dd", params.fechaHasta): params.fechaHasta : null
+		if (promocionFilter.fechaDesde && !promocionFilter.fechaHasta) {
+			params.errorMessages = ["Debe ingresar una fecha de fin si ingresa una fecha de inicio"]
+			return [promocionFilter: promocionFilter,
+					 promocionInstanceCount: 0,
+					 promocionInstanceList: [],
+					 promocionInstanceParams: [fechaDesde: promocionFilter.fechaDesde,
+						 fechaHasta: promocionFilter.fechaHasta,
+						 nombre: promocionFilter.nombre,
+						 sort : params.sort,
+						 order: params.order],
+				 ]
+		}
+		if (promocionFilter.fechaHasta && !promocionFilter.fechaDesde) {
+			params.errorMessages = ["Debe ingresar una fecha de inicio si ingresa una fecha de fin"]
+			return [promocionFilter: promocionFilter,
+					 promocionInstanceCount: 0,
+					 promocionInstanceList: [],
+					 promocionInstanceParams: [fechaDesde: promocionFilter.fechaDesde,
+						 fechaHasta: promocionFilter.fechaHasta,
+						 nombre: promocionFilter.nombre,
+						 sort : params.sort,
+						 order: params.order],
+				 ]
+		}
+		if (promocionFilter.fechaDesde && promocionFilter.fechaHasta) {
+			if (promocionFilter.fechaDesde.clearTime().compareTo(promocionFilter.fechaHasta.clearTime()) > 0) {
+				params.errorMessages = ["La fecha de inicio del filtro de búsqueda es mayor a la fecha de fin"]
+				return [promocionFilter: promocionFilter,
+					 promocionInstanceCount: 0,
+					 promocionInstanceList: [],
+					 promocionInstanceParams: [fechaDesde: promocionFilter.fechaDesde,
+						 fechaHasta: promocionFilter.fechaHasta,
+						 nombre: promocionFilter.nombre,
+						 sort : params.sort,
+						 order: params.order],
+				 ]
+			}
+		}
+        params.max = Math.min(params.max ?: 10, 100)
+        params.offset = params.offset ? params.int(offset) : 0
         params.sort = params.sort ? params.sort : "id"
         params.order = params.order ? params.order : "asc"
 		params.activo = true
 		def criteria = Promocion.createCriteria()
-        def lista = criteria.list {
-            eq("activo", true)
-            order(params.sort, params.order)
-            maxResults(params.max)
-            firstResult(params.offset.toInteger())
-        }
-        def criteria2 = Promocion.createCriteria()
-        def count = criteria2.count {
-            eq("activo", true)
-        }
-        respond lista, model:[
-            promocionInstanceCount: count,
-            promocionInstanceParams: [sort : params.sort, order: params.order]
+		def paramMap = [:]
+		def query = "from Promocion p where p.activo = :activo "
+		paramMap["activo"] = true
+		if (promocionFilter.fechaDesde && promocionFilter.fechaHasta) {
+			paramMap["fechaDesde"] = promocionFilter.fechaDesde
+			paramMap["fechaHasta"] = promocionFilter.fechaHasta
+			query += " and ((:fechaDesde between p.fechaInicio and p.fechaFin "
+			query += " or :fechaHasta between p.fechaInicio and p.fechaFin) "	
+			query += " or (p.fechaInicio between :fechaDesde and :fechaHasta "
+			query += " or p.fechaFin between :fechaDesde and :fechaHasta)) "
+		}
+		if (promocionFilter.nombre) {
+			query += " and p.nombre like :nombre "
+			paramMap["nombre"] = "%" + promocionFilter.nombre + "%"
+		}
+		query += " order by " + params.sort + " " + params.order
+		def paramCount = Promocion.executeQuery("select count(p) " + query, paramMap).get(0)
+		paramMap["max"] = params.max
+		paramMap["offset"] = params.offset
+		def lista = Promocion.executeQuery(query, paramMap)	
+//        def lista = criteria.list {
+//            and {
+//				eq("activo", true)
+//				if (promocionFilter.fechaDesde && promocionFilter.fechaHasta) {
+//					or {
+//					
+//						between("fechaInicio", promocionFilter.fechaDesde, promocionFilter.fechaHasta)
+//						between("fechaFin", promocionFilter.fechaDesde, promocionFilter.fechaHasta)
+//					}
+//            	}
+//				if (promocionFilter.nombre)
+//					ilike("nombre", "%" + promocionFilter.nombre + "%")
+//            }
+//            if (params.sort && params.order)
+//				order(params.sort, params.order)
+//			if (params.max)	
+//				maxResults(params.max)
+//            if (params.offset)
+//				firstResult(params.offset.toInteger())
+//        }
+//        def criteria2 = Promocion.createCriteria()
+//        def count = criteria2.count {
+//            eq("activo", true)
+//        }
+		respond lista, model:[
+            promocionInstanceCount: paramCount,
+            promocionInstanceParams: [fechaDesde: promocionFilter.fechaDesde, fechaHasta: promocionFilter.fechaHasta, nombre: promocionFilter.nombre, sort : params.sort, order: params.order],
+			promocionFilter: promocionFilter
         ]
     }
 
@@ -158,4 +240,23 @@ class PromocionController {
             '*'{ render status: NOT_FOUND }
         }
     }
+}
+
+
+
+class PromocionFilter {
+	String nombre
+	Date fechaDesde
+	Date fechaHasta
+	
+	static constraints = {
+		fechaDesde nullable: true, blank: true
+		
+		fechaHasta nullable: true, blank: true, validator: {val, obj->
+			if (!val && !obj.fechaHasta)
+				return true
+			if (!(val && obj.fechaDesde && val.clearTime().compareTo(obj.fechaDesde.clearTime()) >= 0))
+				return false	
+		}
+	}
 }

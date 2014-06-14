@@ -12,7 +12,45 @@
 <body>
 <section id="list-promocion" class="first">
 	<div class="panel panel-default tab-content">
-		<div class="panel-body">
+		<div class="panel-body formFilter">
+			<g:if test="${params.errorMessages}">
+				<div class="alert alert-danger">
+					<ul>
+						<g:each in="${params.errorMessages}" var="it">
+							<li>${it}</li>
+						</g:each>
+					</ul>
+				</div>
+			</g:if>
+			<g:form name="filterForm" method="GET" action="list">
+				<div class="row form-inline">
+					<div class="form-group col-md-3 col-md-offset-2">
+						<label for="fechaDesde" class="control-label" style="padding-left:0px; text-align: left;">Fecha de inicio</label>
+						<div>
+							<input type="date" class="form-control" name="fechaDesde" precision="day" value="${promocionFilter?.fechaDesde?.format('yyyy-MM-dd')}"/>
+						</div>
+					</div>
+					<div class="form-group col-md-3">
+						<label for="fechaFin" class="control-label" style="padding-left:0px; text-align: left;">Fecha de fin</label>
+						<div>
+							<input type="date" class="form-control" name="fechaHasta" precision="day" value="${promocionFilter?.fechaHasta?.format('yyyy-MM-dd')}"/>
+						</div>
+					</div>
+					<div class="form-group col-md-3">
+						<label for="fechaFin" class="control-label" style="padding-left:0px; text-align: left;">Nombre</label>
+						<div>
+							<input type="text" class="form-control" name="nombre" value="${promocionFilter?.nombre}"/>
+						</div>
+					</div>
+				</div>
+				
+				<br/>
+			<div class="row" style="padding-bottom:10px">
+                    <div class="col-md-2 text-center col-md-offset-2">
+                        <g:submitButton class="btn btn-primary" name="buscar" value="Buscar"/>
+                    </div>
+                </div>
+			</g:form>
 			<table class="table table-bordered margin-top-medium">
 				<thead>
 					<tr>

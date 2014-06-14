@@ -43,7 +43,7 @@
 					</label>
 				</div>
 				<div class="col-md-4">
-						<g:datePicker class="form-control" name="fechaInicio" precision="day"  value="${promocionInstance?.fechaInicio}"  />
+					<input type="date" class="form-control" name="fechaInicio" precision="day"  value="${promocionInstance?.fechaInicio?.format('yyyy-MM-dd')}"  />
 				</div>
 			</div>
 			<div class="${hasErrors(bean: promocionInstance, field: 'fechaFin', 'has-error')} required">
@@ -55,7 +55,7 @@
 					</label>
 				</div>
 				<div class="col-md-4">
-					<g:datePicker class="form-control" name="fechaFin" precision="day"  value="${promocionInstance?.fechaFin}"  />
+					<input type="date" class="form-control" name="fechaFin" precision="day"  value="${promocionInstance?.fechaFin?.format('yyyy-MM-dd')}"  />
 				</div>
 			</div>
 		</div>

@@ -29,9 +29,10 @@
 
 				<g:sortableColumn property="nombre" title="${message(code: 'agregado.nombre.label', default: 'Nombre')}" />
 
+				<g:sortableColumn property="detalle" title="${message(code: 'agregado.descripcion.label', default: 'Descripcion')}" />
+
 				<th>${message(code: 'agregado.precio.label', default: 'Precio')}</th>
 
-				<g:sortableColumn property="descripcion" title="${message(code: 'agregado.descripcion.label', default: 'Descripcion')}" />
 
 				<th><g:message code="subrubro.label" default="Sububro" /></th>
 
@@ -63,7 +64,7 @@
 	</div>
 	</div>
 	<div>
-		<bs:paginate total="${agregadoInstanceCount}" />
+		<bs:paginate total="${agregadoInstanceCount}" params="[sort: params.sort, order: params.order]" />
 	</div>
 </section>
 

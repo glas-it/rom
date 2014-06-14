@@ -21,7 +21,7 @@ environments {
             password = "rom"
         }
         hibernate {
-            show_sql = true
+            show_sql = false
         }
     }
     test {

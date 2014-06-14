@@ -21,13 +21,13 @@
 				<label for="rubro" class="control-label">Nombre</label>
 			</div>
 			<div class="col-md-2">
-				<g:textField class="form-control" name="nombre" maxlength="100" />
+				<g:textField class="form-control" name="nombre" maxlength="100" value="${consumicionFilter?.nombre}"/>
 			</div>
 			<div class="col-md-1">
 				<label for="rubro" class="control-label">Rubro</label>
 			</div>
 			<div class="col-md-3">
-				<g:select class="form-control" id="rubro" name="rubro.id"
+				<g:select class="form-control" id="rubro" name="rubro.id" value="${consumicionFilter?.rubro}"
 				 from="${rom.Rubro.list()}" optionKey="id" class="form-control many-to-one"
 				 noSelection="['':'Seleccione un rubro']"/>
 			</div>
@@ -35,7 +35,7 @@
 				<label for="subrubro" class="control-label">Subrubro</label>
 			</div>
 			<div class="col-md-3">
-				<g:select class="form-control" id="subrubro" name="subrubro.id"
+				<g:select class="form-control" id="subrubro" name="subrubro.id" value="${consumicionFilter?.subrubro}"
 				 from="${rom.Subrubro.list()}" optionKey="id" class="form-control many-to-one"
 				 noSelection="['':'Seleccione un subrubro']"/>
 			</div>
@@ -52,9 +52,11 @@
 			<tr>
 				<g:sortableColumn property="nombre" title="${message(code: 'consumicion.nombre.label', default: 'Nombre')}" />
 
-				<g:sortableColumn property="descripcion" title="${message(code: 'consumicion.descripcion.label', default: 'Descripción')}" />
+				<g:sortableColumn property="detalle" title="${message(code: 'consumicion.detalle.label', default: 'Detalle')}" />
 
-				<g:sortableColumn property="precio" title="${message(code: 'consumicion.precio.label', default: 'Precio')}" />
+<%--				<g:sortableColumn property="precio" title="${message(code: 'consumicion.precio.label', default: 'Precio')}" />--%>
+
+				<th><g:message code="precio.label" default="precio" /></th>
 
 				<th><g:message code="subrubro.label" default="Sububro" /></th>
 
