@@ -121,9 +121,12 @@ class ConsumicionController {
             return
         }
 
-        consumicionInstance.delete flush:true
-
-        redirect action:"index", method:"GET"
+        //consumicionInstance.delete flush:true
+		consumicionInstance.activo = false
+		consumicionInstance.save()
+		
+		flash.message = "La consumición ha sido desactivada con éxito"
+        redirect action:"list", method:"GET"
     }
 
     protected void notFound() {

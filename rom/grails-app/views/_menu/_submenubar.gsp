@@ -30,9 +30,9 @@ This menu is used to show function that can be triggered on the content (an obje
 				</li><%--
 			</g:ifActionExists>
 			--%><%--<g:ifActionExists target="delete">
-				--%><li id="DeleteAction" class="">
+				<li id="DeleteAction" class="">
 					<g:render template="/_common/modals/deleteTextLink"/>
-				</li>
+				</li>--%>
 			<%--</g:ifActionExists>
 		--%></g:if>
 

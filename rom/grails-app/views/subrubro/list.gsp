@@ -66,11 +66,11 @@
 								<i class="glyphicon glyphicon-pencil"></i>
 							</g:link>
 						</div>
-						<div class="col-md-2">
+						<%--<div class="col-md-2">
 							<g:link action="delete" id="${subrubroInstance.id}">
 								<i class="glyphicon glyphicon-remove"></i>
 							</g:link>
-						</div>
+						</div>  --%>
 					</div>
 				</td>
 

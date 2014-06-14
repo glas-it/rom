@@ -23,7 +23,7 @@
 			</div>
 			<div class="col-md-4 ${hasErrors(bean: mesaCreacionCommandInstance, field: 'capacidad', 'error')} required">
 				<g:field class="form-control" name="capacidad" type="number" value="${mesaCreacionCommandInstance.capacidad}" required=""/>
-				<span class="alert-danger help-inline">${hasErrors(bean: mesaCreacionCommandInstance, field: 'capacidad', 'error')}</span>
+				<span class="alert-danger help-inline">${hasErrors(bean: mesaCreacionCommandInstance, field: 'capacidad', 'La capacidad no puede ser cero')}</span>
 			</div>
 			<div class="col-md-2">
 				<label for="activo" class="control-label"><g:message code="mesa.activo.label" default="Activo" /></label>

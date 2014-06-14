@@ -40,11 +40,6 @@
 											<i class="glyphicon glyphicon-pencil"></i>
 										</g:link>
 									</div>
-									<div class="col-md-1">
-										<g:link action="delete" id="${mesaInstance.id}">
-											<i class="glyphicon glyphicon-remove"></i>
-										</g:link>
-									</div>
 								</div>
 							</td>
 						</tr>

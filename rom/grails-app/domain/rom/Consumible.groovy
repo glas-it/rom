@@ -23,15 +23,17 @@ class Consumible {
     
 	static	constraints = {
 		nombre blank: false, maxSize: 100, validator: { val, obj ->
-			return Consumible.list().find{
+			if (Consumible.list().find{
 					it.class == obj.class &&
 					it.subrubro.nombre == obj.subrubro.nombre &&
 					it.nombre == val &&
 					it.id != obj.id
-				} == null
+				} != null)
+			return ['estaRepetido']
 		}
 		precios validator: {val ->
-			return val && val.size() > 0 && !val.any{it && !it.validate()}
+			if (!(val && val.size() > 0 && !val.any{it && !it.validate()}))
+				return ['sinPrecio']
 		}
 		
 		detalle nullable: true, blank: true

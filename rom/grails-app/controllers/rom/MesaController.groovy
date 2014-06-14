@@ -150,8 +150,8 @@ class MesaCreacionCommand {
 	boolean activo
 
 	static constraints = {
-		mesaHasta range: 0..999
-		mesaDesde min: 0, validator: {val, obj ->
+		mesaHasta range: 1..999
+		mesaDesde min: 1, validator: {val, obj ->
 			MesaCreacionCommand cmd = obj as MesaCreacionCommand
 			return val <= cmd.mesaHasta
 		}

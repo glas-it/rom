@@ -93,11 +93,13 @@
 								<i class="glyphicon glyphicon-pencil"></i>
 							</g:link>
 						</div>
+						<g:if test="${consumicionInstance.activo}">
 						<div class="col-md-2">
 							<g:link action="delete" id="${consumicionInstance.id}">
 								<i class="glyphicon glyphicon-remove"></i>
 							</g:link>
 						</div>
+						</g:if>
 					</div>
 				</td>
 			</tr>

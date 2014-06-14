@@ -13,6 +13,11 @@
 	<section id="create-mesa" class="first">
 		<div class="panel panel-default tab-content">
 		<div class="panel-body">
+		<g:hasErrors bean="${mesaCreacionCommandInstance}">
+			<div class="alert alert-danger">
+				<g:renderErrors bean="${mesaCreacionCommandInstance}" as="list" />
+			</div>
+		</g:hasErrors>
 		<g:form action="save" class="form-horizontal" role="form" >
 			<g:render template="form-create"/><br/>
             <div class="row" style="padding-bottom:10px">
