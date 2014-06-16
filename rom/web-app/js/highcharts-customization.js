@@ -7,8 +7,15 @@ function capitaliseFirstLetter(string) {
 Highcharts.drawTable = function() {
 
     moment.lang("es");
-    var fechaInicio = moment(new Date($("#fechaInicio_year").val(), $("#fechaInicio_month").val() - 1));
-    var fechaFin = moment(new Date($("#fechaFin_year").val(), $("#fechaFin_month").val() - 1));
+    var fechaInicio = 0;
+    var fechaFin = 0;
+    if (Highcharts.decimal) {
+        fechaInicio = moment(new Date($("#fechaInicio_year").val(), $("#fechaInicio_month").val() - 1));
+        fechaFin = moment(new Date($("#fechaFin_year").val(), $("#fechaFin_month").val() - 1));
+    } else {
+        fechaInicio = moment(new Date($("#fechaInicio_year").val(), $("#fechaInicio_month").val() - 1, $("#fechaInicio_day").val()));
+        fechaFin = moment(new Date($("#fechaFin_year").val(), $("#fechaFin_month").val() - 1, $("#fechaFin_day").val()));
+    }
 
     // user options
     var tableTop = 420,
