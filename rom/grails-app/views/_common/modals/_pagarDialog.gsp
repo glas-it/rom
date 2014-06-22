@@ -66,16 +66,17 @@ This is the standard dialog that initiates the delete action.
 					Importe
 					<g:field id="montoPagado" type="number" class="form-control" name="montoPagado"/>
 					Vuelto
-					<input type="number" class="form-control" id="vuelto" disabled="true"/>
+					<input type="number" min="0" step="0.01" class="form-control" id="vuelto" disabled="true"/>
 				</div>
 				<g:hiddenField name="totalAPagar" id="totalAPagar" value="${item.total()}"/>
 			</div>
 			<div class="modal-footer">
+				<div class="btn-group">
 					<button class="btn" data-dismiss="modal" aria-hidden="true">
-					<g:message code="pagar.cancel.label" default="Cancelar"/></button>
-					<span class="button">
-						<g:actionSubmit class="btn btn-default" action="pago" value="${message(code: 'default.button.pagar.label', default: 'pagar')}"/>
-					</span>
+						<g:message code="pagar.cancel.label" default="Cancelar"/>
+					</button>
+					<g:actionSubmit class="btn btn-success" action="pago" value="${message(code: 'default.button.pagar.label', default: 'pagar')}"/>
+				</div>
 			</div>
 			</g:form>
 		</div>
