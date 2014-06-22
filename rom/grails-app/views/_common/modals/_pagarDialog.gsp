@@ -48,19 +48,26 @@ This is the standard dialog that initiates the delete action.
 			</div>
 			<g:form id="${item.id}">
 			<div class="modal-body" class="form-group">
-				<p><g:message code="default.pagar.message" args="[entityName]" default="Ingrese el medio de pago"/></p>
+				<h4><g:message code="default.pagar.message" args="[entityName]" default="Medio de pago"/></h4>
 <%--				<g:radioGroup name="medioPago"--%>
 <%--              		labels="['Crédito','Débito','Efectivo']"--%>
 <%--              		values="[1,2,3]">--%>
 <%--					<p>${it.label} ${it.radio}</p>--%>
 <%--				</g:radioGroup>--%>
 				<div class="row">
-					<div class="col-md-1"><p>Crédito</p></div>	
-					<div class="col-md-1"><g:radio value="1" name="medioPago" checked="true"/></div>
-					<div class="col-md-1"><p>Débito</p></div>	
-					<div class="col-md-1"><g:radio value="2" name="medioPago">Débito</g:radio></div>
-					<div class="col-md-1"><p>Efectivo</p></div>	
-					<div class="col-md-1"><g:radio id="PagoEfectivo" value="3" name="medioPago">Efectivo</g:radio></div>
+					
+					<span class="col-md-3"><div class="form-group">
+						<p>Crédito</p>	
+						<g:radio value="1" checked="true" name="medioPago"></g:radio>
+					</div></span>
+					<span class="col-md-3"><div class="col-md-3 form-group">	
+						<p>Débito</p>	
+						<g:radio value="2" name="medioPago"></g:radio>
+					</div></span>
+					<span class="col-md-3"><div class="col-md-3 form-group">
+						<p>Efectivo</p>	
+						<g:radio id="PagoEfectivo" value="3" name="medioPago"></g:radio>
+					</div></span>
 				</div>
 				<div id="vueltoYMonto" style="display:none">
 					Importe
