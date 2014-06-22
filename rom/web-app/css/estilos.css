@@ -101,3 +101,7 @@ th.sortable.asc::after {
 .right {
     float: right;
 }
+
+.pedido.right {
+    float: inherit;
+}

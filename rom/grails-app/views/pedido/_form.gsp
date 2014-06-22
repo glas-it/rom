@@ -35,13 +35,13 @@
 		                    <td class="left">
 		                        ${item.descripcion()}
 		                    </td>
-		                    <td class="right">
+		                    <td class="right pedido">
 		                        ${item.cantidad}
 		                    </td>
-		                    <td class="right">
+		                    <td class="right pedido">
 		                        ${item.precioUnitarioFormateado()}
 		                    </td>
-		                    <td class="right">
+		                    <td class="right pedido">
 		                        ${item.importeFormateado()}
 		                    </td>
 						</tr>

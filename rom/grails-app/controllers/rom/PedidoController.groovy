@@ -132,7 +132,7 @@ class PedidoController {
 	@Transactional(readOnly = false)
 	def pago() {
 		Pedido pedido = Pedido.get(params.id)
-		if (!pedido || !pedido.activo) {
+		if (!pedido) {
 			flash.message = "El pedido no existe"
 			redirect action:'list'
 			return

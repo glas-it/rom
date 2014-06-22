@@ -74,7 +74,7 @@ class PromocionController {
 				 ]
 			}
 		}
-        params.max = Math.min(params.max ?: 10, 100)
+        params.max = Math.min(params.int("max") ?: 10, 100)
         params.offset = params.offset ? params.int(offset) : 0
         params.sort = params.sort ? params.sort : "id"
         params.order = params.order ? params.order : "asc"

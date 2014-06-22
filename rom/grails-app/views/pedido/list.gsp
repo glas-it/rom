@@ -105,7 +105,7 @@
 
 				<td>${pedidoInstance.ordenes.size()}</td>
 
-				<td>${pedidoInstance.fechaPago.format("dd/MM/yyyy")}</td>
+				<td>${pedidoInstance.fechaPago ? pedidoInstance.fechaPago.format("dd/MM/yyyy") : "-"}</td>
 
 				<td><div class="row">
 					<g:if test="${!pedidoInstance.anulado()}">

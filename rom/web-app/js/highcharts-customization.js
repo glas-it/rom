@@ -24,7 +24,7 @@ Highcharts.drawTable = function() {
         tableLeft = document.getElementById("highcharts-report").offsetWidth / 2 - colWidth,
         rowHeight = 20,
         cellPadding = 2.5,
-        valueDecimals = 2,
+        valueDecimals = Highcharts.decimal ? 2:0,
         valuePrefix = Highcharts.tableValuePrefix;
 
     // internal variables
