@@ -154,7 +154,7 @@ class PedidoController {
 				return
 			}
 		}
-		return
+
 		//Mesa mesa = Mesa.findByIdAndRestaurant(idMesa, Restaurant.findById(idRestaurant))
 		//Pedido pedido = pedidoService.getPedidoByMesaId(mesa.id)
 		try {
