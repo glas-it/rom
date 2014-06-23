@@ -21,6 +21,22 @@ This is the standard dialog that initiates the delete action.
 			}
 		});
 		
+		$("#montoPagado").change(function() {
+                        if ($.isNumeric($(this).val())) {
+                                var monto = parseFloat($(this).val());
+                                var total = parseFloat($("#totalAPagar").val());
+                                var vuelto = monto - total;
+                                if (vuelto < 0) {
+                                        $('#vuelto').val("El monto debe ser superior al total");
+                                } else {
+                                        $('#vuelto').val(formatearVuelto(vuelto));
+                                }
+                        } else {
+                                $("#vuelto").val("por favor ingrese un número en el monto");
+                        }
+                });
+
+
 		$("#montoPagado").keyup(function() {
 			if ($.isNumeric($(this).val())) {
 				var monto = parseFloat($(this).val());
@@ -34,7 +50,7 @@ This is the standard dialog that initiates the delete action.
 			} else {
 				$("#vuelto").val("por favor ingrese un número en el monto");
 			}
-		})
+		});
 	});
 </script>
 
@@ -71,9 +87,9 @@ This is the standard dialog that initiates the delete action.
 				</div>
 				<div id="vueltoYMonto" style="display:none">
 					Importe
-					<g:field id="montoPagado" type="number" class="form-control" name="montoPagado"/>
+					<input id="montoPagado" min="0" step="0.01" type="number" class="form-control" name="montoPagado"/>
 					Vuelto
-					<input type="number" min="0" step="0.01" class="form-control" id="vuelto" disabled="true"/>
+					<input class="form-control" id="vuelto" disabled="true"/>
 				</div>
 				<g:hiddenField name="totalAPagar" id="totalAPagar" value="${item.total()}"/>
 			</div>
