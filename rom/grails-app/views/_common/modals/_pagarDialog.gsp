@@ -9,6 +9,7 @@ This is the standard dialog that initiates the delete action.
 	}
 		
 	$(document).ready(function () {
+		$('#total').val(formatearVuelto(${item.total()}))
 		$("input[name='medioPago']").change(function (){
 			if ($(this).val() == "3") {
 				$("#vueltoYMonto").show();
@@ -86,9 +87,11 @@ This is the standard dialog that initiates the delete action.
 					</div></span>
 				</div>
 				<div id="vueltoYMonto" style="display:none">
-					Importe
+					Importe:
+					<input class="form-control" id="total" disabled="true"/>
+					Pago con:
 					<input id="montoPagado" min="0" step="0.01" type="number" class="form-control" name="montoPagado"/>
-					Vuelto
+					Vuelto:
 					<input class="form-control" id="vuelto" disabled="true"/>
 				</div>
 				<g:hiddenField name="totalAPagar" id="totalAPagar" value="${item.total()}"/>
